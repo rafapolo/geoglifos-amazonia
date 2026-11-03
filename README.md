@@ -31,6 +31,7 @@ uv run --with polars script/convert.py                                    # GeoJ
 uv run --with playwright script/extrai_walker_marcadores.py                # marcadores do app do Walker
 uv run --with pillow script/sync_walker.py                                 # fotos e miniaturas -> docs/data/
 python3 -m http.server -d docs                                            # abre o mapa em http://localhost:8000
+bun install && bun run build                                              # versão de produção minificada -> dist/
 ```
 
 `data/raw/` (com `MANIFEST.tsv`: hash e data de cada arquivo) e `docs/data/local/` (camadas do Jacobs) ficam fora do git. Na cópia local, o mapa mostra também as camadas do Jacobs; na versão publicada, elas não existem.
@@ -42,7 +43,7 @@ script/sync.sh               sincroniza as fontes brutas
 script/extract_nature2026.py extrai a Tabela Suplementar 2 da Nature para CSV
 script/convert.py            gera os GeoJSON e o PNG de probabilidade
 data/processed/              CSVs derivados das fontes abertas
-docs/                        site (GitHub Pages): index.html + data/
+docs/                        site: index.html + scripts + data/ (fonte; o build gera dist/, que vai para o GitHub Pages)
 sources.md                   levantamento das fontes de dados
 ```
 

@@ -1,0 +1,13 @@
+{
+  "name": "geoglifos-amazonia",
+  "private": true,
+  "scripts": {
+    "dev": "bunx serve docs -l 3000",
+    "build": "bun script/build.js"
+  },
+  "devDependencies": {
+    "html-minifier-terser": "^7.2.0",
+    "maplibre-gl": "4.7.1",
+    "terser": "5.48.0"
+  }
+}

@@ -1,3 +1,5 @@
 data/raw/
 docs/data/local/
 .DS_Store
+node_modules/
+dist/
