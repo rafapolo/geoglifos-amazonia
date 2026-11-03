@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Geoglifos da Amazônia: mapa das estruturas de terra pré-colombianas</title>
+<meta name="description" content="Mapa aberto das estruturas de terra pré-colombianas (geoglifos) do sudoeste da Amazônia, a partir de dados abertos da Nature (2026) e da Science (2023).">
+<link rel="stylesheet" href="https://unpkg.com/maplibre-gl@4.7.1/dist/maplibre-gl.css">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --terra: #c8642a; --ocre: #e9b44c; --musgo: #6f8f5a; --tinta: #1d1a16;
+    --papel: #f6efe3; --linha: #d9ccb6; --suave: #6b6156;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; height: 100%; font: 14px/1.45 Inter, system-ui, sans-serif; color: var(--tinta); }
+  #map { position: absolute; inset: 0; background: #1b2418; }
+  aside {
+    position: absolute; top: 12px; left: 12px; width: 330px; max-height: calc(100% - 24px);
+    overflow: auto; background: var(--papel); border: 1px solid var(--linha); border-radius: 10px;
+    box-shadow: 0 8px 30px rgba(0,0,0,.35); padding: 18px 18px 14px;
+  }
+  h1 { font: 700 24px/1.1 Fraunces, Georgia, serif; margin: 0 0 6px; letter-spacing: -.01em; }
+  h1 span { color: var(--terra); }
+  .lede { color: var(--suave); margin: 0 0 14px; }
+  h2 { font: 600 11px/1 Inter, sans-serif; text-transform: uppercase; letter-spacing: .08em; color: var(--suave); margin: 16px 0 8px; }
+  label.camada { display: grid; grid-template-columns: 18px 14px 1fr auto; gap: 8px; align-items: center; padding: 6px 0; cursor: pointer; border-top: 1px solid var(--linha); }
+  label.camada:first-of-type { border-top: 0; }
+  label.camada small { display: block; color: var(--suave); font-size: 12px; }
+  .n { font-variant-numeric: tabular-nums; color: var(--suave); font-size: 12px; }
+  .sw { width: 12px; height: 12px; border-radius: 50%; border: 2px solid #fff; box-shadow: 0 0 0 1px rgba(0,0,0,.25); }
+  .sw.q { border-radius: 2px; }
+  .grad { height: 8px; border-radius: 4px; background: linear-gradient(90deg, rgba(255,237,160,.5), #feb24c, #f03b20, #bd0026); }
+  label.camada.local { display: none; }
+  .tem-local label.camada.local { display: grid; }
+  details { margin-top: 14px; border-top: 1px solid var(--linha); padding-top: 10px; }
+  summary { cursor: pointer; font-weight: 600; }
+  details p, details li { color: #3d3730; font-size: 13px; }
+  details ul { padding-left: 18px; margin: 6px 0; }
+  a { color: #8a3e12; }
+  .rodape { margin-top: 12px; font-size: 12px; color: var(--suave); }
+  .maplibregl-popup-content { font: 13px/1.4 Inter, sans-serif; padding: 10px 12px; border-radius: 8px; max-width: 280px; }
+  .maplibregl-popup-content b { font-family: Fraunces, Georgia, serif; font-size: 15px; }
+  .tag { display: inline-block; font-size: 11px; padding: 1px 6px; border-radius: 10px; background: #efe4d2; margin: 4px 4px 0 0; }
+  @media (max-width: 640px) {
+    aside { top: auto; bottom: 0; left: 0; right: 0; width: auto; max-height: 45%; border-radius: 12px 12px 0 0; }
+  }
+</style>
+</head>
+<body>
+<div id="map"></div>
+<aside id="painel">
+  <h1>Geoglifos da <span>Amazônia</span></h1>
+  <p class="lede">Valas e aterros geométricos de 600&nbsp;a.C. a 850&nbsp;d.C., revelados pelo desmatamento e pelo LiDAR no Acre, no Amazonas e na Bolívia.</p>
+
+  <h2>Camadas</h2>
+  <label class="camada"><input type="checkbox" data-camada="nature" checked><span class="sw" style="background:var(--terra)"></span>
+    <span>LiDAR: Nature 2026<small>estruturas sob a floresta (Pärssinen et al.)</small></span><span class="n" id="n-nature"></span></label>
+  <label class="camada"><input type="checkbox" data-camada="science" checked><span class="sw" style="background:var(--ocre)"></span>
+    <span>Base compilada: Science 2023<small>Amazon Arch, CNSA, PAST, INRAP, INPE</small></span><span class="n" id="n-science"></span></label>
+  <label class="camada"><input type="checkbox" data-camada="prob"><span class="sw q" style="background:#f03b20"></span>
+    <span>Onde ainda pode haver estruturas<small>modelo preditivo, Science 2023</small></span><span></span></label>
+  <label class="camada local"><input type="checkbox" data-camada="jacobs" checked><span class="sw" style="background:#7fd1c7"></span>
+    <span>Jacobs (só local)<small>pontos, contornos e estradas</small></span><span class="n" id="n-jacobs"></span></label>
+  <div id="legenda-prob" style="display:none;margin:6px 0 0"><div class="grad"></div>
+    <div style="display:flex;justify-content:space-between;font-size:11px;color:var(--suave)"><span>menor</span><span>maior probabilidade</span></div></div>
+
+  <details>
+    <summary>O que são os geoglifos?</summary>
+    <p>São recintos de terra (círculos, quadrados, octógonos, elipses) delimitados por valas de até 15&nbsp;m de largura e 5&nbsp;m de profundidade, às vezes ligados por estradas com aterros paralelos. Segundo Pärssinen et al. (2026), foram construídos pela chamada civilização Aquiry e serviam a cerimônias e encontros políticos, não a moradia.</p>
+    <p>O LiDAR de 4.497&nbsp;km² encontrou 432 estruturas, 396 delas inéditas, e os autores estimam que haja de 24 a 30 mil na região.</p>
+  </details>
+  <details>
+    <summary>Fontes e licenças</summary>
+    <ul>
+      <li>Pärssinen et al. 2026, <i>Nature</i>, <a href="https://doi.org/10.1038/s41586-026-10835-7">doi:10.1038/s41586-026-10835-7</a> (CC&nbsp;BY&nbsp;4.0). Tabela Suplementar&nbsp;2; as estruturas em terras indígenas foram omitidas pelos autores.</li>
+      <li>Peripato et al. 2023, <i>Science</i>, <a href="https://doi.org/10.1126/science.ade2541">doi:10.1126/science.ade2541</a>; dados em <a href="https://zenodo.org/records/10214943">Zenodo</a>.</li>
+      <li>Imagens de satélite: Esri World Imagery.</li>
+    </ul>
+    <p>A base mais completa, com fotos e contornos, é a de <a href="https://www.jqjacobs.net/archaeology/geoglyph.html">James Q. Jacobs</a>. Fotos por sítio: <a href="https://robert-walker.shinyapps.io/ggshiny/">Ancient Amazonian Earthworks</a> (R. Walker).</p>
+  </details>
+  <details>
+    <summary>Proteção dos sítios</summary>
+    <p>Sítios arqueológicos são bens da União (Lei 3.924/1961). As coordenadas aqui já foram publicadas pelos autores, com precisão de cerca de 100&nbsp;m. Não entre em propriedades nem remova material; danos a sítios são crime.</p>
+  </details>
+  <p class="rodape">Código e dados: <a href="https://github.com/rafapolo/geoglifos-amazonia">github.com/rafapolo/geoglifos-amazonia</a></p>
+</aside>
+
+<script src="https://unpkg.com/maplibre-gl@4.7.1/dist/maplibre-gl.js"></script>
+<script>
+const map = new maplibregl.Map({
+  container: 'map',
+  center: [-67.3, -9.7], zoom: 6.3, maxZoom: 16, hash: true,
+  style: {
+    version: 8,
+    glyphs: 'https://demotiles.maplibre.org/font/{fontstack}/{range}.pbf',
+    sources: {
+      sat: { type: 'raster', tileSize: 256, maxzoom: 18,
+        tiles: ['https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}'],
+        attribution: 'Imagens © Esri, Maxar, Earthstar Geographics' },
+      ref: { type: 'raster', tileSize: 256,
+        tiles: ['https://server.arcgisonline.com/ArcGIS/rest/services/Reference/World_Boundaries_and_Places/MapServer/tile/{z}/{y}/{x}'] }
+    },
+    layers: [
+      { id: 'sat', type: 'raster', source: 'sat', paint: { 'raster-saturation': -0.25, 'raster-brightness-max': 0.85 } },
+      { id: 'ref', type: 'raster', source: 'ref', paint: { 'raster-opacity': 0.7 } }
+    ]
+  }
+});
+map.addControl(new maplibregl.NavigationControl({ visualizePitch: false }), 'top-right');
+map.addControl(new maplibregl.ScaleControl({ unit: 'metric' }), 'bottom-right');
+
+const camadas = { nature: ['nature'], science: ['science'], prob: ['prob'], jacobs: ['jacobs-contornos', 'jacobs-linhas', 'jacobs-pontos'] };
+const fmt = n => n.toLocaleString('pt-BR');
+const esc = s => String(s ?? '').replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+
+async function carregar(url) {
+  const r = await fetch(url);
+  if (!r.ok) throw new Error(url);
+  return r.json();
+}
+
+function circulo(id, source, cor, raio) {
+  map.addLayer({ id, type: 'circle', source, paint: {
+    'circle-color': cor, 'circle-stroke-color': '#fff', 'circle-stroke-width': 1.2,
+    'circle-radius': ['interpolate', ['linear'], ['zoom'], 5, raio * 0.6, 10, raio, 15, raio * 1.8],
+    'circle-opacity': 0.92 } });
+}
+
+map.on('load', async () => {
+  const prob = await carregar('data/probabilidade.json');
+  map.addSource('prob', { type: 'image', url: 'data/probabilidade.png', coordinates: prob.coordinates });
+  map.addLayer({ id: 'prob', type: 'raster', source: 'prob', layout: { visibility: 'none' }, paint: { 'raster-opacity': 0.65, 'raster-resampling': 'linear' } }, 'ref');
+
+  // Camadas locais do Jacobs: existem só na cópia local (licença "all rights reserved").
+  try {
+    const [pts, cont, lin] = await Promise.all(['pontos', 'contornos', 'linhas'].map(n => carregar(`data/local/jacobs_${n}.geojson`)));
+    map.addSource('jacobs-contornos', { type: 'geojson', data: cont });
+    map.addSource('jacobs-linhas', { type: 'geojson', data: lin });
+    map.addSource('jacobs-pontos', { type: 'geojson', data: pts });
+    map.addLayer({ id: 'jacobs-contornos', type: 'line', source: 'jacobs-contornos', minzoom: 11, paint: { 'line-color': '#7fd1c7', 'line-width': 1.5 } });
+    map.addLayer({ id: 'jacobs-linhas', type: 'line', source: 'jacobs-linhas', minzoom: 11, paint: { 'line-color': '#f2f2a0', 'line-width': 1.2, 'line-dasharray': [2, 1] } });
+    circulo('jacobs-pontos', 'jacobs-pontos', '#7fd1c7', 4);
+    document.getElementById('n-jacobs').textContent = fmt(pts.features.length);
+    document.body.classList.add('tem-local');
+  } catch (e) { /* versão pública: sem dados do Jacobs */ }
+
+  const [sci, nat] = await Promise.all([carregar('data/science2023.geojson'), carregar('data/nature2026.geojson')]);
+  map.addSource('science', { type: 'geojson', data: sci });
+  map.addSource('nature', { type: 'geojson', data: nat });
+  circulo('science', 'science', '#e9b44c', 4.5);
+  circulo('nature', 'nature', ['case', ['get', 'aquiry'], '#c8642a', '#8c6b52'], 5.5);
+  document.getElementById('n-science').textContent = fmt(sci.features.length);
+  document.getElementById('n-nature').textContent = fmt(nat.features.length);
+
+  const popup = (f) => {
+    const p = f.properties;
+    if (p.fonte === 'nature2026') return `<b>${esc(p.nome)}</b><br>${p.area_ha} ha${p.aquiry === true || p.aquiry === 'true' ? '<span class="tag">Aquiry</span>' : '<span class="tag">não Aquiry</span>'}<span class="tag">LiDAR</span>${p.parcial === true || p.parcial === 'true' ? '<span class="tag">parcial</span>' : ''}<br><small>Pärssinen et al. 2026, <i>Nature</i></small>`;
+    if (p.fonte === 'science2023') return `<b>Estrutura de terra</b><br><small>Base: ${esc(p.base)}<br>Peripato et al. 2023, <i>Science</i></small>`;
+    return `<b>${esc(p.nome || p.codigo)}</b><br><span class="tag">${esc(p.forma || p.grupo)}</span><span class="tag">${esc(p.codigo)}</span><br><small>J. Q. Jacobs</small>`;
+  };
+  for (const id of ['nature', 'science', 'jacobs-pontos']) {
+    if (!map.getLayer(id)) continue;
+    map.on('click', id, (e) => new maplibregl.Popup({ offset: 8 }).setLngLat(e.features[0].geometry.coordinates).setHTML(popup(e.features[0])).addTo(map));
+    map.on('mouseenter', id, () => map.getCanvas().style.cursor = 'pointer');
+    map.on('mouseleave', id, () => map.getCanvas().style.cursor = '');
+  }
+});
+
+document.querySelectorAll('input[data-camada]').forEach(cb => cb.addEventListener('change', () => {
+  for (const id of camadas[cb.dataset.camada]) if (map.getLayer(id)) map.setLayoutProperty(id, 'visibility', cb.checked ? 'visible' : 'none');
+  if (cb.dataset.camada === 'prob') document.getElementById('legenda-prob').style.display = cb.checked ? 'block' : 'none';
+}));
+</script>
+</body>
+</html>
