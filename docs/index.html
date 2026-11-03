@@ -159,6 +159,29 @@
   body.touring aside, body.touring #topo, body.touring .maplibregl-ctrl-bottom-right { opacity: 0; pointer-events: none; transition: opacity 600ms; }
   aside, #topo, .maplibregl-ctrl-bottom-right { transition: opacity 600ms; }
   @media (max-width: 640px) { #topo { top: 8px; right: 8px; } }
+  /* painel da esquerda no mesmo tema escuro do painel de fotos */
+  aside { background: rgba(22,18,14,.92); color: var(--papel); border-color: rgba(246,239,227,.12); backdrop-filter: blur(6px); }
+  aside h1 { color: var(--papel); }
+  aside h1 span { color: #e07a3c; }
+  aside .lede { color: #c9bba6; }
+  aside .lede b { color: var(--papel); }
+  aside h2 { color: #a99b88; }
+  aside label.camada { border-top-color: rgba(246,239,227,.1); }
+  aside label.camada small, aside .n { color: #a99b88; }
+  aside .sw { border-color: rgba(246,239,227,.85); }
+  aside input[type=checkbox] { accent-color: var(--ocre); }
+  aside details { border-top-color: rgba(246,239,227,.1); }
+  aside summary { color: var(--papel); }
+  aside details p, aside details li { color: #d8ccb9; }
+  aside a { color: var(--ocre); }
+  aside .rodape a { color: #a99b88; border-bottom-color: rgba(246,239,227,.2); }
+  aside .rodape a:hover { color: var(--ocre); }
+  aside #legenda-prob div:last-child { color: #a99b88 !important; }
+  aside .tour-btn { background: var(--ocre); color: var(--tinta); }
+  aside .tour-btn::before { border-left-color: var(--tinta); }
+  aside .tour-btn:hover { background: #f2c766; }
+  aside::-webkit-scrollbar, #fotos-grade::-webkit-scrollbar { width: 8px; }
+  aside::-webkit-scrollbar-thumb, #fotos-grade::-webkit-scrollbar-thumb { background: rgba(246,239,227,.18); border-radius: 4px; }
 </style>
 </head>
 <body>
