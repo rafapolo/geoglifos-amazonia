@@ -5,6 +5,24 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Geoglifos da Amazônia: mapa das estruturas de terra pré-colombianas</title>
 <meta name="description" content="Mapa aberto das estruturas de terra pré-colombianas (geoglifos) do sudoeste da Amazônia, a partir de dados abertos da Nature (2026) e da Science (2023).">
+<link rel="canonical" href="https://rafapolo.github.io/geoglifos-amazonia/">
+<meta name="theme-color" content="#1d1a16">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="pt_BR">
+<meta property="og:site_name" content="Geoglifos da Amazônia">
+<meta property="og:url" content="https://rafapolo.github.io/geoglifos-amazonia/">
+<meta property="og:title" content="Geoglifos da Amazônia: o mapa das estruturas de terra pré-colombianas">
+<meta property="og:description" content="Valas e aterros geométricos de 600 a.C. a 850 d.C. no Acre, no Amazonas e na Bolívia. 406 estruturas achadas por LiDAR (Nature 2026), 961 já catalogadas e um tour de 2 minutos.">
+<meta property="og:image" content="https://rafapolo.github.io/geoglifos-amazonia/og.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Geoglifo do Tequinho, no Acre, visto por satélite, com o título Geoglifos da Amazônia">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Geoglifos da Amazônia">
+<meta name="twitter:description" content="O mapa das estruturas de terra pré-colombianas do sudoeste da Amazônia, com um tour de 2 minutos.">
+<meta name="twitter:image" content="https://rafapolo.github.io/geoglifos-amazonia/og.jpg">
+<meta name="twitter:image:alt" content="Geoglifo do Tequinho, no Acre, visto por satélite">
 <link rel="stylesheet" href="https://unpkg.com/maplibre-gl@4.7.1/dist/maplibre-gl.css">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
@@ -39,20 +57,114 @@
   details p, details li { color: #3d3730; font-size: 13px; }
   details ul { padding-left: 18px; margin: 6px 0; }
   a { color: #8a3e12; }
-  .rodape { margin-top: 12px; font-size: 12px; color: var(--suave); }
+  .rodape { margin-top: 12px; font-size: 12px; }
+  .rodape a { color: var(--suave); text-decoration: none; border-bottom: 1px solid var(--linha); }
+  .rodape a:hover { color: var(--terra); }
+  .lede b { color: var(--tinta); }
+  .tour-btn { display: inline-flex; align-items: center; gap: 8px; font: 600 13px Inter, sans-serif; color: var(--papel); background: var(--tinta);
+    border: 0; border-radius: 999px; padding: 8px 16px; cursor: pointer; margin: 0 0 4px; }
+  .tour-btn::before { content: ""; border-left: 7px solid var(--ocre); border-top: 4.5px solid transparent; border-bottom: 4.5px solid transparent; }
+  .tour-btn:hover { background: #000; }
+  .maplibregl-popup-content img { display: block; width: 100%; border-radius: 4px; margin: 0 0 8px; background: #ddd; }
+  .maplibregl-popup.foto .maplibregl-popup-content { max-width: 340px; width: 340px; }
+  .credito { color: var(--suave); font-size: 11px; }
+
+  /* painel de fotos (desktop) */
+  :root { --fotos-w: 0px; }
+  body.tem-fotos { --fotos-w: 268px; }
+  #fotos { display: none; position: absolute; top: 0; right: 0; bottom: 0; width: var(--fotos-w); background: rgba(22,18,14,.92);
+    border-left: 1px solid rgba(246,239,227,.12); color: var(--papel); flex-direction: column; z-index: 4; }
+  body.tem-fotos #fotos { display: flex; }
+  #fotos header { padding: 14px 14px 10px; font: 600 14px Inter, sans-serif; }
+  #fotos header b { font: 700 18px Fraunces, Georgia, serif; }
+  #fotos header span { color: var(--ocre); font-size: 12px; margin-left: 4px; }
+  #fotos header small { display: block; color: #a99b88; font-weight: 400; font-size: 12px; margin-top: 2px; }
+  #fotos-grade { flex: 1; min-height: 0; overflow-y: auto; display: grid; grid-template-columns: 1fr 1fr; grid-auto-rows: 118px; gap: 4px; padding: 0 10px 10px; align-content: start; }
+  #fotos-grade button { position: relative; padding: 0; border: 2px solid transparent; border-radius: 4px; background: #2b241d; cursor: pointer; overflow: hidden; }
+  #fotos-grade button:hover, #fotos-grade button.ativo { border-color: var(--ocre); }
+  #fotos-grade img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; display: block; transition: transform .3s; }
+  #fotos-grade button:hover img { transform: scale(1.06); }
+  #fotos footer { padding: 8px 14px 12px; font-size: 11px; color: #a99b88; border-top: 1px solid rgba(246,239,227,.1); }
+  #fotos footer a { color: var(--ocre); }
+  #topo { right: calc(var(--fotos-w) + 12px) !important; }
+  #map { right: var(--fotos-w); }
+  body.touring #fotos { opacity: 0; pointer-events: none; }
+  #fotos { transition: opacity 600ms; }
   .maplibregl-popup-content { font: 13px/1.4 Inter, sans-serif; padding: 10px 12px; border-radius: 8px; max-width: 280px; }
   .maplibregl-popup-content b { font-family: Fraunces, Georgia, serif; font-size: 15px; }
   .tag { display: inline-block; font-size: 11px; padding: 1px 6px; border-radius: 10px; background: #efe4d2; margin: 4px 4px 0 0; }
-  @media (max-width: 640px) {
-    aside { top: auto; bottom: 0; left: 0; right: 0; width: auto; max-height: 45%; border-radius: 12px 12px 0 0; }
+  /* celular e telas estreitas: sem painel de fotos; o painel de camadas vira uma folha embaixo */
+  @media (max-width: 900px) {
+    body.tem-fotos { --fotos-w: 0px; }
+    body.tem-fotos #fotos { display: none; }
   }
+  @media (max-width: 640px) {
+    aside { top: auto; bottom: 0; left: 0; right: 0; width: auto; max-height: 42%; border-radius: 14px 14px 0 0; padding: 14px 16px 10px;
+      box-shadow: 0 -6px 24px rgba(0,0,0,.35); }
+    h1 { font-size: 21px; }
+    .lede { font-size: 13px; margin-bottom: 10px; }
+    #topo { top: 10px; right: 10px !important; }
+    #topo button { padding: 7px 13px; }
+    .maplibregl-ctrl-bottom-right { bottom: 42vh; }
+    .maplibregl-popup.foto .maplibregl-popup-content { width: 78vw; max-width: 78vw; }
+    #tour-cap { padding: 0 5vw; }
+  }
+  #topo { position: absolute; top: 12px; right: 12px; display: flex; gap: 8px; z-index: 5; }
+  #topo button, #tour-parar {
+    font: 600 13px Inter, sans-serif; color: var(--tinta); background: var(--papel); border: 1px solid var(--linha);
+    border-radius: 999px; padding: 8px 16px; cursor: pointer; box-shadow: 0 4px 16px rgba(0,0,0,.3);
+  }
+  #topo button:hover { background: #fff; }
+  #tour-abrir::before { content: ""; display: inline-block; margin-right: 7px; border-left: 7px solid var(--terra);
+    border-top: 4.5px solid transparent; border-bottom: 4.5px solid transparent; }
+  dialog#sobre { width: min(640px, 92vw); max-height: 86vh; overflow: auto; border: 1px solid var(--linha); border-radius: 12px;
+    background: var(--papel); color: var(--tinta); padding: 26px 30px; box-shadow: 0 20px 60px rgba(0,0,0,.5); }
+  dialog#sobre::backdrop { background: rgba(15,12,8,.55); backdrop-filter: blur(2px); }
+  #sobre h2 { font: 700 26px/1.1 Fraunces, Georgia, serif; text-transform: none; letter-spacing: 0; color: var(--tinta); margin: 0 0 12px; }
+  #sobre h3 { font: 700 17px Fraunces, Georgia, serif; margin: 20px 0 6px; }
+  #sobre p, #sobre li { font-size: 14px; color: #3d3730; }
+  #sobre ul { padding-left: 18px; }
+  #sobre li { margin: 4px 0; }
+  #sobre blockquote { margin: 14px 0; padding: 4px 0 4px 14px; border-left: 3px solid var(--terra);
+    font: italic 500 16px/1.4 Fraunces, Georgia, serif; }
+  #sobre cite { display: block; margin-top: 4px; font: normal 12px Inter, sans-serif; color: var(--suave); }
+  #sobre .aviso { font-size: 12px; color: var(--suave); border-top: 1px solid var(--linha); padding-top: 10px; }
+  #sobre .fechar { position: sticky; top: 0; float: right; border: 0; background: none; font-size: 18px; cursor: pointer; color: var(--suave); }
+
+  /* ---------- tour: faixas de cinema 2.39:1 (até 16% da tela cada), legenda e progresso ---------- */
+  :root { --lb: clamp(0px, calc((100vh - 100vw / 2.39) / 2), 16vh); --ease: cubic-bezier(.4,0,.2,1); }
+  #tour { position: fixed; inset: 0; z-index: 40; pointer-events: none; }
+  #tour[hidden] { display: none; }
+  #tour .bar { position: absolute; left: 0; right: 0; height: var(--lb); background: #000; transform: scaleY(0); transition: transform 900ms var(--ease); }
+  #tour .bar.top { top: 0; transform-origin: top; }
+  #tour .bar.bottom { bottom: 0; transform-origin: bottom; }
+  #tour.on .bar { transform: scaleY(1); }
+  #tour-progress { position: absolute; left: 0; right: 0; bottom: var(--lb); height: 2px; background: rgba(246,239,227,.12); }
+  #tour-progress i { display: block; height: 100%; background: var(--ocre); transform: scaleX(0); transform-origin: left; }
+  #tour-left { position: absolute; right: 16px; top: min(8px, calc(var(--lb) - 18px)); font: 12px ui-monospace, Menlo, monospace;
+    font-variant-numeric: tabular-nums; letter-spacing: .04em; color: var(--ocre); }
+  #tour-parar { position: absolute; left: 16px; top: max(6px, calc(var(--lb) - 40px)); pointer-events: auto; padding: 5px 12px; font-size: 12px;
+    background: rgba(0,0,0,.6); color: var(--papel); border-color: rgba(246,239,227,.25); box-shadow: none; }
+  #tour-cap { position: absolute; left: 0; right: 0; bottom: calc(var(--lb) + 28px); padding: 0 8vw; text-align: center;
+    opacity: 0; transform: translateY(8px); transition: opacity 600ms, transform 600ms; }
+  #tour-cap.on { opacity: 1; transform: none; }
+  #tour-kicker { display: inline-block; padding: 6px calc(12px - .18em) 6px 12px; background: rgba(20,16,12,.72); border: 1px solid rgba(246,239,227,.18);
+    border-radius: 4px; font: 600 clamp(10px, 1vw, 13px) Inter, sans-serif; letter-spacing: .18em; text-transform: uppercase; color: var(--ocre); margin-bottom: 10px; }
+  #tour-kicker:empty { display: none; }
+  #tour-line { display: block; font: 500 clamp(20px, 2.5vw, 36px)/1.22 Fraunces, Georgia, serif; color: var(--papel);
+    text-shadow: 0 0 18px rgba(0,0,0,.95), 0 0 4px rgba(0,0,0,.9); text-wrap: balance; }
+  #tour-line cite { display: block; margin-top: 8px; font: 500 clamp(12px, 1vw, 15px) Inter, sans-serif; font-style: normal; color: var(--ocre); letter-spacing: .02em; }
+  body.touring aside, body.touring #topo, body.touring .maplibregl-ctrl-bottom-right { opacity: 0; pointer-events: none; transition: opacity 600ms; }
+  aside, #topo, .maplibregl-ctrl-bottom-right { transition: opacity 600ms; }
+  @media (max-width: 640px) { #topo { top: 8px; right: 8px; } }
 </style>
 </head>
 <body>
 <div id="map"></div>
 <aside id="painel">
   <h1>Geoglifos da <span>Amazônia</span></h1>
-  <p class="lede">Valas e aterros geométricos de 600&nbsp;a.C. a 850&nbsp;d.C., revelados pelo desmatamento e pelo LiDAR no Acre, no Amazonas e na Bolívia.</p>
+  <p class="lede"><b id="lede-total">1.367</b> estruturas de terra (<span id="lede-nature">406</span> achadas por LiDAR, <span id="lede-science">961</span> já catalogadas) e <span id="lede-fotos">664</span> fotos: valas e aterros geométricos de 600&nbsp;a.C. a 850&nbsp;d.C., revelados pelo desmatamento e pelo LiDAR no Acre, no Amazonas e na Bolívia.</p>
+  <button id="tour-abrir-painel" class="tour-btn" type="button">Tour de 2 minutos</button>
 
   <h2>Camadas</h2>
   <label class="camada"><input type="checkbox" data-camada="nature" checked><span class="sw" style="background:var(--terra)"></span>
@@ -61,6 +173,8 @@
     <span>Base compilada: Science 2023<small>Amazon Arch, CNSA, PAST, INRAP, INPE</small></span><span class="n" id="n-science"></span></label>
   <label class="camada"><input type="checkbox" data-camada="prob"><span class="sw q" style="background:#f03b20"></span>
     <span>Onde ainda pode haver estruturas<small>modelo preditivo, Science 2023</small></span><span></span></label>
+  <label class="camada"><input type="checkbox" data-camada="fotos" checked><span class="sw" style="background:#9cc3e6"></span>
+    <span>Fotos<small>app Ancient Amazonian Earthworks (R. Walker)</small></span><span class="n" id="n-fotos"></span></label>
   <label class="camada local"><input type="checkbox" data-camada="jacobs" checked><span class="sw" style="background:#7fd1c7"></span>
     <span>Jacobs (só local)<small>pontos, contornos e estradas</small></span><span class="n" id="n-jacobs"></span></label>
   <div id="legenda-prob" style="display:none;margin:6px 0 0"><div class="grad"></div>
@@ -76,22 +190,67 @@
     <ul>
       <li>Pärssinen et al. 2026, <i>Nature</i>, <a href="https://doi.org/10.1038/s41586-026-10835-7">doi:10.1038/s41586-026-10835-7</a> (CC&nbsp;BY&nbsp;4.0). Tabela Suplementar&nbsp;2; as estruturas em terras indígenas foram omitidas pelos autores.</li>
       <li>Peripato et al. 2023, <i>Science</i>, <a href="https://doi.org/10.1126/science.ade2541">doi:10.1126/science.ade2541</a>; dados em <a href="https://zenodo.org/records/10214943">Zenodo</a>.</li>
+      <li>Fotos: app <a href="https://robert-walker.shinyapps.io/ggshiny/">Ancient Amazonian Earthworks</a> (R. Walker, Univ. of Missouri), que reúne figuras de artigos e fotos de pesquisadores; os créditos de cada foto seguem a legenda original.</li>
       <li>Imagens de satélite: Esri World Imagery.</li>
     </ul>
-    <p>A base mais completa, com fotos e contornos, é a de <a href="https://www.jqjacobs.net/archaeology/geoglyph.html">James Q. Jacobs</a>. Fotos por sítio: <a href="https://robert-walker.shinyapps.io/ggshiny/">Ancient Amazonian Earthworks</a> (R. Walker).</p>
+    <p>A base mais completa, com fotos e contornos, é a de <a href="https://www.jqjacobs.net/archaeology/geoglyph.html">James Q. Jacobs</a>.</p>
   </details>
   <details>
     <summary>Proteção dos sítios</summary>
     <p>Sítios arqueológicos são bens da União (Lei 3.924/1961). As coordenadas aqui já foram publicadas pelos autores, com precisão de cerca de 100&nbsp;m. Não entre em propriedades nem remova material; danos a sítios são crime.</p>
   </details>
-  <p class="rodape">Código e dados: <a href="https://github.com/rafapolo/geoglifos-amazonia">github.com/rafapolo/geoglifos-amazonia</a></p>
+  <p class="rodape"><a href="https://github.com/rafapolo/geoglifos-amazonia">Código e dados no GitHub</a></p>
 </aside>
+
+<section id="fotos" aria-label="Fotos dos sítios">
+  <header><b>Fotos</b> <span id="fotos-n"></span><small>clique para ir ao sítio</small></header>
+  <div id="fotos-grade"></div>
+  <footer>Fotos: <a href="https://robert-walker.shinyapps.io/ggshiny/">Ancient Amazonian Earthworks</a> (R. Walker)</footer>
+</section>
+
+<nav id="topo">
+  <button id="tour-abrir" type="button" title="Um passeio de 2 minutos pelos geoglifos">Tour</button>
+  <button id="sobre-abrir" type="button" aria-haspopup="dialog">Sobre</button>
+</nav>
+
+<dialog id="sobre" aria-labelledby="sobre-titulo">
+  <button class="fechar" type="button" aria-label="Fechar">✕</button>
+  <h2 id="sobre-titulo">Sobre</h2>
+  <p>Este mapa reúne, num só lugar e em português, as estruturas de terra pré-colombianas do sudoeste da Amazônia: os <b>geoglifos</b>, valas e aterros geométricos que só ficam visíveis do alto, de avião ou por satélite.</p>
+
+  <h3>A civilização Aquiry</h3>
+  <p>Em julho de 2026, uma equipe de universidades da Finlândia e do Brasil (Helsinque, Turku, UFAC, UFPA e outras) publicou na <i>Nature</i> um levantamento com LiDAR, um laser lançado de avião que enxerga sob as árvores, de 4.497&nbsp;km² entre o Acre e o Amazonas. Encontraram <b>432 estruturas, 396 delas nunca registradas</b>.</p>
+  <ul>
+    <li>Os geoglifos foram construídos entre <b>600 a.C. e 850 d.C.</b> pela chamada civilização Aquiry.</li>
+    <li>A área ocupada chegaria a <b>183 mil km²</b>, pouco mais que o Uruguai, com <b>até 3 milhões de pessoas</b> entre 100 e 300 d.C.</li>
+    <li>As valas chegam a 15&nbsp;m de largura e 5&nbsp;m de profundidade. Sem pedra na região, a terra era movida com madeira e cestos.</li>
+    <li>Eram espaços de cerimônia e decisão política, ligados por <b>350&nbsp;km de estradas</b> já mapeadas, que se alargavam ao chegar perto deles. Não eram fortalezas nem moradias.</li>
+    <li>Por volta de 850 d.C. deixaram de ser construídos, na mesma época em que os maias abandonaram suas cidades.</li>
+    <li>Os autores estimam que haja de <b>24 a 30 mil</b> estruturas na região, a maioria ainda sob a floresta.</li>
+  </ul>
+  <blockquote>“Esse povo fazia geometria monumental na Amazônia ao mesmo tempo que Pitágoras desenvolvia seu teorema na Grécia.”<cite>Alceu Ranzi, paleontólogo, Instituto Geoglifos da Amazônia</cite></blockquote>
+  <blockquote>“O que a gente vê na Amazônia não é uma grande floresta natural, mas, sim, um grande jardim construído historicamente.”<cite>Rhuan Carlos Lopes, arqueólogo, UFPA</cite></blockquote>
+  <p>Com base na reportagem <a href="https://www.bbc.com/portuguese/articles/cm4gvnv14zlgo">“As construções monumentais ‘escondidas’ na Amazônia descobertas por cientistas”</a>, de André Biernath (BBC News Brasil, 30/09/2026), e no artigo <a href="https://doi.org/10.1038/s41586-026-10835-7">Pärssinen et al. 2026, <i>Nature</i></a>.</p>
+
+  <h3>Dados</h3>
+  <p>Pontos da Tabela Suplementar 2 da <i>Nature</i> (CC&nbsp;BY&nbsp;4.0; sem as estruturas em terras indígenas) e da base compilada por <a href="https://doi.org/10.1126/science.ade2541">Peripato et al. 2023, <i>Science</i></a>, com o modelo de probabilidade dos mesmos autores. Código, dados e lista de fontes: <a href="https://github.com/rafapolo/geoglifos-amazonia">github.com/rafapolo/geoglifos-amazonia</a>.</p>
+  <p class="aviso">Sítios arqueológicos são bens da União (Lei 3.924/1961). Danificá-los é crime.</p>
+</dialog>
+
+<div id="tour" hidden>
+  <div class="bar top"></div><div class="bar bottom"></div>
+  <div id="tour-cap"><span id="tour-kicker"></span><span id="tour-line"></span></div>
+  <div id="tour-progress"><i></i></div>
+  <span id="tour-left"></span>
+  <button id="tour-parar" type="button">✕ esc</button>
+</div>
 
 <script src="https://unpkg.com/maplibre-gl@4.7.1/dist/maplibre-gl.js"></script>
 <script>
 const map = new maplibregl.Map({
   container: 'map',
-  center: [-67.3, -9.7], zoom: 6.3, maxZoom: 16, hash: true,
+  center: [-67.3, -9.7], zoom: 6.3, minZoom: 4.3, maxZoom: 16, hash: true,
+  maxBounds: [[-84, -24], [-40, 10]],
   style: {
     version: 8,
     glyphs: 'https://demotiles.maplibre.org/font/{fontstack}/{range}.pbf',
@@ -108,10 +267,13 @@ const map = new maplibregl.Map({
     ]
   }
 });
-map.addControl(new maplibregl.NavigationControl({ visualizePitch: false }), 'top-right');
+map.addControl(new maplibregl.NavigationControl({ visualizePitch: false }), 'bottom-right');
 map.addControl(new maplibregl.ScaleControl({ unit: 'metric' }), 'bottom-right');
 
-const camadas = { nature: ['nature'], science: ['science'], prob: ['prob'], jacobs: ['jacobs-contornos', 'jacobs-linhas', 'jacobs-pontos'] };
+let prontoOk; window.pronto = new Promise(r => prontoOk = r);
+const camadas = { nature: ['nature-mancha', 'nature'], science: ['science-mancha', 'science'], prob: ['prob'], fotos: ['fotos'], jacobs: ['jacobs-contornos', 'jacobs-linhas', 'jacobs-pontos'] };
+// a cópia local tem as camadas do Jacobs; no GitHub Pages nem tentamos buscá-las (evita os 404)
+const LOCAL = !/github\.io$/.test(location.hostname);
 const fmt = n => n.toLocaleString('pt-BR');
 const esc = s => String(s ?? '').replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
 
@@ -121,11 +283,23 @@ async function carregar(url) {
   return r.json();
 }
 
+// de longe, os pontos viram uma mancha de calor; ao aproximar, ela some e os pontos aparecem
+const SURGE = ['interpolate', ['linear'], ['zoom'], 5.6, 0, 7.4, 1];
 function circulo(id, source, cor, raio) {
   map.addLayer({ id, type: 'circle', source, paint: {
     'circle-color': cor, 'circle-stroke-color': '#fff', 'circle-stroke-width': 1.2,
     'circle-radius': ['interpolate', ['linear'], ['zoom'], 5, raio * 0.6, 10, raio, 15, raio * 1.8],
-    'circle-opacity': 0.92 } });
+    'circle-opacity': ['interpolate', ['linear'], ['zoom'], 5.6, 0, 7.4, 0.92],
+    'circle-stroke-opacity': SURGE } });
+}
+function mancha(id, source, peso) {
+  map.addLayer({ id, type: 'heatmap', source, maxzoom: 9.5, paint: {
+    'heatmap-weight': peso,
+    'heatmap-intensity': ['interpolate', ['linear'], ['zoom'], 4, 0.35, 9, 1],
+    'heatmap-radius': ['interpolate', ['linear'], ['zoom'], 4, 8, 7, 18, 9, 28],
+    'heatmap-color': ['interpolate', ['linear'], ['heatmap-density'],
+      0, 'rgba(0,0,0,0)', 0.1, 'rgba(233,180,76,.18)', 0.3, 'rgba(233,160,70,.42)', 0.55, 'rgba(214,118,50,.62)', 0.8, 'rgba(200,100,42,.78)', 1, 'rgba(240,170,90,.88)'],
+    'heatmap-opacity': ['interpolate', ['linear'], ['zoom'], 6.4, 0.85, 8.6, 0] } });
 }
 
 map.on('load', async () => {
@@ -134,7 +308,7 @@ map.on('load', async () => {
   map.addLayer({ id: 'prob', type: 'raster', source: 'prob', layout: { visibility: 'none' }, paint: { 'raster-opacity': 0.65, 'raster-resampling': 'linear' } }, 'ref');
 
   // Camadas locais do Jacobs: existem só na cópia local (licença "all rights reserved").
-  try {
+  if (LOCAL) try {
     const [pts, cont, lin] = await Promise.all(['pontos', 'contornos', 'linhas'].map(n => carregar(`data/local/jacobs_${n}.geojson`)));
     map.addSource('jacobs-contornos', { type: 'geojson', data: cont });
     map.addSource('jacobs-linhas', { type: 'geojson', data: lin });
@@ -146,32 +320,76 @@ map.on('load', async () => {
     document.body.classList.add('tem-local');
   } catch (e) { /* versão pública: sem dados do Jacobs */ }
 
-  const [sci, nat] = await Promise.all([carregar('data/science2023.geojson'), carregar('data/nature2026.geojson')]);
+  const [sci, nat, fot] = await Promise.all(['science2023', 'nature2026', 'walker_fotos'].map(n => carregar(`data/${n}.geojson`)));
   map.addSource('science', { type: 'geojson', data: sci });
   map.addSource('nature', { type: 'geojson', data: nat });
+  map.addSource('fotos', { type: 'geojson', data: fot });
+  mancha('science-mancha', 'science', 0.6);
+  mancha('nature-mancha', 'nature', 0.7);
+  circulo('fotos', 'fotos', '#9cc3e6', 3.6);
   circulo('science', 'science', '#e9b44c', 4.5);
   circulo('nature', 'nature', ['case', ['get', 'aquiry'], '#c8642a', '#8c6b52'], 5.5);
-  document.getElementById('n-science').textContent = fmt(sci.features.length);
-  document.getElementById('n-nature').textContent = fmt(nat.features.length);
+  const n = { nature: nat.features.length, science: sci.features.length, fotos: fot.features.length };
+  for (const k in n) { document.getElementById(`n-${k}`).textContent = fmt(n[k]); document.getElementById(`lede-${k}`).textContent = fmt(n[k]); }
+  document.getElementById('lede-total').textContent = fmt(n.nature + n.science);
+  window.dados = { nature: nat, science: sci, fotos: fot };
+  montarFotos(fot.features);
 
   const popup = (f) => {
     const p = f.properties;
     if (p.fonte === 'nature2026') return `<b>${esc(p.nome)}</b><br>${p.area_ha} ha${p.aquiry === true || p.aquiry === 'true' ? '<span class="tag">Aquiry</span>' : '<span class="tag">não Aquiry</span>'}<span class="tag">LiDAR</span>${p.parcial === true || p.parcial === 'true' ? '<span class="tag">parcial</span>' : ''}<br><small>Pärssinen et al. 2026, <i>Nature</i></small>`;
+    if (p.fonte === 'walker') return `<img src="${esc(p.foto)}" alt="${esc(p.legenda)}" loading="lazy"><b>${esc(p.legenda)}</b><br><span class="credito">Foto: ${esc(p.credito)}</span>`;
     if (p.fonte === 'science2023') return `<b>Estrutura de terra</b><br><small>Base: ${esc(p.base)}<br>Peripato et al. 2023, <i>Science</i></small>`;
     return `<b>${esc(p.nome || p.codigo)}</b><br><span class="tag">${esc(p.forma || p.grupo)}</span><span class="tag">${esc(p.codigo)}</span><br><small>J. Q. Jacobs</small>`;
   };
-  for (const id of ['nature', 'science', 'jacobs-pontos']) {
+  window.abrirPopup = (f) => {
+    document.querySelectorAll('.maplibregl-popup').forEach(p => p.remove());
+    return new maplibregl.Popup({ offset: 8, className: f.properties.fonte === 'walker' ? 'foto' : '' })
+      .setLngLat(f.geometry.coordinates).setHTML(popup(f)).addTo(map);
+  };
+  for (const id of ['nature', 'science', 'fotos', 'jacobs-pontos']) {
     if (!map.getLayer(id)) continue;
-    map.on('click', id, (e) => new maplibregl.Popup({ offset: 8 }).setLngLat(e.features[0].geometry.coordinates).setHTML(popup(e.features[0])).addTo(map));
+    map.on('click', id, (e) => abrirPopup(e.features[0]));
     map.on('mouseenter', id, () => map.getCanvas().style.cursor = 'pointer');
     map.on('mouseleave', id, () => map.getCanvas().style.cursor = '');
   }
+  prontoOk();
 });
 
+// painel de miniaturas: clicar voa até o sítio e abre a foto
+function montarFotos(feats) {
+  const grade = document.getElementById('fotos-grade');
+  document.getElementById('fotos-n').textContent = fmt(feats.length);
+  const obs = new IntersectionObserver((es) => es.forEach(e => {
+    if (e.isIntersecting) { e.target.src = e.target.dataset.src; obs.unobserve(e.target); }
+  }), { root: grade, rootMargin: '400px' });
+  for (const f of feats) {
+    const b = document.createElement('button');
+    b.type = 'button'; b.title = f.properties.legenda;
+    const img = document.createElement('img');
+    img.alt = f.properties.legenda; img.dataset.src = f.properties.miniatura;
+    b.append(img); grade.append(b); obs.observe(img);
+    b.addEventListener('click', () => {
+      grade.querySelectorAll('.ativo').forEach(x => x.classList.remove('ativo'));
+      b.classList.add('ativo');
+      mostrar('fotos', true);
+      document.querySelectorAll('.maplibregl-popup').forEach(p => p.remove());
+      const largo = innerWidth > 900;
+      map.flyTo({ center: f.geometry.coordinates, zoom: 14.5, pitch: 40, bearing: 0, speed: 1.1, curve: 1.5, essential: true,
+        padding: largo ? { left: 360, right: 0, top: 260, bottom: 0 } : { top: 200, bottom: 0, left: 0, right: 0 } });
+      map.once('moveend', () => abrirPopup(f));
+    });
+  }
+  if (feats.length) document.body.classList.add('tem-fotos');
+  map.resize();
+}
+
+window.mostrar = (nome, on) => { const cb = document.querySelector(`input[data-camada="${nome}"]`); if (cb && cb.checked !== on) { cb.checked = on; cb.dispatchEvent(new Event('change')); } };
 document.querySelectorAll('input[data-camada]').forEach(cb => cb.addEventListener('change', () => {
   for (const id of camadas[cb.dataset.camada]) if (map.getLayer(id)) map.setLayoutProperty(id, 'visibility', cb.checked ? 'visible' : 'none');
   if (cb.dataset.camada === 'prob') document.getElementById('legenda-prob').style.display = cb.checked ? 'block' : 'none';
 }));
 </script>
+<script src="tour.js"></script>
 </body>
 </html>

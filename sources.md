@@ -36,12 +36,17 @@ Comparação com a cópia antiga (`~/Documents/misc/amazon_geoglyphs.kml`, set/2
 - `ade2541-v1.0.0.zip` → `Database/Earthworks.rds`: **961 estruturas** (lon/lat + base de origem: Amazon Arch 360, PAST 164, CNSA 98, INRAP & DAC 32, TREES/INPE 24, múltiplas 283). Cobre a Amazônia inteira, não só os geoglifos.
 - `IPPModel_EarthworkProb-log10.tif`: mapa de probabilidade de haver estruturas ocultas (1 km). Pode virar uma camada de "onde ainda pode haver geoglifos". Não baixamos a versão linear (36 MB), que é redundante.
 
+### 4. Fotos — app "Ancient Amazonian Earthworks" (R. Walker, Univ. of Missouri)
+- App: https://robert-walker.shinyapps.io/ggshiny/ (Leaflet; ao passar o mouse nos pontos vermelhos aparece a foto)
+- `script/extrai_walker_marcadores.py` lê os 1.295 marcadores com foto direto do Leaflet da página; `script/sync_walker.py` baixa as imagens de `image-pnt-0.0.1/` e `image-reactives-0.0.1/` (os nomes são os códigos do Jacobs: `valsq.jpg`, `mgrz13.jpg`). Não precisa do ID do worker (`_w_…`).
+- **664 fotos encontradas.** Os outros 631 marcadores apontam para arquivos sem pasta (`mgrc9.jpg`) que não existem nem no próprio app; testamos extensões, pastas e uma força bruta com todos os 1.796 códigos do Jacobs, sem nenhuma foto a mais.
+- **Direitos:** são figuras de artigos (Saunaluoma et al. 2019, Iriarte et al. 2020…) e fotos de pesquisadores. Decisão de 2026-11-03: publicar reduzidas (1000 px, miniaturas de 240 px) com crédito ao app em cada foto. Atender de pronto qualquer pedido de remoção.
+
 ## Avaliadas, não sincronizadas
 
 | Fonte | Por quê |
 |---|---|
 | Mendeley Data — Jacobs, "Amazon Geoglyphs" (https://data.mendeley.com/datasets/5ynjwk7gc7/1) | snapshot de 2016 (440 geoglifos); obsoleto em relação ao KML atual |
-| App Shiny de Robert Walker (https://robert-walker.shinyapps.io/ggshiny/) | ferramenta acadêmica (bolsa AIA); os dados não estão disponíveis para download |
 | IPHAN — SICG / CNSA (cadastro oficial de sítios) | sem API/mapa público; um acordo do MPF prevê georreferenciar 400 sítios do Acre (https://www.mpf.mp.br/o-mpf/unidades/pr-ac/noticias/mpf-firma-acordos-para-compensar-danos-a-geoglifos-amazonicos-no-acre). Vale pedir os dados via LAI |
 | Kalliola et al., Acta Amazonica 2024 (https://scielo.br/j/aa/a/6mwCFLMkt6SQCmSpnBMRqgR) | geografia das estruturas em 27.569 km²; conferir se o material suplementar tem coordenadas |
 | Factum Foundation — The Aquiry earthworks (https://factumfoundation.org/our-projects/research/the-aquiry-earthworks-in-southwest-amazonia/) | imagens/hillshades do LiDAR da Nature; possível fonte visual, sem dados vetoriais |

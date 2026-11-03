@@ -10,8 +10,10 @@ Saídas locais (Jacobs, "all rights reserved", fora do git) em docs/data/local/:
 Uso: uv run --with polars script/convert.py   (precisa de Rscript e GDAL no PATH)
 """
 
+import html
 import json
 import re
+import unicodedata
 import subprocess
 import tempfile
 from pathlib import Path
@@ -105,8 +107,10 @@ def probabilidade() -> None:
     print(f"      raster -> {png.relative_to(ROOT)} ({png.stat().st_size // 1024} KB)")
 
 
-def clean(html: str) -> str:
-    return re.sub(r"\s+", " ", re.sub(r"<[^>]+>", " ", html or "")).strip()
+def clean(texto: str) -> str:
+    """Tira as tags, decodifica entidades (&amp;, &nbsp;) e normaliza o Unicode."""
+    t = html.unescape(re.sub(r"<[^>]+>", " ", texto or "")).replace("\u00a0", " ")
+    return re.sub(r"\s+", " ", unicodedata.normalize("NFC", t)).strip()
 
 
 def coords(text: str) -> list[list[float]]:

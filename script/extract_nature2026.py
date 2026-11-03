@@ -4,8 +4,10 @@ da Nature 2026 (Pärssinen et al., CC BY 4.0) para data/processed/nature2026_lid
 Uso: uv run --with polars --with 'markitdown[docx]' script/extract_nature2026.py
 """
 
+import html
 import re
 import subprocess
+import unicodedata
 import sys
 from pathlib import Path
 
@@ -16,6 +18,13 @@ DOCX = ROOT / "data/raw/nature2026/41586_2026_10835_MOESM1_ESM.docx"
 OUT = ROOT / "data/processed/nature2026_lidar.csv"
 
 
+def limpa(s: str) -> str:
+    """Desfaz os escapes do markdown (Lid24\\_L04\\_46a), entidades HTML e espaços especiais."""
+    s = re.sub(r"\\([\\`*_{}\[\]()#+\-.!|<>~])", r"\1", s)
+    s = html.unescape(s).replace(" ", " ").replace("​", "")
+    return re.sub(r"\s+", " ", unicodedata.normalize("NFC", s)).strip()
+
+
 def main() -> None:
     md = subprocess.run(
         ["markitdown", str(DOCX)], capture_output=True, text=True, check=True
@@ -24,13 +33,13 @@ def main() -> None:
     end = md.index("Supplementary Table 3.", start)
     rows = []
     for line in md[start:end].splitlines():
-        cells = [c.strip() for c in line.strip().strip("|").split("|")]
-        if len(cells) != 7 or not re.fullmatch(r"\\?\*?\d+", cells[0]):
+        cells = [limpa(c) for c in line.strip().strip("|").split("|")]
+        if len(cells) != 7 or not re.fullmatch(r"\*?\d+", cells[0]):
             continue
         no, lat, lon, name, aquiry, size, acc = cells
         rows.append(
             {
-                "n": int(no.lstrip("\\*")),
+                "n": int(no.lstrip("*")),
                 "parcial": "*" in no,  # intersecta <50% da faixa LiDAR
                 "lat": float(lat),
                 "lon": float(lon),
