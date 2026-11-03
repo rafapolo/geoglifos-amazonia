@@ -8,7 +8,7 @@
   const fmt = (n) => n.toLocaleString('pt-BR');
   const TOTAL = 120000;
 
-  let ativo = false, inicio = 0, raf = 0, salvo = null;
+  let ativo = false, inicio = 0, raf = 0, salvo = null, cenaAtual = 0;
   const pendentes = new Set();
 
   class Parado extends Error {}
@@ -61,6 +61,7 @@
     l.textContent = linha;
     if (cite) { const c = document.createElement('cite'); c.textContent = cite; l.append(c); }
     cap.classList.add('on');
+    somTour.legenda();
   }
 
   const so = (...nomes) => ['nature', 'science', 'prob', 'fotos', 'jacobs'].forEach((n) => mostrar(n, nomes.includes(n)));
@@ -192,10 +193,13 @@
     requestAnimationFrame(() => $('tour').classList.add('on'));
     inicio = performance.now();
     progresso();
+    somTour.iniciar();
     try {
       let fim = 0;
-      for (const cena of cenas()) {
+      for (const [i, cena] of cenas().entries()) {
         fim += cena.dur;
+        cenaAtual = i;
+        somTour.cena(i);
         await cena.run();
         await espera(inicio + fim - performance.now());
       }
@@ -209,6 +213,7 @@
   function parar(voltar = true, peloHistorico = false) {
     if (!ativo) return;
     ativo = false;
+    somTour.parar(!voltar); // tour até o fim: cadência; parado no meio: some rápido
     cancelAnimationFrame(raf);
     for (const p of pendentes) { clearTimeout(p.id); p.falha(new Parado()); }
     pendentes.clear();
@@ -233,6 +238,10 @@
   $('tour-abrir').addEventListener('click', iniciar);
   $('tour-abrir-painel').addEventListener('click', iniciar);
   $('tour-parar').addEventListener('click', () => parar(true));
+  const botaoSom = $('tour-som');
+  const marcarSom = () => { botaoSom.classList.toggle('mudo', !somTour.ligado()); botaoSom.setAttribute('aria-pressed', somTour.ligado()); };
+  botaoSom.addEventListener('click', () => { somTour.alternar(); marcarSom(); });
+  marcarSom();
   addEventListener('keydown', (e) => { if (e.key === 'Escape' && ativo) parar(true); });
 
   // botão Sobre (abrir fica em navegacao.js, que registra no histórico)
@@ -247,5 +256,5 @@
     history.replaceState(null, '', location.pathname + (q.size ? `?${q}` : '') + location.hash);
     iniciar();
   }
-  window.tour = { iniciar, parar, ativo: () => ativo };
+  window.tour = { iniciar, parar, ativo: () => ativo, cena: () => cenaAtual };
 })();

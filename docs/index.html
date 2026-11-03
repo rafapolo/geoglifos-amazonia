@@ -131,6 +131,9 @@
     font-variant-numeric: tabular-nums; letter-spacing: .04em; color: var(--ocre); }
   #tour-parar { position: absolute; left: 16px; top: max(6px, calc(var(--lb) - 40px)); pointer-events: auto; padding: 5px 12px; font-size: 12px;
     background: rgba(0,0,0,.6); color: var(--papel); border-color: rgba(246,239,227,.25); box-shadow: none; }
+  #tour-som { position: absolute; left: 92px; top: max(6px, calc(var(--lb) - 40px)); pointer-events: auto; padding: 5px 11px; font: 600 12px Inter, sans-serif;
+    background: rgba(0,0,0,.6); color: var(--ocre); border: 1px solid rgba(246,239,227,.25); border-radius: 999px; cursor: pointer; }
+  #tour-som.mudo { color: rgba(246,239,227,.45); text-decoration: line-through; }
   #tour-cap { position: absolute; left: 0; right: 0; bottom: calc(var(--lb) + 28px); padding: 0 8vw; text-align: center;
     opacity: 0; transform: translateY(8px); transition: opacity 600ms, transform 600ms; }
   #tour-cap.on { opacity: 1; transform: none; }
@@ -383,6 +386,7 @@
   <div id="tour-progress"><i></i></div>
   <span id="tour-left"></span>
   <button id="tour-parar" type="button">✕ esc</button>
+  <button id="tour-som" type="button" title="Som do tour (liga/desliga)" aria-label="Som do tour" aria-pressed="true">♪</button>
 </div>
 
 <script src="https://unpkg.com/maplibre-gl@4.7.1/dist/maplibre-gl.js"></script>
@@ -534,6 +538,7 @@ document.querySelectorAll('input[data-camada]').forEach(cb => cb.addEventListene
 }));
 </script>
 <div id="toast" role="status" aria-live="polite"></div>
+<script src="som.js"></script>
 <script src="tour.js"></script>
 <script src="navegacao.js"></script>
 </body>
