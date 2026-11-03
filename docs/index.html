@@ -470,7 +470,8 @@ map.on('load', async () => {
   window.dados = { nature: nat, science: sci, fotos: fot, ...(window.dadosLocais || {}) };
   montarFotos(fot.features);
 
-  const botaoCompartilhar = p => `<button class="compartilhar" type="button" data-sitio="${esc(chave(p))}">Compartilhar</button>`;
+  // só os pontos com foto têm o botão de compartilhar no balão
+  const botaoCompartilhar = p => p.fonte !== 'walker' ? '' : `<button class="compartilhar" type="button" data-sitio="${esc(chave(p))}">Compartilhar</button>`;
   const popup = (f) => conteudo(f) + botaoCompartilhar(f.properties);
   const conteudo = (f) => {
     const p = f.properties;
