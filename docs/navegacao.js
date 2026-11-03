@@ -85,7 +85,7 @@
       if (r.width > innerWidth * 0.8) { if (r.top > innerHeight / 2) baixo = Math.min(baixo, r.top); else cima = Math.max(cima, r.bottom); }
       else if (r.left < innerWidth / 2) esq = Math.max(esq, r.right); else dir = Math.min(dir, r.left);
     }
-    const alto = f.properties.fonte === 'walker' ? 380 : 160; // altura do balão acima do ponto
+    const alto = temFoto(f.properties) ? 380 : 160; // altura do balão acima do ponto
     return x > esq + 130 && x < dir - 130 && y > cima + alto && y < baixo - 20;
   }
 

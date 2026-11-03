@@ -28,6 +28,7 @@ Comparação com a cópia antiga (`~/Documents/misc/amazon_geoglyphs.kml`, set/2
   - `MOESM2_ESM.pdf`: Reporting Summary (fontes dos dados de fundo, como o MERIT Hydro para rios).
   - `MOESM3_ESM.pdf`: Peer Review File.
 - Os dados brutos do LiDAR são restritos pela lei brasileira, segundo o próprio artigo.
+- **Figuras de LiDAR (CC BY 4.0):** Fig. 2 (painéis d–f) e Extended Data Fig. 4a, baixadas de media.springernature.com para `data/raw/nature2026/figuras/`, recortadas por `script/figuras_nature.py` em `docs/data/figuras/` e ligadas aos pontos Lid24_L05_43a, Lid24_L05_44a, Lid24_L09_1b e Lid24_L01_203a, com crédito no balão. Os painéis a–c (Piloto, D. Schaan, Fazenda Atlântica) ficaram de fora: esses sítios não estão na Tabela 2.
 - Extraída para `data/processed/nature2026_lidar.csv` por `script/extract_nature2026.py`: **406 estruturas** (284 Aquiry, 13 parciais). Os códigos da coluna "Name in our data" são os do Jacobs (`acre40`, `amag4`…). **337 delas não estão no KML do Jacobs** (nem pelo nome nem a menos de ~300 m de um ponto dele).
 
 ### 3. Science 2023 — Peripato et al., "More than 10,000 pre-Columbian earthworks are still hidden throughout Amazonia"

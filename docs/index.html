@@ -65,7 +65,7 @@
     border: 0; border-radius: 999px; padding: 8px 16px; cursor: pointer; margin: 0 0 4px; }
   .tour-btn::before { content: ""; border-left: 7px solid var(--ocre); border-top: 4.5px solid transparent; border-bottom: 4.5px solid transparent; }
   .tour-btn:hover { background: #000; }
-  .maplibregl-popup-content img { display: block; width: 100%; border-radius: 4px; margin: 0 0 8px; background: #ddd; }
+  .maplibregl-popup-content img { display: block; width: 100%; border-radius: 4px; margin: 0 0 8px; background: #ddd; max-height: 240px; object-fit: contain; }
   .maplibregl-popup.foto .maplibregl-popup-content { max-width: 340px; width: 340px; }
   .credito { color: var(--suave); font-size: 11px; }
 
@@ -303,7 +303,7 @@
   <details>
     <summary>Fontes e licenças</summary>
     <ul>
-      <li>Pärssinen et al. 2026, <i>Nature</i>, <a href="https://doi.org/10.1038/s41586-026-10835-7">doi:10.1038/s41586-026-10835-7</a> (CC&nbsp;BY&nbsp;4.0). Tabela Suplementar&nbsp;2; as estruturas em terras indígenas foram omitidas pelos autores.</li>
+      <li>Pärssinen et al. 2026, <i>Nature</i>, <a href="https://doi.org/10.1038/s41586-026-10835-7">doi:10.1038/s41586-026-10835-7</a> (CC&nbsp;BY&nbsp;4.0). Tabela Suplementar&nbsp;2; as estruturas em terras indígenas foram omitidas pelos autores. Os recortes de LiDAR nos balões vêm da Fig.&nbsp;2 e da Extended Data Fig.&nbsp;4 do artigo.</li>
       <li>Peripato et al. 2023, <i>Science</i>, <a href="https://doi.org/10.1126/science.ade2541">doi:10.1126/science.ade2541</a>; dados em <a href="https://zenodo.org/records/10214943">Zenodo</a>.</li>
       <li>Fotos: app <a href="https://robert-walker.shinyapps.io/ggshiny/">Ancient Amazonian Earthworks</a> (R. Walker, Univ. of Missouri), que reúne figuras de artigos e fotos de pesquisadores; os créditos de cada foto seguem a legenda original.</li>
       <li>Imagens de satélite: Esri World Imagery.</li>
@@ -426,6 +426,9 @@ const fmt = n => n.toLocaleString('pt-BR');
 // chave estável de cada ponto, usada na URL (?sitio=n-12) e no histórico
 const PREFIXO = { nature2026: 'n', science2023: 's', walker: 'f', jacobs: 'j' };
 window.chave = p => `${PREFIXO[p.fonte]}-${p.id}`;
+// pontos com imagem no balão: fotos do Walker e recortes de LiDAR da Nature
+window.figuras = {};
+window.temFoto = p => p.fonte === 'walker' || (p.fonte === 'nature2026' && !!figuras[p.nome]);
 const esc = s => String(s ?? '').replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
 
 async function carregar(url) {
@@ -474,6 +477,8 @@ map.on('load', async () => {
   } catch (e) { /* versão pública: sem dados do Jacobs */ }
 
   const [sci, nat, fot] = await Promise.all(['science2023', 'nature2026', 'walker_fotos'].map(n => carregar(`data/${n}.geojson`)));
+  // recortes de LiDAR das figuras da Nature (CC BY 4.0), ligados ao ponto pelo nome
+  window.figuras = await carregar('data/nature_figuras.json').catch(() => ({}));
   map.addSource('science', { type: 'geojson', data: sci });
   map.addSource('nature', { type: 'geojson', data: nat });
   map.addSource('fotos', { type: 'geojson', data: fot });
@@ -489,10 +494,12 @@ map.on('load', async () => {
   montarFotos(fot.features);
 
   // só os pontos com foto têm o botão de compartilhar no balão
-  const botaoCompartilhar = p => p.fonte !== 'walker' ? '' : `<button class="compartilhar" type="button" data-sitio="${esc(chave(p))}">Compartilhar</button>`;
+  const botaoCompartilhar = p => !temFoto(p) ? '' : `<button class="compartilhar" type="button" data-sitio="${esc(chave(p))}">Compartilhar</button>`;
   const popup = (f) => conteudo(f) + botaoCompartilhar(f.properties);
   const conteudo = (f) => {
     const p = f.properties;
+    const fig = p.fonte === 'nature2026' && figuras[p.nome];
+    if (fig) return `<img src="${esc(fig.foto)}" alt="${esc(fig.legenda)}" loading="lazy"><b>${esc(p.nome)}</b><br>${p.area_ha} ha${p.aquiry === true || p.aquiry === 'true' ? '<span class="tag">Aquiry</span>' : ''}<span class="tag">LiDAR</span><br><span class="credito">${esc(fig.legenda)}. ${esc(fig.credito)}</span>`;
     if (p.fonte === 'nature2026') return `<b>${esc(p.nome)}</b><br>${p.area_ha} ha${p.aquiry === true || p.aquiry === 'true' ? '<span class="tag">Aquiry</span>' : '<span class="tag">não Aquiry</span>'}<span class="tag">LiDAR</span>${p.parcial === true || p.parcial === 'true' ? '<span class="tag">parcial</span>' : ''}<br><small>Pärssinen et al. 2026, <i>Nature</i></small>`;
     if (p.fonte === 'walker') return `<img src="${esc(p.foto)}" alt="${esc(p.legenda)}" loading="lazy"><b>${esc(p.legenda)}</b><br><span class="credito">Foto: ${esc(p.credito)}</span>`;
     if (p.fonte === 'science2023') return `<b>Estrutura de terra</b><br><small>Base: ${esc(p.base)}<br>Peripato et al. 2023, <i>Science</i></small>`;
@@ -500,7 +507,7 @@ map.on('load', async () => {
   };
   window.abrirPopup = (f) => {
     document.querySelectorAll('.maplibregl-popup').forEach(p => p.remove());
-    return new maplibregl.Popup({ offset: 8, className: f.properties.fonte === 'walker' ? 'foto' : '' })
+    return new maplibregl.Popup({ offset: 8, className: temFoto(f.properties) ? 'foto' : '' })
       .setLngLat(f.geometry.coordinates).setHTML(popup(f)).addTo(map);
   };
   for (const id of ['nature', 'science', 'fotos', 'jacobs-pontos']) {

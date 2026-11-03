@@ -1,0 +1,22 @@
+{
+ "Lid24_L05_43a": {
+  "foto": "data/figuras/Lid24_L05_43a.jpg",
+  "legenda": "LiDAR: Lid24_L05_43a (amag34), Fig. 2d",
+  "credito": "Pärssinen et al. 2026, Nature (CC BY 4.0)"
+ },
+ "Lid24_L05_44a": {
+  "foto": "data/figuras/Lid24_L05_44a.jpg",
+  "legenda": "LiDAR: Lid24_L05_44a, Fig. 2e",
+  "credito": "Pärssinen et al. 2026, Nature (CC BY 4.0)"
+ },
+ "Lid24_L09_1b": {
+  "foto": "data/figuras/Lid24_L09_1b.jpg",
+  "legenda": "LiDAR: Lid24_L09_1b, Fig. 2f",
+  "credito": "Pärssinen et al. 2026, Nature (CC BY 4.0)"
+ },
+ "Lid24_L01_203a": {
+  "foto": "data/figuras/Lid24_L01_203a.jpg",
+  "legenda": "LiDAR: grupo Lid24_L01_203, Extended Data Fig. 4a",
+  "credito": "Pärssinen et al. 2026, Nature (CC BY 4.0)"
+ }
+}
