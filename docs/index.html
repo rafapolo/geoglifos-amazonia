@@ -286,6 +286,8 @@
     <span>LiDAR: Nature 2026<small>estruturas sob a floresta (Pärssinen et al.)</small></span><span class="n" id="n-nature"></span></label>
   <label class="camada"><input type="checkbox" data-camada="science" checked><span class="sw" style="background:var(--ocre)"></span>
     <span>Base compilada: Science 2023<small>Amazon Arch, CNSA, PAST, INRAP, INPE</small></span><span class="n" id="n-science"></span></label>
+  <label class="camada"><input type="checkbox" data-camada="lidar" checked><span class="sw q" style="background:linear-gradient(135deg,#d9cdb6 45%,#3c8c87 55%)"></span>
+    <span>LiDAR aberto: relevo sob a floresta<small>faixas do projeto EBA (INPE); aproxime para ver</small></span><span class="n" id="n-lidar"></span></label>
   <label class="camada"><input type="checkbox" data-camada="prob"><span class="sw q" style="background:#f03b20"></span>
     <span>Onde ainda pode haver estruturas<small>modelo preditivo, Science 2023</small></span><span></span></label>
   <label class="camada"><input type="checkbox" data-camada="fotos" checked><span class="sw" style="background:#9cc3e6"></span>
@@ -306,6 +308,7 @@
       <li>Pärssinen et al. 2026, <i>Nature</i>, <a href="https://doi.org/10.1038/s41586-026-10835-7">doi:10.1038/s41586-026-10835-7</a> (CC&nbsp;BY&nbsp;4.0). Tabela Suplementar&nbsp;2; as estruturas em terras indígenas foram omitidas pelos autores. Os recortes de LiDAR nos balões vêm da Fig.&nbsp;2 e da Extended Data Fig.&nbsp;4 do artigo.</li>
       <li>Peripato et al. 2023, <i>Science</i>, <a href="https://doi.org/10.1126/science.ade2541">doi:10.1126/science.ade2541</a>; dados em <a href="https://zenodo.org/records/10214943">Zenodo</a>.</li>
       <li>Fotos: app <a href="https://robert-walker.shinyapps.io/ggshiny/">Ancient Amazonian Earthworks</a> (R. Walker, Univ. of Missouri), que reúne figuras de artigos e fotos de pesquisadores; os créditos de cada foto seguem a legenda original.</li>
+      <li>LiDAR aberto: transectos do projeto EBA (INPE), <a href="https://zenodo.org/records/4968706">Zenodo</a> (CC&nbsp;BY&nbsp;4.0). Modelo de terreno de 2&nbsp;m feito aqui a partir das nuvens de pontos, com filtro próprio de chão, relevo sombreado e realce do relevo local (valas em verde-azulado, aterros em ocre).</li>
       <li>Imagens de satélite: Esri World Imagery.</li>
     </ul>
     <p>A base mais completa, com fotos e contornos, é a de <a href="https://www.jqjacobs.net/archaeology/geoglyph.html">James Q. Jacobs</a>.</p>
@@ -419,7 +422,7 @@ const recolheAtribuicao = () => document.querySelectorAll('.maplibregl-ctrl-attr
 map.once('load', recolheAtribuicao); map.once('idle', recolheAtribuicao);
 
 let prontoOk; window.pronto = new Promise(r => prontoOk = r);
-const camadas = { nature: ['nature-mancha', 'nature'], science: ['science-mancha', 'science'], prob: ['prob'], fotos: ['fotos'], jacobs: ['jacobs-contornos', 'jacobs-linhas', 'jacobs-pontos'] };
+const camadas = { lidar: ['lidar', 'lidar-faixas'], nature: ['nature-mancha', 'nature'], science: ['science-mancha', 'science'], prob: ['prob'], fotos: ['fotos'], jacobs: ['jacobs-contornos', 'jacobs-linhas', 'jacobs-pontos'] };
 // a cópia local tem as camadas do Jacobs; no GitHub Pages nem tentamos buscá-las (evita os 404)
 const LOCAL = !/github\.io$/.test(location.hostname);
 const fmt = n => n.toLocaleString('pt-BR');
@@ -475,6 +478,17 @@ map.on('load', async () => {
     document.getElementById('n-jacobs').textContent = fmt(pts.features.length);
     document.body.classList.add('tem-local');
   } catch (e) { /* versão pública: sem dados do Jacobs */ }
+
+  // LiDAR aberto (EBA/INPE): relevo sombreado em tiles, só onde há faixa; de longe, o contorno das faixas
+  const faixas = await carregar('data/lidar_faixas.geojson');
+  const lim = faixas.features.flatMap(f => f.geometry.coordinates[0]).reduce((b, [x, y]) => [Math.min(b[0], x), Math.min(b[1], y), Math.max(b[2], x), Math.max(b[3], y)], [180, 90, -180, -90]);
+  map.addSource('lidar', { type: 'raster', tiles: [new URL('data/lidar/{z}/{x}/{y}.webp', location.href).href.replace(/%7B/g, '{').replace(/%7D/g, '}')], tileSize: 256, minzoom: 10, maxzoom: 16, bounds: lim,
+    attribution: 'LiDAR: <a href="https://zenodo.org/records/4968706">EBA/INPE</a> (CC BY 4.0)' });
+  map.addLayer({ id: 'lidar', type: 'raster', source: 'lidar', minzoom: 10, paint: { 'raster-opacity': ['interpolate', ['linear'], ['zoom'], 10, 0, 11.5, 1], 'raster-fade-duration': 200 } }, 'ref');
+  map.addSource('lidar-faixas', { type: 'geojson', data: faixas });
+  map.addLayer({ id: 'lidar-faixas', type: 'line', source: 'lidar-faixas', maxzoom: 13, paint: {
+    'line-color': '#d9cdb6', 'line-width': ['interpolate', ['linear'], ['zoom'], 5, 1.5, 12, 1], 'line-opacity': ['interpolate', ['linear'], ['zoom'], 11, 0.9, 13, 0] } }, 'ref');
+  document.getElementById('n-lidar').textContent = fmt(faixas.features.length);
 
   const [sci, nat, fot] = await Promise.all(['science2023', 'nature2026', 'walker_fotos'].map(n => carregar(`data/${n}.geojson`)));
   // recortes de LiDAR das figuras da Nature (CC BY 4.0), ligados ao ponto pelo nome

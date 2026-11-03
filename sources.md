@@ -43,6 +43,13 @@ Comparação com a cópia antiga (`~/Documents/misc/amazon_geoglyphs.kml`, set/2
 - **664 fotos encontradas.** Os outros 631 marcadores apontam para arquivos sem pasta (`mgrc9.jpg`) que não existem nem no próprio app; testamos extensões, pastas e uma força bruta com todos os 1.796 códigos do Jacobs, sem nenhuma foto a mais.
 - **Direitos:** são figuras de artigos (Saunaluoma et al. 2019, Iriarte et al. 2020…) e fotos de pesquisadores. Decisão de 2026-11-03: publicar reduzidas (1000 px, miniaturas de 240 px) com crédito ao app em cada foto. Atender de pronto qualquer pedido de remoção.
 
+### 5. LiDAR aberto — transectos do projeto EBA (INPE, "Estimativa de Biomassa na Amazônia")
+- Índice dos transectos: Zenodo https://zenodo.org/records/4968706 (**CC BY 4.0**), 901 faixas de ~12,5 km × 300 m, 2016–2018.
+- Nuvens de pontos (L1A, .laz) por estado: Acre e Rondônia https://zenodo.org/records/7689909; Amazonas, Pará e Mato Grosso https://zenodo.org/records/7636454; Roraima e Amapá https://zenodo.org/records/7689693; Maranhão e Tocantins https://zenodo.org/records/7689210 (todos CC BY 4.0).
+- `script/zipremoto.py` lê o índice dos zips (90+ GB) por range requests e baixa só os transectos pedidos: os 24 a menos de 20 km de algum geoglifo do sudoeste e os 5 com pontos da Science 2023 dentro (29 faixas, ~6 GB, processadas no beelink).
+- A classe "chão" desses arquivos inclui copa de árvore (alturas iguais às da vegetação), então `script/lidar_eba.py` faz um filtro próprio: ponto mais baixo por célula de 2 m, abertura morfológica de 20 m e pontos até 0,5 m acima dela. Daí sai o modelo de terreno de 2 m, o relevo sombreado de várias direções e o realce do relevo local, cortados em `docs/data/lidar/{z}/{x}/{y}.webp` (z10–16, ~24 MB) e `docs/data/lidar_faixas.geojson`.
+- Validação: no ponto Science 2023 nº 745 (Acre, transecto T-0414) aparece um geoglifo circular sob a floresta.
+
 ## Avaliadas, não sincronizadas
 
 | Fonte | Por quê |
