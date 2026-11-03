@@ -74,7 +74,22 @@
   // desloca o ponto para baixo do centro, deixando o balão (que abre acima dele) inteiro na tela
   const deslocamento = () => (movel.matches ? [0, 70] : [innerWidth > 900 ? 46 : 0, 120]);
 
-  window.abrirSitio = (f, { voar = false, empurra = true } = {}) => {
+  // o ponto está à vista, com espaço acima para o balão e sem nada por cima (painel, fotos, folha)?
+  function cabeNaTela(f) {
+    if (map.getZoom() < 7.4) return false; // de longe os pontos nem aparecem
+    const { x, y } = map.project(f.geometry.coordinates);
+    let esq = 0, dir = innerWidth, cima = $('topo').getBoundingClientRect().bottom, baixo = innerHeight;
+    for (const el of [painel, $('fotos')]) {
+      const r = el.getBoundingClientRect();
+      if (!r.width || !r.height || getComputedStyle(el).display === 'none') continue;
+      if (r.width > innerWidth * 0.8) { if (r.top > innerHeight / 2) baixo = Math.min(baixo, r.top); else cima = Math.max(cima, r.bottom); }
+      else if (r.left < innerWidth / 2) esq = Math.max(esq, r.right); else dir = Math.min(dir, r.left);
+    }
+    const alto = f.properties.fonte === 'walker' ? 380 : 160; // altura do balão acima do ponto
+    return x > esq + 130 && x < dir - 130 && y > cima + alto && y < baixo - 20;
+  }
+
+  window.abrirSitio =(f, { voar = false, empurra = true } = {}) => {
     const k = chave(f.properties);
     if (empurra && atual().sitio !== k) empurrar({ sitio: k, sobre: false });
     if (movel.matches) folha(false);
@@ -170,7 +185,9 @@
     const s = { sitio: f ? k : null, sobre: pedido.has('sobre') };
     if (f) {
       history.replaceState({ ...s, cam: cam() }, '', url({ ...s, cam: cam() }));
-      if (inicial) balao(f); else abrirSitio(f, { voar: true, empurra: false });
+      // a câmera do link é a de quem compartilhou: se o ponto não cabe nesta tela com o balão
+      // (que abre acima dele), voa até ele em vez de abrir o balão fora da vista
+      if (inicial && cabeNaTela(f)) balao(f); else abrirSitio(f, { voar: true, empurra: false });
     } else trocar(s);
     if (s.sobre && !sobre.open) sobre.showModal();
   });
