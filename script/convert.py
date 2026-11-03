@@ -56,7 +56,7 @@ def nature() -> None:
     df = pl.read_csv(PROC / "nature2026_lidar.csv")
     feats = [
         point(r["lon"], r["lat"], {
-            "nome": r["nome"], "aquiry": r["aquiry"], "area_ha": r["area_ha"],
+            "id": r["n"], "nome": r["nome"], "aquiry": r["aquiry"], "area_ha": r["area_ha"],
             "precisao": "boa" if r["precisao"] == "g" else "razoável",
             "parcial": r["parcial"], "fonte": "nature2026",
         })
@@ -75,10 +75,11 @@ def science() -> None:
     df = pl.read_csv(csv)
     feats = [
         point(r["Longitude"], r["Latitude"], {
+            "id": i,
             "base": r["Database"].removeprefix("Multiple: ").strip("()"),
             "fonte": "science2023",
         })
-        for r in df.iter_rows(named=True)
+        for i, r in enumerate(df.iter_rows(named=True))
     ]
     write_geojson(OUT / "science2023.geojson", feats)
 

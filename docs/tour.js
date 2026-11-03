@@ -175,6 +175,8 @@
     if (ativo) return;
     await pronto;
     ativo = true;
+    // o tour vira uma entrada no histórico: o "voltar" do navegador o encerra
+    history.pushState({ ...(history.state || {}), tour: true, empurrado: true }, '', location.href);
     salvo = {
       camera: { center: map.getCenter(), zoom: map.getZoom(), pitch: map.getPitch(), bearing: map.getBearing() },
       camadas: [...document.querySelectorAll('input[data-camada]')].map((cb) => [cb.dataset.camada, cb.checked]),
@@ -204,7 +206,7 @@
     }
   }
 
-  function parar(voltar = true) {
+  function parar(voltar = true, peloHistorico = false) {
     if (!ativo) return;
     ativo = false;
     cancelAnimationFrame(raf);
@@ -222,6 +224,10 @@
     document.body.classList.remove('touring');
     map.resize();
     setTimeout(() => { if (!ativo) $('tour').hidden = true; }, 900);
+    if (!peloHistorico && history.state?.tour) {
+      if (voltar) history.back(); // Esc ou ✕: volta à entrada de antes do tour
+      else history.replaceState({ ...history.state, tour: false }, '', location.href);
+    }
   }
 
   $('tour-abrir').addEventListener('click', iniciar);
@@ -229,9 +235,8 @@
   $('tour-parar').addEventListener('click', () => parar(true));
   addEventListener('keydown', (e) => { if (e.key === 'Escape' && ativo) parar(true); });
 
-  // botão Sobre
+  // botão Sobre (abrir fica em navegacao.js, que registra no histórico)
   const sobre = $('sobre');
-  $('sobre-abrir').addEventListener('click', () => sobre.showModal());
   sobre.querySelector('.fechar').addEventListener('click', () => sobre.close());
   sobre.addEventListener('click', (e) => { if (e.target === sobre) sobre.close(); });
 
@@ -242,5 +247,5 @@
     history.replaceState(null, '', location.pathname + (q.size ? `?${q}` : '') + location.hash);
     iniciar();
   }
-  window.tour = { iniciar, parar };
+  window.tour = { iniciar, parar, ativo: () => ativo };
 })();

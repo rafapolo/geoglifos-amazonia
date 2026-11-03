@@ -95,22 +95,6 @@
   .maplibregl-popup-content { font: 13px/1.4 Inter, sans-serif; padding: 10px 12px; border-radius: 8px; max-width: 280px; }
   .maplibregl-popup-content b { font-family: Fraunces, Georgia, serif; font-size: 15px; }
   .tag { display: inline-block; font-size: 11px; padding: 1px 6px; border-radius: 10px; background: #efe4d2; margin: 4px 4px 0 0; }
-  /* celular e telas estreitas: sem painel de fotos; o painel de camadas vira uma folha embaixo */
-  @media (max-width: 900px) {
-    body.tem-fotos { --fotos-w: 0px; }
-    body.tem-fotos #fotos { display: none; }
-  }
-  @media (max-width: 640px) {
-    aside { top: auto; bottom: 0; left: 0; right: 0; width: auto; max-height: 42%; border-radius: 14px 14px 0 0; padding: 14px 16px 10px;
-      box-shadow: 0 -6px 24px rgba(0,0,0,.35); }
-    h1 { font-size: 21px; }
-    .lede { font-size: 13px; margin-bottom: 10px; }
-    #topo { top: 10px; right: 10px !important; }
-    #topo button { padding: 7px 13px; }
-    .maplibregl-ctrl-bottom-right { bottom: 42vh; }
-    .maplibregl-popup.foto .maplibregl-popup-content { width: 78vw; max-width: 78vw; }
-    #tour-cap { padding: 0 5vw; }
-  }
   #topo { position: absolute; top: 12px; right: 12px; display: flex; gap: 8px; z-index: 5; }
   #topo button, #tour-parar {
     font: 600 13px Inter, sans-serif; color: var(--tinta); background: var(--papel); border: 1px solid var(--linha);
@@ -219,11 +203,63 @@
   .maplibregl-ctrl-attrib-button { filter: invert(.9); background-color: transparent !important; }
   .maplibregl-ctrl-scale { background: rgba(22,18,14,.75); color: #c9bba6; border-color: #a99b88; }
   #sobre .ilustracao { display: block; width: 100%; height: auto; margin: 4px 0 14px; border-radius: 8px; background: #1d1813; }
+  /* compartilhar e aviso */
+  .compartilhar { display: flex; width: fit-content; margin-top: 10px; font: 600 12px Inter, sans-serif; color: var(--tinta); background: var(--ocre);
+    border: 0; border-radius: 999px; padding: 6px 12px; cursor: pointer; }
+  .compartilhar:hover { background: #f2c766; }
+  #toast { position: fixed; left: 50%; bottom: 28px; transform: translate(-50%, 20px); opacity: 0; z-index: 60; pointer-events: none;
+    background: #16120e; color: var(--papel); border: 1px solid rgba(246,239,227,.16); border-radius: 999px; padding: 9px 18px;
+    font: 600 13px Inter, sans-serif; transition: opacity .25s, transform .25s; box-shadow: 0 8px 24px rgba(0,0,0,.4); }
+  #toast.on { opacity: 1; transform: translate(-50%, 0); }
+  #alca { display: none; }
+
+  /* ---------- tablet (641–900 px): fotos numa faixa embaixo, ao lado do painel ---------- */
+  @media (max-width: 900px) {
+    body.tem-fotos { --fotos-w: 0px; }
+    body.tem-fotos #fotos { display: flex; top: auto; bottom: 12px; left: 354px; right: 12px; width: auto; height: 96px;
+      background: transparent; border: 0; z-index: 3; }
+    #fotos header, #fotos footer { display: none; }
+    #fotos-grade { display: flex; gap: 6px; overflow-x: auto; overflow-y: hidden; padding: 0; scroll-snap-type: x proximity; }
+    #fotos-grade button { flex: 0 0 92px; height: 92px; scroll-snap-align: start; box-shadow: 0 4px 14px rgba(0,0,0,.45); }
+    .maplibregl-ctrl-bottom-right { bottom: 110px; }
+  }
+
+  /* ---------- celular: o painel vira uma folha recolhível embaixo ---------- */
+  @media (max-width: 640px) {
+    :root { --espia: calc(112px + env(safe-area-inset-bottom)); }
+    aside { top: auto; bottom: 0; left: 0; right: 0; width: auto; height: min(78dvh, 640px); max-height: none;
+      border-radius: 16px 16px 0 0; padding: 0 16px calc(14px + env(safe-area-inset-bottom)); box-shadow: 0 -8px 28px rgba(0,0,0,.45);
+      display: flex; flex-direction: column; overflow: hidden; z-index: 6;
+      transform: translateY(calc(100% - var(--espia))); transition: transform .35s cubic-bezier(.3,.7,.2,1); }
+    aside.aberta { transform: none; overflow-y: auto; }
+    #alca { display: block; order: 0; flex: 0 0 auto; width: 100%; height: 24px; margin: 0 -16px; padding: 0; width: calc(100% + 32px);
+      background: none; border: 0; cursor: grab; }
+    #alca span { display: block; width: 40px; height: 4px; margin: 10px auto 0; border-radius: 2px; background: rgba(246,239,227,.35); }
+    aside h1 { order: 1; font-size: 21px; margin: 2px 0 8px; cursor: pointer; }
+    aside .tour-btn { order: 2; align-self: flex-start; }
+    aside .lede { order: 3; font-size: 13px; margin: 14px 0 6px; }
+    aside > :not(#alca):not(h1):not(.tour-btn):not(.lede) { order: 4; flex: 0 0 auto; }
+    #topo { top: calc(10px + env(safe-area-inset-top)); right: 10px !important; }
+    #topo button { padding: 8px 12px; }
+    #compartilhar span { display: none; }
+    .maplibregl-ctrl-group, .maplibregl-ctrl-scale { display: none; }
+    .maplibregl-ctrl-bottom-right { bottom: calc(var(--espia) + 104px); }
+    body.tem-fotos #fotos { left: 0; right: 0; bottom: calc(var(--espia) + 8px); height: 84px; padding: 0 10px; transition: opacity .25s; }
+    #fotos-grade button { flex-basis: 80px; height: 80px; }
+    body.folha-aberta #fotos { opacity: 0; pointer-events: none; }
+    .maplibregl-popup.foto .maplibregl-popup-content { width: 80vw; max-width: 80vw; }
+    .maplibregl-popup-content { max-width: 80vw; }
+    dialog#sobre { width: 100vw; max-width: 100vw; height: 100dvh; max-height: 100dvh; margin: 0; border-radius: 0; border: 0;
+      padding: calc(18px + env(safe-area-inset-top)) 20px calc(24px + env(safe-area-inset-bottom)); }
+    #tour-cap { padding: 0 5vw; }
+    #toast { bottom: calc(var(--espia) + 104px); }
+  }
 </style>
 </head>
 <body>
 <div id="map"></div>
 <aside id="painel">
+  <button id="alca" type="button" aria-label="Abrir ou fechar o painel" aria-expanded="false"><span></span></button>
   <h1>Geoglifos da <span>Amazônia</span></h1>
   <p class="lede"><b id="lede-total">1.367</b> estruturas de terra (<span id="lede-nature">406</span> achadas por LiDAR, <span id="lede-science">961</span> já catalogadas) e <span id="lede-fotos">664</span> fotos: valas e aterros geométricos de 600&nbsp;a.C. a 850&nbsp;d.C., revelados pelo desmatamento e pelo LiDAR no Acre, no Amazonas e na Bolívia.</p>
   <button id="tour-abrir-painel" class="tour-btn" type="button">Tour de 2 minutos</button>
@@ -272,6 +308,7 @@
 
 <nav id="topo">
   <button id="tour-abrir" type="button" title="Um passeio de 2 minutos pelos geoglifos">Tour</button>
+  <button id="compartilhar" type="button" title="Compartilhar esta vista"><svg class="ico" viewBox="0 0 16 16" aria-hidden="true"><path d="M8 10V2M5 4.8 8 2l3 2.8M3.5 8.5v5h9v-5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Compartilhar</span></button>
   <button id="sobre-abrir" type="button" aria-haspopup="dialog"><svg class="ico" viewBox="0 0 16 16" aria-hidden="true"><rect x="1.5" y="1.5" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.6"/><circle cx="8" cy="8" r="3.4" fill="none" stroke="currentColor" stroke-width="1.6"/></svg>Sobre</button>
 </nav>
 
@@ -338,7 +375,7 @@
 <script>
 const map = new maplibregl.Map({
   container: 'map',
-  center: [-67.3, -9.7], zoom: 6.3, minZoom: 4.3, maxZoom: 16, hash: true, attributionControl: false,
+  center: [-67.3, -9.7], zoom: 6.3, minZoom: 4.3, maxZoom: 16, attributionControl: false,
   maxBounds: [[-84, -24], [-40, 10]],
   style: {
     version: 8,
@@ -368,6 +405,9 @@ const camadas = { nature: ['nature-mancha', 'nature'], science: ['science-mancha
 // a cópia local tem as camadas do Jacobs; no GitHub Pages nem tentamos buscá-las (evita os 404)
 const LOCAL = !/github\.io$/.test(location.hostname);
 const fmt = n => n.toLocaleString('pt-BR');
+// chave estável de cada ponto, usada na URL (?sitio=n-12) e no histórico
+const PREFIXO = { nature2026: 'n', science2023: 's', walker: 'f', jacobs: 'j' };
+window.chave = p => `${PREFIXO[p.fonte]}-${p.id}`;
 const esc = s => String(s ?? '').replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
 
 async function carregar(url) {
@@ -405,7 +445,9 @@ map.on('load', async () => {
     const [pts, cont, lin] = await Promise.all(['pontos', 'contornos', 'linhas'].map(n => carregar(`data/local/jacobs_${n}.geojson`)));
     map.addSource('jacobs-contornos', { type: 'geojson', data: cont });
     map.addSource('jacobs-linhas', { type: 'geojson', data: lin });
+    pts.features.forEach((f, i) => { f.properties.id = i; });
     map.addSource('jacobs-pontos', { type: 'geojson', data: pts });
+    window.dadosLocais = { jacobs: pts };
     map.addLayer({ id: 'jacobs-contornos', type: 'line', source: 'jacobs-contornos', minzoom: 11, paint: { 'line-color': '#7fd1c7', 'line-width': 1.5 } });
     map.addLayer({ id: 'jacobs-linhas', type: 'line', source: 'jacobs-linhas', minzoom: 11, paint: { 'line-color': '#f2f2a0', 'line-width': 1.2, 'line-dasharray': [2, 1] } });
     circulo('jacobs-pontos', 'jacobs-pontos', '#7fd1c7', 4);
@@ -425,10 +467,12 @@ map.on('load', async () => {
   const n = { nature: nat.features.length, science: sci.features.length, fotos: fot.features.length };
   for (const k in n) { document.getElementById(`n-${k}`).textContent = fmt(n[k]); document.getElementById(`lede-${k}`).textContent = fmt(n[k]); }
   document.getElementById('lede-total').textContent = fmt(n.nature + n.science);
-  window.dados = { nature: nat, science: sci, fotos: fot };
+  window.dados = { nature: nat, science: sci, fotos: fot, ...(window.dadosLocais || {}) };
   montarFotos(fot.features);
 
-  const popup = (f) => {
+  const botaoCompartilhar = p => `<button class="compartilhar" type="button" data-sitio="${esc(chave(p))}">Compartilhar</button>`;
+  const popup = (f) => conteudo(f) + botaoCompartilhar(f.properties);
+  const conteudo = (f) => {
     const p = f.properties;
     if (p.fonte === 'nature2026') return `<b>${esc(p.nome)}</b><br>${p.area_ha} ha${p.aquiry === true || p.aquiry === 'true' ? '<span class="tag">Aquiry</span>' : '<span class="tag">não Aquiry</span>'}<span class="tag">LiDAR</span>${p.parcial === true || p.parcial === 'true' ? '<span class="tag">parcial</span>' : ''}<br><small>Pärssinen et al. 2026, <i>Nature</i></small>`;
     if (p.fonte === 'walker') return `<img src="${esc(p.foto)}" alt="${esc(p.legenda)}" loading="lazy"><b>${esc(p.legenda)}</b><br><span class="credito">Foto: ${esc(p.credito)}</span>`;
@@ -442,7 +486,7 @@ map.on('load', async () => {
   };
   for (const id of ['nature', 'science', 'fotos', 'jacobs-pontos']) {
     if (!map.getLayer(id)) continue;
-    map.on('click', id, (e) => abrirPopup(e.features[0]));
+    map.on('click', id, (e) => abrirSitio(e.features[0]));
     map.on('mouseenter', id, () => map.getCanvas().style.cursor = 'pointer');
     map.on('mouseleave', id, () => map.getCanvas().style.cursor = '');
   }
@@ -458,20 +502,11 @@ function montarFotos(feats) {
   }), { root: grade, rootMargin: '400px' });
   for (const f of feats) {
     const b = document.createElement('button');
-    b.type = 'button'; b.title = f.properties.legenda;
+    b.type = 'button'; b.title = f.properties.legenda; b.dataset.k = chave(f.properties);
     const img = document.createElement('img');
     img.alt = f.properties.legenda; img.dataset.src = f.properties.miniatura;
     b.append(img); grade.append(b); obs.observe(img);
-    b.addEventListener('click', () => {
-      grade.querySelectorAll('.ativo').forEach(x => x.classList.remove('ativo'));
-      b.classList.add('ativo');
-      mostrar('fotos', true);
-      document.querySelectorAll('.maplibregl-popup').forEach(p => p.remove());
-      const largo = innerWidth > 900;
-      map.flyTo({ center: f.geometry.coordinates, zoom: 14.5, pitch: 40, bearing: 0, speed: 1.1, curve: 1.5, essential: true,
-        padding: largo ? { left: 360, right: 0, top: 260, bottom: 0 } : { top: 200, bottom: 0, left: 0, right: 0 } });
-      map.once('moveend', () => abrirPopup(f));
-    });
+    b.addEventListener('click', () => abrirSitio(f, { voar: true }));
   }
   if (feats.length) document.body.classList.add('tem-fotos');
   map.resize();
@@ -483,6 +518,8 @@ document.querySelectorAll('input[data-camada]').forEach(cb => cb.addEventListene
   if (cb.dataset.camada === 'prob') document.getElementById('legenda-prob').style.display = cb.checked ? 'block' : 'none';
 }));
 </script>
+<div id="toast" role="status" aria-live="polite"></div>
 <script src="tour.js"></script>
+<script src="navegacao.js"></script>
 </body>
 </html>

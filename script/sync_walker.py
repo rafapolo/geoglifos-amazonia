@@ -80,7 +80,7 @@ def main() -> None:
     print(f"{len(itens)} marcadores com foto; {sum(ok.values())}/{len(todos)} arquivos baixados")
 
     # cópias para o mapa local: foto (máx. 1200 px) e miniatura (máx. 320 px), em JPEG
-    feats = []
+    feats, usados = [], set()
     for i in itens:
         achado = next((c for c in i["candidatos"] if ok.get(c)), None)
         if not achado:
@@ -91,9 +91,13 @@ def main() -> None:
             dest = PUB / pasta / nome
             if not dest.exists():
                 reduz(orig, dest, lado, q)
+        ident, k = nome.stem, 2
+        while ident in usados:
+            ident, k = f"{nome.stem}-{k}", k + 1
+        usados.add(ident)
         feats.append({"type": "Feature",
                       "geometry": {"type": "Point", "coordinates": [round(i["lon"], 6), round(i["lat"], 6)]},
-                      "properties": {"legenda": i["legenda"], "foto": f"data/fotos/{nome}",
+                      "properties": {"id": ident, "legenda": i["legenda"], "foto": f"data/fotos/{nome}",
                                      "miniatura": f"data/miniaturas/{nome}", "fonte": "walker",
                                      "credito": "Ancient Amazonian Earthworks (R. Walker, Univ. of Missouri)"}})
     (PUB / "walker_fotos.geojson").write_text(
