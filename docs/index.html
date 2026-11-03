@@ -32,7 +32,7 @@
     --papel: #f6efe3; --linha: #d9ccb6; --suave: #6b6156;
   }
   * { box-sizing: border-box; }
-  html, body { margin: 0; height: 100%; font: 14px/1.45 Inter, system-ui, sans-serif; color: var(--tinta); }
+  html, body { margin: 0; height: 100%; font: 14px/1.45 Inter, system-ui, sans-serif; color: var(--tinta); background: #12100d; }
   #map { position: absolute; inset: 0; background: #1b2418; }
   aside {
     position: absolute; top: 12px; left: 12px; width: 330px; max-height: calc(100% - 24px);
@@ -89,6 +89,8 @@
   #topo { right: calc(var(--fotos-w) + 12px) !important; }
   #map { right: var(--fotos-w); }
   body.touring #fotos { opacity: 0; pointer-events: none; }
+  /* no tour o mapa ocupa a tela toda, sem a faixa do painel de fotos */
+  body.touring { --fotos-w: 0px; }
   #fotos { transition: opacity 600ms; }
   .maplibregl-popup-content { font: 13px/1.4 Inter, sans-serif; padding: 10px 12px; border-radius: 8px; max-width: 280px; }
   .maplibregl-popup-content b { font-family: Fraunces, Georgia, serif; font-size: 15px; }
