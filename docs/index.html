@@ -182,6 +182,43 @@
   aside .tour-btn:hover { background: #f2c766; }
   aside::-webkit-scrollbar, #fotos-grade::-webkit-scrollbar { width: 8px; }
   aside::-webkit-scrollbar-thumb, #fotos-grade::-webkit-scrollbar-thumb { background: rgba(246,239,227,.18); border-radius: 4px; }
+  /* Sobre e balões dos pontos no tema escuro */
+  dialog#sobre { background: #16120e; color: var(--papel); border-color: rgba(246,239,227,.14); }
+  #sobre h2, #sobre h3 { color: var(--papel); }
+  #sobre p, #sobre li { color: #d8ccb9; }
+  #sobre b { color: var(--papel); }
+  #sobre a { color: var(--ocre); }
+  #sobre blockquote { color: var(--papel); border-left-color: #e07a3c; }
+  #sobre cite, #sobre .aviso { color: #a99b88; }
+  #sobre .aviso { border-top-color: rgba(246,239,227,.12); }
+  #sobre .fechar { color: #a99b88; }
+  #sobre .fechar:hover { color: var(--papel); }
+  #sobre::-webkit-scrollbar { width: 8px; }
+  #sobre::-webkit-scrollbar-thumb { background: rgba(246,239,227,.18); border-radius: 4px; }
+  .maplibregl-popup-content { background: #16120e; color: var(--papel); box-shadow: 0 8px 28px rgba(0,0,0,.5); border: 1px solid rgba(246,239,227,.12); }
+  .maplibregl-popup-content small, .maplibregl-popup-content .credito { color: #a99b88; }
+  .maplibregl-popup-content .tag { background: rgba(233,180,76,.16); color: var(--ocre); }
+  .maplibregl-popup-content img { background: #2b241d; }
+  .maplibregl-popup-close-button { color: #a99b88; font-size: 18px; padding: 0 6px; }
+  .maplibregl-popup-close-button:hover { background: transparent; color: var(--papel); }
+  .maplibregl-popup-anchor-top .maplibregl-popup-tip, .maplibregl-popup-anchor-top-left .maplibregl-popup-tip, .maplibregl-popup-anchor-top-right .maplibregl-popup-tip { border-bottom-color: #16120e; }
+  .maplibregl-popup-anchor-bottom .maplibregl-popup-tip, .maplibregl-popup-anchor-bottom-left .maplibregl-popup-tip, .maplibregl-popup-anchor-bottom-right .maplibregl-popup-tip { border-top-color: #16120e; }
+  .maplibregl-popup-anchor-left .maplibregl-popup-tip { border-right-color: #16120e; }
+  .maplibregl-popup-anchor-right .maplibregl-popup-tip { border-left-color: #16120e; }
+  /* botões do topo e controles do mapa no tema escuro */
+  #topo button { background: rgba(22,18,14,.9); color: var(--papel); border-color: rgba(246,239,227,.16); display: inline-flex; align-items: center; gap: 7px; }
+  #topo button:hover { background: #000; border-color: var(--ocre); }
+  #tour-abrir::before { border-left-color: var(--ocre) !important; margin-right: 0 !important; }
+  #topo .ico { width: 14px; height: 14px; color: var(--ocre); }
+  .maplibregl-ctrl-group { background: rgba(22,18,14,.9); border: 1px solid rgba(246,239,227,.16); box-shadow: 0 4px 16px rgba(0,0,0,.3) !important; }
+  .maplibregl-ctrl-group button + button { border-top-color: rgba(246,239,227,.12); }
+  .maplibregl-ctrl-group button .maplibregl-ctrl-icon { filter: invert(.92) sepia(.25); }
+  .maplibregl-ctrl-group button:not(:disabled):hover { background: rgba(233,180,76,.15); }
+  .maplibregl-ctrl-attrib { background: rgba(22,18,14,.8) !important; color: #a99b88; }
+  .maplibregl-ctrl-attrib a { color: #c9bba6 !important; }
+  .maplibregl-ctrl-attrib-button { filter: invert(.9); background-color: transparent !important; }
+  .maplibregl-ctrl-scale { background: rgba(22,18,14,.75); color: #c9bba6; border-color: #a99b88; }
+  #sobre .ilustracao { display: block; width: 100%; height: auto; margin: 4px 0 14px; border-radius: 8px; background: #1d1813; }
 </style>
 </head>
 <body>
@@ -235,11 +272,38 @@
 
 <nav id="topo">
   <button id="tour-abrir" type="button" title="Um passeio de 2 minutos pelos geoglifos">Tour</button>
-  <button id="sobre-abrir" type="button" aria-haspopup="dialog">Sobre</button>
+  <button id="sobre-abrir" type="button" aria-haspopup="dialog"><svg class="ico" viewBox="0 0 16 16" aria-hidden="true"><rect x="1.5" y="1.5" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.6"/><circle cx="8" cy="8" r="3.4" fill="none" stroke="currentColor" stroke-width="1.6"/></svg>Sobre</button>
 </nav>
 
 <dialog id="sobre" aria-labelledby="sobre-titulo">
   <button class="fechar" type="button" aria-label="Fechar">✕</button>
+  <svg class="ilustracao" viewBox="0 0 560 150" role="img" aria-label="Desenho de dois geoglifos ligados por uma estrada: um quadrado triplo e um círculo dentro de um quadrado">
+    <defs><pattern id="pasto" width="6" height="6" patternUnits="userSpaceOnUse"><circle cx="1" cy="1" r=".7" fill="rgba(233,180,76,.12)"/></pattern></defs>
+    <rect width="560" height="150" fill="url(#pasto)"/>
+    <g fill="none" stroke-linecap="round">
+      <!-- estrada com aterros paralelos, que se alarga ao chegar perto dos recintos -->
+      <path d="M0 118 C 90 112, 150 98, 196 84" stroke="#a99b88" stroke-width="1.2" stroke-dasharray="3 4"/>
+      <path d="M0 128 C 92 124, 156 110, 200 96" stroke="#a99b88" stroke-width="1.2" stroke-dasharray="3 4"/>
+      <path d="M302 72 C 350 66, 384 66, 418 72" stroke="#a99b88" stroke-width="1.2" stroke-dasharray="3 4"/>
+      <path d="M302 90 C 350 86, 384 86, 418 90" stroke="#a99b88" stroke-width="1.2" stroke-dasharray="3 4"/>
+      <!-- quadrado triplo (Tequinho) -->
+      <g stroke="#e07a3c" stroke-width="3">
+        <rect x="196" y="22" width="106" height="106" rx="3"/>
+        <rect x="214" y="40" width="70" height="70" rx="2" stroke-width="2.6"/>
+        <rect x="231" y="57" width="36" height="36" rx="1.5" stroke-width="2.2"/>
+      </g>
+      <!-- círculo dentro do quadrado (Jacó Sá) -->
+      <g stroke="#e9b44c" stroke-width="3">
+        <rect x="418" y="30" width="100" height="100" rx="3"/>
+        <circle cx="468" cy="80" r="34"/>
+      </g>
+      <path d="M538 128 C 548 124, 554 120, 560 116" stroke="#a99b88" stroke-width="1.2" stroke-dasharray="3 4"/>
+    </g>
+    <g font-family="Inter, sans-serif" font-size="10" letter-spacing=".12em" fill="#a99b88">
+      <text x="249" y="146" text-anchor="middle">QUADRADO TRIPLO</text>
+      <text x="468" y="146" text-anchor="middle">CÍRCULO NO QUADRADO</text>
+    </g>
+  </svg>
   <h2 id="sobre-titulo">Sobre</h2>
   <p>Este mapa reúne, num só lugar e em português, as estruturas de terra pré-colombianas do sudoeste da Amazônia: os <b>geoglifos</b>, valas e aterros geométricos que só ficam visíveis do alto, de avião ou por satélite.</p>
 
@@ -274,7 +338,7 @@
 <script>
 const map = new maplibregl.Map({
   container: 'map',
-  center: [-67.3, -9.7], zoom: 6.3, minZoom: 4.3, maxZoom: 16, hash: true,
+  center: [-67.3, -9.7], zoom: 6.3, minZoom: 4.3, maxZoom: 16, hash: true, attributionControl: false,
   maxBounds: [[-84, -24], [-40, 10]],
   style: {
     version: 8,
@@ -287,13 +351,17 @@ const map = new maplibregl.Map({
         tiles: ['https://server.arcgisonline.com/ArcGIS/rest/services/Reference/World_Boundaries_and_Places/MapServer/tile/{z}/{y}/{x}'] }
     },
     layers: [
-      { id: 'sat', type: 'raster', source: 'sat', paint: { 'raster-saturation': -0.25, 'raster-brightness-max': 0.85 } },
-      { id: 'ref', type: 'raster', source: 'ref', paint: { 'raster-opacity': 0.7 } }
+      { id: 'sat', type: 'raster', source: 'sat', paint: { 'raster-saturation': -0.3, 'raster-brightness-max': 0.68, 'raster-contrast': 0.08 } },
+      { id: 'ref', type: 'raster', source: 'ref', paint: { 'raster-opacity': 0.55 } }
     ]
   }
 });
 map.addControl(new maplibregl.NavigationControl({ visualizePitch: false }), 'bottom-right');
 map.addControl(new maplibregl.ScaleControl({ unit: 'metric' }), 'bottom-right');
+map.addControl(new maplibregl.AttributionControl({ compact: true }), 'bottom-right');
+// a atribuição compacta abre sozinha em telas largas: começa sempre recolhida
+const recolheAtribuicao = () => document.querySelectorAll('.maplibregl-ctrl-attrib').forEach(d => { d.removeAttribute('open'); d.classList.remove('maplibregl-compact-show'); });
+map.once('load', recolheAtribuicao); map.once('idle', recolheAtribuicao);
 
 let prontoOk; window.pronto = new Promise(r => prontoOk = r);
 const camadas = { nature: ['nature-mancha', 'nature'], science: ['science-mancha', 'science'], prob: ['prob'], fotos: ['fotos'], jacobs: ['jacobs-contornos', 'jacobs-linhas', 'jacobs-pontos'] };
