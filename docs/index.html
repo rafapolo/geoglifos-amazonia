@@ -57,7 +57,7 @@
   details p, details li { color: #3d3730; font-size: 13px; }
   details ul { padding-left: 18px; margin: 6px 0; }
   a { color: #8a3e12; }
-  .rodape { margin-top: 12px; font-size: 12px; }
+  .rodape { margin-top: 12px; font-size: 10.5px; text-align: center; }
   .rodape a { color: var(--suave); text-decoration: none; border-bottom: 1px solid var(--linha); }
   .rodape a:hover { color: var(--terra); }
   .lede b { color: var(--tinta); }
@@ -154,6 +154,20 @@
   aside label.camada small, aside .n { color: #a99b88; }
   aside .sw { border-color: rgba(246,239,227,.85); }
   aside input[type=checkbox] { accent-color: var(--ocre); }
+  /* camadas: o próprio ícone é o seletor liga/desliga, sem a caixinha nativa */
+  label.camada { grid-template-columns: 22px 1fr auto; position: relative; }
+  label.camada input { position: absolute; opacity: 0; width: 1px; height: 1px; margin: 0; pointer-events: none; }
+  label.camada .sw { width: 18px; height: 18px; justify-self: center; position: relative; box-sizing: border-box;
+    transition: box-shadow .2s, border-color .2s, transform .2s; }
+  label.camada input:checked + .sw { box-shadow: 0 0 0 3px rgba(246,239,227,.12); }
+  label.camada input:checked + .sw::after { content: ''; position: absolute; left: 50%; top: 45%; width: 4px; height: 7px;
+    border: solid rgba(22,18,14,.85); border-width: 0 2px 2px 0; transform: translate(-50%, -50%) rotate(45deg); }
+  label.camada input:not(:checked) + .sw { box-shadow: inset 0 0 0 9px #2b241d; border-color: rgba(246,239,227,.35); transform: scale(.88); }
+  label.camada:hover .sw { transform: scale(1.08); }
+  label.camada:hover input:not(:checked) + .sw { border-color: rgba(246,239,227,.7); transform: scale(.95); }
+  label.camada input:focus-visible + .sw { outline: 2px solid var(--ocre); outline-offset: 3px; }
+  label.camada:has(input:not(:checked)) > span:not(.sw) { opacity: .5; }
+  label.camada > span:not(.sw) { transition: opacity .2s; }
   aside details { border-top-color: rgba(246,239,227,.1); }
   aside summary { color: var(--papel); }
   aside details p, aside details li { color: #d8ccb9; }
