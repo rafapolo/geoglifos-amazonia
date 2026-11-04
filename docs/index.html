@@ -178,7 +178,7 @@
   aside .rodape a { color: #a99b88; border-bottom-color: rgba(246,239,227,.2); }
   aside .rodape a:hover { color: var(--ocre); }
   aside #legenda-prob div:last-child { color: #a99b88 !important; }
-  aside .tour-btn { background: var(--ocre); color: var(--tinta); }
+  aside .tour-btn { background: var(--ocre); color: var(--tinta); display: flex; width: fit-content; margin-left: auto; }
   aside .tour-btn::before { border-left-color: var(--tinta); }
   aside .tour-btn:hover { background: #f2c766; }
   aside::-webkit-scrollbar, #fotos-grade::-webkit-scrollbar { width: 8px; }
@@ -209,6 +209,14 @@
   /* botões do topo e controles do mapa no tema escuro */
   #topo button { background: rgba(22,18,14,.9); color: var(--papel); border-color: rgba(246,239,227,.16); display: inline-flex; align-items: center; gap: 7px; }
   #topo button:hover { background: #000; border-color: var(--ocre); }
+  /* seletor de idioma com a mesma pílula dos botões */
+  #topo select { appearance: none; -webkit-appearance: none; font: 600 13px Inter, sans-serif; color: var(--papel); background: rgba(22,18,14,.9)
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M1 1l4 4 4-4' fill='none' stroke='%23e9b44c' stroke-width='1.6'/%3E%3C/svg%3E") no-repeat right 12px center;
+    border: 1px solid rgba(246,239,227,.16); border-radius: 999px; padding: 8px 30px 8px 14px; cursor: pointer; box-shadow: 0 4px 16px rgba(0,0,0,.3); }
+  #topo select:hover, #topo select:focus-visible { background-color: #000; border-color: var(--ocre); }
+  #topo select option { color: #16120e; background: #f6efe3; }
+  /* navegadores com select customizável (appearance: base-select) desenham uma seta própria: fica só a nossa */
+  #topo select::picker-icon { display: none; }
   #tour-abrir::before { border-left-color: var(--ocre) !important; margin-right: 0 !important; }
   #topo .ico { width: 14px; height: 14px; color: var(--ocre); }
   .maplibregl-ctrl-group { background: rgba(22,18,14,.9); border: 1px solid rgba(246,239,227,.16); box-shadow: 0 4px 16px rgba(0,0,0,.3) !important; }
@@ -253,11 +261,12 @@
       background: none; border: 0; cursor: grab; }
     #alca span { display: block; width: 40px; height: 4px; margin: 10px auto 0; border-radius: 2px; background: rgba(246,239,227,.35); }
     aside h1 { order: 1; font-size: 21px; margin: 2px 0 8px; cursor: pointer; }
-    aside .tour-btn { order: 2; align-self: flex-start; }
+    aside .tour-btn { order: 2; align-self: flex-end; }
     aside .lede { order: 3; font-size: 13px; margin: 14px 0 6px; }
     aside > :not(#alca):not(h1):not(.tour-btn):not(.lede) { order: 4; flex: 0 0 auto; }
     #topo { top: calc(10px + env(safe-area-inset-top)); right: 10px !important; }
     #topo button { padding: 8px 12px; }
+    #topo select { padding: 8px 26px 8px 11px; background-position: right 10px center; }
     #compartilhar span { display: none; }
     .maplibregl-ctrl-group, .maplibregl-ctrl-scale { display: none; }
     .maplibregl-ctrl-bottom-right { bottom: calc(var(--espia) + 104px); }
@@ -276,65 +285,67 @@
 <body>
 <div id="map"></div>
 <aside id="painel">
-  <button id="alca" type="button" aria-label="Abrir ou fechar o painel" aria-expanded="false"><span></span></button>
-  <h1>Geoglifos da <span>Amazônia</span></h1>
-  <p class="lede"><b id="lede-total">1.367</b> estruturas de terra (<span id="lede-nature">406</span> achadas por LiDAR, <span id="lede-science">961</span> já catalogadas) e <span id="lede-fotos">664</span> fotos: valas e aterros geométricos de 600&nbsp;a.C. a 850&nbsp;d.C., revelados pelo desmatamento e pelo LiDAR no Acre, no Amazonas e na Bolívia.</p>
-  <button id="tour-abrir-painel" class="tour-btn" type="button">Tour de 2 minutos</button>
+  <button id="alca" type="button" data-i18n-aria="alca" aria-label="Abrir ou fechar o painel" aria-expanded="false"><span></span></button>
+  <h1 data-i18n="h1">Geoglifos da <span>Amazônia</span></h1>
+  <p class="lede" data-i18n="lede"><b id="lede-total">1.367</b> estruturas de terra (<span id="lede-nature">406</span> achadas por LiDAR, <span id="lede-science">961</span> já catalogadas) e <span id="lede-fotos">664</span> fotos: valas e aterros geométricos de 600&nbsp;a.C. a 850&nbsp;d.C., revelados pelo desmatamento e pelo LiDAR no Acre, no Amazonas e na Bolívia.</p>
+  <button id="tour-abrir-painel" class="tour-btn" type="button" data-i18n="tour-painel">Tour de 2 minutos</button>
 
-  <h2>Camadas</h2>
+  <h2 data-i18n="camadas">Camadas</h2>
   <label class="camada"><input type="checkbox" data-camada="nature" checked><span class="sw" style="background:var(--terra)"></span>
-    <span>LiDAR: Nature 2026<small>estruturas sob a floresta (Pärssinen et al.)</small></span><span class="n" id="n-nature"></span></label>
+    <span data-i18n="c-nature">LiDAR: Nature 2026<small>estruturas sob a floresta (Pärssinen et al.)</small></span><span class="n" id="n-nature"></span></label>
   <label class="camada"><input type="checkbox" data-camada="science" checked><span class="sw" style="background:var(--ocre)"></span>
-    <span>Base compilada: Science 2023<small>Amazon Arch, CNSA, PAST, INRAP, INPE</small></span><span class="n" id="n-science"></span></label>
+    <span data-i18n="c-science">Base compilada: Science 2023<small>Amazon Arch, CNSA, PAST, INRAP, INPE</small></span><span class="n" id="n-science"></span></label>
   <label class="camada"><input type="checkbox" data-camada="lidar" checked><span class="sw q" style="background:linear-gradient(135deg,#d9cdb6 45%,#3c8c87 55%)"></span>
-    <span>LiDAR aberto: relevo sob a floresta<small>faixas do projeto EBA (INPE); aproxime para ver</small></span><span class="n" id="n-lidar"></span></label>
+    <span data-i18n="c-lidar">LiDAR aberto: relevo sob a floresta<small>faixas do projeto EBA (INPE); aproxime para ver</small></span><span class="n" id="n-lidar"></span></label>
   <label class="camada"><input type="checkbox" data-camada="prob"><span class="sw q" style="background:#f03b20"></span>
-    <span>Onde ainda pode haver estruturas<small>modelo preditivo, Science 2023</small></span><span></span></label>
+    <span data-i18n="c-prob">Onde ainda pode haver estruturas<small>modelo preditivo, Science 2023</small></span><span></span></label>
   <label class="camada"><input type="checkbox" data-camada="fotos" checked><span class="sw" style="background:#9cc3e6"></span>
-    <span>Fotos<small>app Ancient Amazonian Earthworks (R. Walker)</small></span><span class="n" id="n-fotos"></span></label>
+    <span data-i18n="c-fotos">Fotos<small>app Ancient Amazonian Earthworks (R. Walker)</small></span><span class="n" id="n-fotos"></span></label>
   <label class="camada local"><input type="checkbox" data-camada="jacobs" checked><span class="sw" style="background:#7fd1c7"></span>
-    <span>Jacobs (só local)<small>pontos, contornos e estradas</small></span><span class="n" id="n-jacobs"></span></label>
+    <span data-i18n="c-jacobs">Jacobs (só local)<small>pontos, contornos e estradas</small></span><span class="n" id="n-jacobs"></span></label>
   <div id="legenda-prob" style="display:none;margin:6px 0 0"><div class="grad"></div>
-    <div style="display:flex;justify-content:space-between;font-size:11px;color:var(--suave)"><span>menor</span><span>maior probabilidade</span></div></div>
+    <div style="display:flex;justify-content:space-between;font-size:11px;color:var(--suave)"><span data-i18n="prob-menor">menor</span><span data-i18n="prob-maior">maior probabilidade</span></div></div>
 
-  <details>
+  <details data-i18n="d-oque">
     <summary>O que são os geoglifos?</summary>
     <p>São recintos de terra (círculos, quadrados, octógonos, elipses) delimitados por valas de até 15&nbsp;m de largura e 5&nbsp;m de profundidade, às vezes ligados por estradas com aterros paralelos. Segundo Pärssinen et al. (2026), foram construídos pela chamada civilização Aquiry e serviam a cerimônias e encontros políticos, não a moradia.</p>
     <p>O LiDAR de 4.497&nbsp;km² encontrou 432 estruturas, 396 delas inéditas, e os autores estimam que haja de 24 a 30 mil na região.</p>
   </details>
-  <details>
+  <details data-i18n="d-fontes">
     <summary>Fontes e licenças</summary>
     <ul>
       <li>Pärssinen et al. 2026, <i>Nature</i>, <a href="https://doi.org/10.1038/s41586-026-10835-7">doi:10.1038/s41586-026-10835-7</a> (CC&nbsp;BY&nbsp;4.0). Tabela Suplementar&nbsp;2; as estruturas em terras indígenas foram omitidas pelos autores. Os recortes de LiDAR nos balões vêm da Fig.&nbsp;2 e da Extended Data Fig.&nbsp;4 do artigo.</li>
       <li>Peripato et al. 2023, <i>Science</i>, <a href="https://doi.org/10.1126/science.ade2541">doi:10.1126/science.ade2541</a>; dados em <a href="https://zenodo.org/records/10214943">Zenodo</a>.</li>
       <li>Fotos: app <a href="https://robert-walker.shinyapps.io/ggshiny/">Ancient Amazonian Earthworks</a> (R. Walker, Univ. of Missouri), que reúne figuras de artigos e fotos de pesquisadores; os créditos de cada foto seguem a legenda original.</li>
       <li>LiDAR aberto: transectos do projeto EBA (INPE), <a href="https://zenodo.org/records/4968706">Zenodo</a> (CC&nbsp;BY&nbsp;4.0). Modelo de terreno de 2&nbsp;m feito aqui a partir das nuvens de pontos, com filtro próprio de chão, relevo sombreado e realce do relevo local (valas em verde-azulado, aterros em ocre).</li>
+      <li>Tour: BBC News Brasil (30/09/2026); Prümers et al. 2022, <i>Nature</i>, <a href="https://doi.org/10.1038/s41586-022-04780-4">doi:10.1038/s41586-022-04780-4</a>; Koch et al. 2019, <i>Quaternary Science Reviews</i>, <a href="https://doi.org/10.1016/j.quascirev.2018.12.004">doi:10.1016/j.quascirev.2018.12.004</a>.</li>
       <li>Imagens de satélite: Esri World Imagery.</li>
     </ul>
     <p>A base mais completa, com fotos e contornos, é a de <a href="https://www.jqjacobs.net/archaeology/geoglyph.html">James Q. Jacobs</a>.</p>
   </details>
-  <details>
+  <details data-i18n="d-protecao">
     <summary>Proteção dos sítios</summary>
     <p>Sítios arqueológicos são bens da União (Lei 3.924/1961). As coordenadas aqui já foram publicadas pelos autores, com precisão de cerca de 100&nbsp;m. Não entre em propriedades nem remova material; danos a sítios são crime.</p>
   </details>
-  <p class="rodape"><a href="https://github.com/rafapolo/geoglifos-amazonia">Código e dados no GitHub</a></p>
+  <p class="rodape"><a href="https://github.com/rafapolo/geoglifos-amazonia" data-i18n="rodape">Código e dados no GitHub</a></p>
 </aside>
 
-<section id="fotos" aria-label="Fotos dos sítios">
-  <header><b>Fotos</b> <span id="fotos-n"></span><small>clique para ir ao sítio</small></header>
+<section id="fotos" aria-label="Fotos dos sítios" data-i18n-aria="fotos-aria">
+  <header data-i18n="fotos-cab"><b>Fotos</b> <span id="fotos-n"></span><small>clique para ir ao sítio</small></header>
   <div id="fotos-grade"></div>
-  <footer>Fotos: <a href="https://robert-walker.shinyapps.io/ggshiny/">Ancient Amazonian Earthworks</a> (R. Walker)</footer>
+  <footer data-i18n="fotos-rodape">Fotos: <a href="https://robert-walker.shinyapps.io/ggshiny/">Ancient Amazonian Earthworks</a> (R. Walker)</footer>
 </section>
 
 <nav id="topo">
-  <button id="tour-abrir" type="button" title="Um passeio de 2 minutos pelos geoglifos">Tour</button>
-  <button id="compartilhar" type="button" title="Compartilhar esta vista"><svg class="ico" viewBox="0 0 16 16" aria-hidden="true"><path d="M8 10V2M5 4.8 8 2l3 2.8M3.5 8.5v5h9v-5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Compartilhar</span></button>
-  <button id="sobre-abrir" type="button" aria-haspopup="dialog"><svg class="ico" viewBox="0 0 16 16" aria-hidden="true"><rect x="1.5" y="1.5" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.6"/><circle cx="8" cy="8" r="3.4" fill="none" stroke="currentColor" stroke-width="1.6"/></svg>Sobre</button>
+  <button id="tour-abrir" type="button" data-i18n-title="tour-titulo" title="Um passeio de 2 minutos pelos geoglifos">Tour</button>
+  <button id="compartilhar" type="button" data-i18n-title="compartilhar-titulo" title="Compartilhar esta vista"><svg class="ico" viewBox="0 0 16 16" aria-hidden="true"><path d="M8 10V2M5 4.8 8 2l3 2.8M3.5 8.5v5h9v-5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg><span data-i18n="compartilhar">Compartilhar</span></button>
+  <button id="sobre-abrir" type="button" aria-haspopup="dialog"><svg class="ico" viewBox="0 0 16 16" aria-hidden="true"><rect x="1.5" y="1.5" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.6"/><circle cx="8" cy="8" r="3.4" fill="none" stroke="currentColor" stroke-width="1.6"/></svg><span data-i18n="sobre">Sobre</span></button>
+  <select id="idioma" data-i18n-aria="idioma" aria-label="Idioma"><option value="pt">PT</option><option value="en">EN</option><option value="es">ES</option></select>
 </nav>
 
 <dialog id="sobre" aria-labelledby="sobre-titulo">
-  <button class="fechar" type="button" aria-label="Fechar">✕</button>
-  <svg class="ilustracao" viewBox="0 0 560 150" role="img" aria-label="Desenho de dois geoglifos ligados por uma estrada: um quadrado triplo e um círculo dentro de um quadrado">
+  <button class="fechar" type="button" data-i18n-aria="fechar" aria-label="Fechar">✕</button>
+  <svg class="ilustracao" viewBox="0 0 560 150" role="img" data-i18n-aria="svg-aria" aria-label="Desenho de dois geoglifos ligados por uma estrada: um quadrado triplo e um círculo dentro de um quadrado">
     <defs><pattern id="pasto" width="6" height="6" patternUnits="userSpaceOnUse"><circle cx="1" cy="1" r=".7" fill="rgba(233,180,76,.12)"/></pattern></defs>
     <rect width="560" height="150" fill="url(#pasto)"/>
     <g fill="none" stroke-linecap="round">
@@ -357,11 +368,12 @@
       <path d="M538 128 C 548 124, 554 120, 560 116" stroke="#a99b88" stroke-width="1.2" stroke-dasharray="3 4"/>
     </g>
     <g font-family="Inter, sans-serif" font-size="10" letter-spacing=".12em" fill="#a99b88">
-      <text x="249" y="146" text-anchor="middle">QUADRADO TRIPLO</text>
-      <text x="468" y="146" text-anchor="middle">CÍRCULO NO QUADRADO</text>
+      <text x="249" y="146" text-anchor="middle" data-i18n="svg-quadrado">QUADRADO TRIPLO</text>
+      <text x="468" y="146" text-anchor="middle" data-i18n="svg-circulo">CÍRCULO NO QUADRADO</text>
     </g>
   </svg>
-  <h2 id="sobre-titulo">Sobre</h2>
+  <h2 id="sobre-titulo" data-i18n="sobre">Sobre</h2>
+  <div data-i18n="sobre-corpo">
   <p>Este mapa reúne, num só lugar e em português, as estruturas de terra pré-colombianas do sudoeste da Amazônia: os <b>geoglifos</b>, valas e aterros geométricos que só ficam visíveis do alto, de avião ou por satélite.</p>
 
   <h3>A civilização Aquiry</h3>
@@ -381,6 +393,7 @@
   <h3>Dados</h3>
   <p>Pontos da Tabela Suplementar 2 da <i>Nature</i> (CC&nbsp;BY&nbsp;4.0; sem as estruturas em terras indígenas) e da base compilada por <a href="https://doi.org/10.1126/science.ade2541">Peripato et al. 2023, <i>Science</i></a>, com o modelo de probabilidade dos mesmos autores. Código, dados e lista de fontes: <a href="https://github.com/rafapolo/geoglifos-amazonia">github.com/rafapolo/geoglifos-amazonia</a>.</p>
   <p class="aviso">Sítios arqueológicos são bens da União (Lei 3.924/1961). Danificá-los é crime.</p>
+  </div>
 </dialog>
 
 <div id="tour" hidden>
@@ -389,9 +402,10 @@
   <div id="tour-progress"><i></i></div>
   <span id="tour-left"></span>
   <button id="tour-parar" type="button">✕ esc</button>
-  <button id="tour-som" type="button" title="Som do tour (liga/desliga)" aria-label="Som do tour" aria-pressed="true">♪</button>
+  <button id="tour-som" type="button" data-i18n-title="tour-som" data-i18n-aria="tour-som-aria" title="Som do tour (liga/desliga)" aria-label="Som do tour" aria-pressed="true">♪</button>
 </div>
 
+<script src="i18n.js"></script>
 <script src="https://unpkg.com/maplibre-gl@4.7.1/dist/maplibre-gl.js"></script>
 <script>
 const map = new maplibregl.Map({
@@ -404,7 +418,7 @@ const map = new maplibregl.Map({
     sources: {
       sat: { type: 'raster', tileSize: 256, maxzoom: 18,
         tiles: ['https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}'],
-        attribution: 'Imagens © Esri, Maxar, Earthstar Geographics' },
+        attribution: t('Imagens', 'Imagery', 'Imágenes') + ' © Esri, Maxar, Earthstar Geographics' },
       ref: { type: 'raster', tileSize: 256,
         tiles: ['https://server.arcgisonline.com/ArcGIS/rest/services/Reference/World_Boundaries_and_Places/MapServer/tile/{z}/{y}/{x}'] }
     },
@@ -425,7 +439,6 @@ let prontoOk; window.pronto = new Promise(r => prontoOk = r);
 const camadas = { lidar: ['lidar', 'lidar-faixas'], nature: ['nature-mancha', 'nature'], science: ['science-mancha', 'science'], prob: ['prob'], fotos: ['fotos'], jacobs: ['jacobs-contornos', 'jacobs-linhas', 'jacobs-pontos'] };
 // a cópia local tem as camadas do Jacobs; no GitHub Pages nem tentamos buscá-las (evita os 404)
 const LOCAL = !/github\.io$/.test(location.hostname);
-const fmt = n => n.toLocaleString('pt-BR');
 // chave estável de cada ponto, usada na URL (?sitio=n-12) e no histórico
 const PREFIXO = { nature2026: 'n', science2023: 's', walker: 'f', jacobs: 'j' };
 window.chave = p => `${PREFIXO[p.fonte]}-${p.id}`;
@@ -508,15 +521,15 @@ map.on('load', async () => {
   montarFotos(fot.features);
 
   // só os pontos com foto têm o botão de compartilhar no balão
-  const botaoCompartilhar = p => !temFoto(p) ? '' : `<button class="compartilhar" type="button" data-sitio="${esc(chave(p))}">Compartilhar</button>`;
+  const botaoCompartilhar = p => !temFoto(p) ? '' : `<button class="compartilhar" type="button" data-sitio="${esc(chave(p))}">${t('Compartilhar', 'Share', 'Compartir')}</button>`;
   const popup = (f) => conteudo(f) + botaoCompartilhar(f.properties);
   const conteudo = (f) => {
     const p = f.properties;
     const fig = p.fonte === 'nature2026' && figuras[p.nome];
     if (fig) return `<img src="${esc(fig.foto)}" alt="${esc(fig.legenda)}" loading="lazy"><b>${esc(p.nome)}</b><br>${p.area_ha} ha${p.aquiry === true || p.aquiry === 'true' ? '<span class="tag">Aquiry</span>' : ''}<span class="tag">LiDAR</span><br><span class="credito">${esc(fig.legenda)}. ${esc(fig.credito)}</span>`;
-    if (p.fonte === 'nature2026') return `<b>${esc(p.nome)}</b><br>${p.area_ha} ha${p.aquiry === true || p.aquiry === 'true' ? '<span class="tag">Aquiry</span>' : '<span class="tag">não Aquiry</span>'}<span class="tag">LiDAR</span>${p.parcial === true || p.parcial === 'true' ? '<span class="tag">parcial</span>' : ''}<br><small>Pärssinen et al. 2026, <i>Nature</i></small>`;
-    if (p.fonte === 'walker') return `<img src="${esc(p.foto)}" alt="${esc(p.legenda)}" loading="lazy"><b>${esc(p.legenda)}</b><br><span class="credito">Foto: ${esc(p.credito)}</span>`;
-    if (p.fonte === 'science2023') return `<b>Estrutura de terra</b><br><small>Base: ${esc(p.base)}<br>Peripato et al. 2023, <i>Science</i></small>`;
+    if (p.fonte === 'nature2026') return `<b>${esc(p.nome)}</b><br>${p.area_ha} ha${p.aquiry === true || p.aquiry === 'true' ? '<span class="tag">Aquiry</span>' : `<span class="tag">${t('não Aquiry', 'not Aquiry', 'no Aquiry')}</span>`}<span class="tag">LiDAR</span>${p.parcial === true || p.parcial === 'true' ? `<span class="tag">${t('parcial', 'partial', 'parcial')}</span>` : ''}<br><small>Pärssinen et al. 2026, <i>Nature</i></small>`;
+    if (p.fonte === 'walker') return `<img src="${esc(p.foto)}" alt="${esc(p.legenda)}" loading="lazy"><b>${esc(p.legenda)}</b><br><span class="credito">${t('Foto', 'Photo', 'Foto')}: ${esc(p.credito)}</span>`;
+    if (p.fonte === 'science2023') return `<b>${t('Estrutura de terra', 'Earthwork', 'Estructura de tierra')}</b><br><small>${t('Base', 'Database', 'Base')}: ${esc(p.base)}<br>Peripato et al. 2023, <i>Science</i></small>`;
     return `<b>${esc(p.nome || p.codigo)}</b><br><span class="tag">${esc(p.forma || p.grupo)}</span><span class="tag">${esc(p.codigo)}</span><br><small>J. Q. Jacobs</small>`;
   };
   window.abrirPopup = (f) => {

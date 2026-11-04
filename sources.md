@@ -22,6 +22,8 @@ Comparação com a cópia antiga (`~/Documents/misc/amazon_geoglyphs.kml`, set/2
 ### 2. Nature 2026 — Pärssinen et al., "Over 20,000 pre-colonial earthworks in the Southwest Amazonia"
 - DOI: https://doi.org/10.1038/s41586-026-10835-7 (jul/2026, open access, **CC BY 4.0**)
 - Matéria da BBC News Brasil (30/09/2026): https://www.bbc.com/portuguese/articles/cm4gvnv14zlgo
+- Tour, cena de Cotoca (Bolívia): Prümers et al. 2022, "Lidar reveals pre-Hispanic low-density urbanism in the Bolivian Amazon", *Nature* 606, https://doi.org/10.1038/s41586-022-04780-4 (só o texto da legenda; nenhum dado copiado)
+- Tour, legenda sobre a colonização: Koch, Brierley, Maslin e Lewis 2019, "Earth system impacts of the European arrival and Great Dying in the Americas after 1492", *Quaternary Science Reviews* 207, https://doi.org/10.1016/j.quascirev.2018.12.004 (cerca de 90% da população indígena morreu no século seguinte a 1492; intervalo de 87% a 92%)
 - LiDAR aerotransportado em 4.497 km² (AM/AC): 432 estruturas, 396 inéditas; fase Aquiry entre 600 a.C. e 850 d.C.; estimativa de 24–30 mil estruturas em ~183 mil km² e até 3 milhões de pessoas entre 100 e 300 d.C.
 - Suplementos baixados:
   - `MOESM1_ESM.docx`: Supplementary Information. **A Tabela 2 lista as estruturas com coordenadas** (3 casas decimais, ~100 m); as de terras indígenas foram omitidas. A Tabela 1 traz as datações por radiocarbono.

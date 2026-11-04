@@ -2,7 +2,7 @@
 
 Mapa aberto das estruturas de terra pré-colombianas (geoglifos) do sudoeste da Amazônia: valas e aterros geométricos construídos entre 600 a.C. e 850 d.C. no Acre, no sul do Amazonas, em Rondônia e na Bolívia.
 
-**Mapa:** https://xn--2dk.xyz/dataviz/geoglifos-amazonia/ (cópia em https://rafapolo.github.io/geoglifos-amazonia/; tour de 2 minutos com música gerada: botão Tour ou `?tour=1`, em inglês por `?tour=en`; roteiro e som em [design/tour.md](design/tour.md))
+**Mapa:** https://xn--2dk.xyz/dataviz/geoglifos-amazonia/ (cópia em https://rafapolo.github.io/geoglifos-amazonia/; tour de 2 minutos com música gerada: botão Tour ou `?tour=1`, em inglês por `?tour=en` e em espanhol por `?tour=es`; o site inteiro tem seletor PT/EN/ES no topo e `?lang=en|es`; roteiro e som em [design/tour.md](design/tour.md))
 
 Não existia um mapa web público e mantido desses sítios. A base mais completa, a de James Q. Jacobs, só abre no Google Earth Pro. Este projeto junta as fontes abertas num mapa navegável, em português.
 

@@ -32,6 +32,8 @@
     const q = [];
     if (s.sitio) q.push(`sitio=${encodeURIComponent(s.sitio)}`);
     if (s.sobre) q.push('sobre');
+    // link compartilhado abre no mesmo idioma
+    if (window.idioma && window.idioma !== 'pt') q.push(`lang=${window.idioma}`);
     return (absoluta ? location.origin : '') + location.pathname + (q.length ? `?${q.join('&')}` : '') + hash(s.cam || cam());
   }
   // atualiza a entrada atual (sem criar outra)
@@ -140,18 +142,19 @@
     const s = { ...atual(), sobre: false, cam: cam() };
     if (k !== undefined) s.sitio = k;
     const f = s.sitio && indice.get(s.sitio);
-    const nome = f ? (f.properties.nome || f.properties.legenda || 'Estrutura de terra') : null;
+    const nome = f ? (f.properties.nome || f.properties.legenda || t('Estrutura de terra', 'Earthwork', 'Estructura de tierra')) : null;
     const dados = {
-      title: nome ? `${nome} · Geoglifos da Amazônia` : 'Geoglifos da Amazônia',
-      text: nome ? `${nome}, no mapa dos geoglifos da Amazônia` : 'O mapa das estruturas de terra pré-colombianas do sudoeste da Amazônia',
+      title: nome ? `${nome} · ${t('Geoglifos da Amazônia', 'Geoglyphs of the Amazon', 'Geoglifos de la Amazonía')}` : t('Geoglifos da Amazônia', 'Geoglyphs of the Amazon', 'Geoglifos de la Amazonía'),
+      text: nome ? t(`${nome}, no mapa dos geoglifos da Amazônia`, `${nome}, on the map of the Amazon geoglyphs`, `${nome}, en el mapa de los geoglifos de la Amazonía`)
+        : t('O mapa das estruturas de terra pré-colombianas do sudoeste da Amazônia', 'The map of pre-Columbian earthworks in the southwestern Amazon', 'El mapa de las estructuras de tierra precolombinas del suroeste de la Amazonía'),
       url: url(s, true),
     };
     if (navigator.share && matchMedia('(pointer: coarse)').matches) {
       try { await navigator.share(dados); } catch { /* cancelado */ }
       return;
     }
-    try { await navigator.clipboard.writeText(dados.url); aviso('Link copiado'); }
-    catch { prompt('Copie o link:', dados.url); }
+    try { await navigator.clipboard.writeText(dados.url); aviso(t('Link copiado', 'Link copied', 'Enlace copiado')); }
+    catch { prompt(t('Copie o link:', 'Copy the link:', 'Copie el enlace:'), dados.url); }
   }
   $('compartilhar').addEventListener('click', () => compartilhar());
   document.addEventListener('click', (e) => {

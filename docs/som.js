@@ -11,7 +11,7 @@
   const RE = 146.83;                        // ré 3
   const BPM = 92, PASSO = 60 / BPM / 4;     // semicolcheia
   // nota do bordão de cada cena (semitons sobre ré, sempre dentro da escala)
-  const RAIZ_CENA = [0, 3, 5, -2, 7, 0, 3, -2, 0];
+  const RAIZ_CENA = [0, 3, 5, -2, 7, 0, 3, -2, 5, 0];
   const CHAVE = 'geoglifos-som';
 
   let ctx = null, saida, bus, sala, bordao, ventoG, ventoF, ruido;

@@ -45,6 +45,9 @@ const fonteJs = SCRIPTS.map((f) => readFileSync(join(DOCS, f), "utf-8")).join("\
 const app = await terser(fonteJs, { compress: { passes: 2 }, mangle: true, format: { comments: false } });
 writeFileSync(join(DIST, "app.js"), app.code);
 for (const f of SCRIPTS) rmSync(join(DIST, f));
+// i18n.js roda antes do script do mapa (traduz a página e define t/fmt), então fica num arquivo à parte
+const i18n = await terser(readFileSync(join(DOCS, "i18n.js"), "utf-8"), { compress: { passes: 2 }, mangle: true, format: { comments: false } });
+writeFileSync(join(DIST, "i18n.js"), i18n.code);
 
 // ── 4. index.html ──
 let html = readFileSync(join(DOCS, "index.html"), "utf-8");
@@ -54,6 +57,7 @@ const troca = (de, para) => {
 };
 troca(`https://unpkg.com/maplibre-gl@${mlVersao}/dist/maplibre-gl.css`, `vendor/maplibre-gl.css?v=${mlVersao}`);
 troca(`https://unpkg.com/maplibre-gl@${mlVersao}/dist/maplibre-gl.js`, `vendor/maplibre-gl.js?v=${mlVersao}`);
+troca(`<script src="i18n.js"></script>`, `<script src="i18n.js?v=${sha}"></script>`);
 troca(SCRIPTS.map((f) => `<script src="${f}"></script>`).join("\n"), `<script src="app.js?v=${sha}"></script>`);
 
 const min = await minify(html, {
