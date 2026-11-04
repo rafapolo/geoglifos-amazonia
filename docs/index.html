@@ -45,6 +45,7 @@
   #painel h1, label.camada .nome { display: block; white-space: nowrap; overflow: hidden; }
   label.camada > span { min-width: 0; }
   /* camadas sem licença para publicar: só aparecem na cópia local (localhost) */
+  label.camada.fundo { border-top: 0; margin-bottom: 4px; }
   label.camada.local { display: none; }
   .tem-local label.camada.local { display: grid; }
   .lede { color: var(--suave); margin: 0 0 14px; }
@@ -314,6 +315,8 @@
   <button id="tour-abrir-painel" class="tour-btn" type="button" data-i18n="tour-painel">Tour de 2 minutos</button>
 
   <h2 data-i18n="camadas">Camadas</h2>
+  <label class="camada fundo"><input type="checkbox" id="fundo-verde"><span class="sw" style="background:#1f3d29;border:1px solid #e9b44c"></span>
+    <span data-i18n="c-fundo">Fundo verde, só os desenhos<small>sem satélite: só os traçados, como num mapa desenhado</small></span><span></span></label>
   <label class="camada"><input type="checkbox" data-camada="nature" checked><span class="sw" style="background:var(--terra)"></span>
     <span data-i18n="c-nature">LiDAR: Nature 2026<small>estruturas sob a floresta (Pärssinen et al.)</small></span><span class="n" id="n-nature"></span></label>
   <label class="camada"><input type="checkbox" data-camada="science" checked><span class="sw" style="background:var(--ocre)"></span>
@@ -462,6 +465,8 @@ const map = new maplibregl.Map({
         tiles: ['https://server.arcgisonline.com/ArcGIS/rest/services/Reference/World_Boundaries_and_Places/MapServer/tile/{z}/{y}/{x}'] }
     },
     layers: [
+      // fundo verde-escuro liso, que só aparece quando o satélite some (modo "só os desenhos")
+      { id: 'fundo', type: 'background', paint: { 'background-color': '#1f3d29' } },
       { id: 'sat', type: 'raster', source: 'sat', paint: { 'raster-saturation': -0.3, 'raster-brightness-max': 0.68, 'raster-contrast': 0.08 } },
       { id: 'ref', type: 'raster', source: 'ref', paint: { 'raster-opacity': 0.55 } }
     ]
@@ -473,6 +478,7 @@ map.addControl(new maplibregl.AttributionControl({ compact: true }), 'bottom-rig
 // a atribuição compacta abre sozinha em telas largas: começa sempre recolhida
 const recolheAtribuicao = () => document.querySelectorAll('.maplibregl-ctrl-attrib').forEach(d => { d.removeAttribute('open'); d.classList.remove('maplibregl-compact-show'); });
 map.once('load', recolheAtribuicao); map.once('idle', recolheAtribuicao);
+
 
 let prontoOk; window.pronto = new Promise(r => prontoOk = r);
 const camadas = { lidar: ['lidar', 'lidar-faixas'], nature: ['nature-mancha', 'nature'], science: ['science-mancha', 'science'], prob: ['prob'], fotos: ['fotos'], kalliola: ['kalliola'], ufpa: ['ufpa'], jacobsimg: ['jacobsimg'], jacobs: ['jacobs-contornos', 'jacobs-linhas', 'jacobs-pontos'] };
@@ -663,6 +669,36 @@ document.querySelectorAll('input[data-camada]').forEach(cb => cb.addEventListene
   for (const id of camadas[cb.dataset.camada]) if (map.getLayer(id)) map.setLayoutProperty(id, 'visibility', cb.checked ? 'visible' : 'none');
   if (cb.dataset.camada === 'prob') document.getElementById('legenda-prob').style.display = cb.checked ? 'block' : 'none';
 }));
+
+// modo "só os desenhos": tira o satélite e os rótulos e pinta os traçados de ocre sobre o verde,
+// como os desenhos de J. Q. Jacobs; fica no endereço (?fundo=verde) para o link compartilhado abrir igual
+const pontosOrig = {};
+window.fundoVerde = (on) => {
+  document.body.classList.toggle('fundo-verde', on);
+  document.getElementById('fundo-verde').checked = on;
+  const aplicar = () => {
+    map.setLayoutProperty('sat', 'visibility', on ? 'none' : 'visible');
+    map.setLayoutProperty('ref', 'visibility', on ? 'none' : 'visible');
+    const linha = (id, cor, larg) => map.getLayer(id) && (map.setPaintProperty(id, 'line-color', cor), map.setPaintProperty(id, 'line-width', larg));
+    linha('jacobs-contornos', on ? '#e9b44c' : '#7fd1c7', on ? ['interpolate', ['linear'], ['zoom'], 9, 1, 14, 2.2] : 1.5);
+    linha('jacobs-linhas', on ? '#d9b46a' : '#f2f2a0', on ? ['interpolate', ['linear'], ['zoom'], 9, 0.8, 14, 1.6] : 1.2);
+    if (map.getLayer('jacobs-linhas')) map.setPaintProperty('jacobs-linhas', 'line-dasharray', on ? [1, 0] : [2, 1]);
+    // no verde, os contornos aparecem já de mais longe
+    if (map.getLayer('jacobs-contornos')) map.setLayerZoomRange('jacobs-contornos', on ? 8 : 11, 24);
+    // os pontos encolhem e ficam translúcidos: quem manda são os traçados
+    for (const id of ['nature', 'science', 'fotos', 'kalliola', 'jacobs-pontos', 'ufpa', 'jacobsimg']) {
+      if (!map.getLayer(id)) continue;
+      const orig = (pontosOrig[id] ||= { r: map.getPaintProperty(id, 'circle-radius'), o: map.getPaintProperty(id, 'circle-opacity'), s: map.getPaintProperty(id, 'circle-stroke-width') });
+      map.setPaintProperty(id, 'circle-radius', on ? ['*', 0.45, orig.r] : orig.r);
+      map.setPaintProperty(id, 'circle-opacity', on ? ['*', 0.6, orig.o] : orig.o);
+      map.setPaintProperty(id, 'circle-stroke-width', on ? 0 : orig.s);
+    }
+  };
+  if (window.dados) aplicar(); else pronto.then(aplicar);
+  document.dispatchEvent(new Event('fundo'));
+};
+document.getElementById('fundo-verde').addEventListener('change', (e) => fundoVerde(e.target.checked));
+if (new URLSearchParams(location.search).get('fundo') === 'verde') fundoVerde(true);
 </script>
 <div id="toast" role="status" aria-live="polite"></div>
 <script src="som.js"></script>

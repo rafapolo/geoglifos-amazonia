@@ -232,6 +232,9 @@
     };
     map.setMaxZoom(17);
     map.setMaxPitch(78);
+    // o tour é feito sobre o satélite: o modo "só os desenhos" volta quando ele termina
+    salvo.verde = document.body.classList.contains('fundo-verde');
+    if (salvo.verde) fundoVerde(false);
     // os rótulos da Esri são raster: com a câmera inclinada eles esticam, então somem no tour
     map.setLayoutProperty('ref', 'visibility', 'none');
     document.querySelectorAll('.maplibregl-popup').forEach((p) => p.remove());
@@ -280,6 +283,7 @@
     // só voltam ao normal quando a pessoa sai dessa vista (senão a câmera daria um pulo)
     map.once('movestart', () => { if (!ativo) { map.setMaxZoom(16); map.setMaxPitch(60); } });
     map.setLayoutProperty('ref', 'visibility', 'visible');
+    if (salvo.verde) fundoVerde(true);
     salvo.camadas.forEach(([n, on]) => mostrar(n, on));
     $('tour').classList.remove('on');
     $('tour-cap').classList.remove('on');

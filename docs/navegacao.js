@@ -32,6 +32,7 @@
     const q = [];
     if (s.sitio) q.push(`sitio=${encodeURIComponent(s.sitio)}`);
     if (s.sobre) q.push('sobre');
+    if (document.body.classList.contains('fundo-verde')) q.push('fundo=verde');
     // link compartilhado abre no mesmo idioma
     if (window.idioma && window.idioma !== 'pt') q.push(`lang=${window.idioma}`);
     return (absoluta ? location.origin : '') + location.pathname + (q.length ? `?${q.join('&')}` : '') + hash(s.cam || cam());
@@ -48,6 +49,7 @@
     history.pushState(s, '', url(s));
   }
   map.on('moveend', () => { if (!document.body.classList.contains('touring')) trocar(); });
+  document.addEventListener('fundo', () => { if (!document.body.classList.contains('touring')) trocar(); });
 
   // ---------- sítios ----------
   const indice = new Map();
