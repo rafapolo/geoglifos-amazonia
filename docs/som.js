@@ -11,12 +11,12 @@
   const RE = 146.83;                        // ré 3
   const BPM = 92, PASSO = 60 / BPM / 4;     // semicolcheia
   // nota do bordão de cada cena (semitons sobre ré, sempre dentro da escala)
-  const RAIZ_CENA = [0, 3, 5, -2, 7, 0, 3, -2, 5, 0];
+  const RAIZ_CENA = [0, 3, 5, -2, 7, 3, 0, 3, -2, 5, 0];
   const CHAVE = 'geoglifos-som';
   // coro de vozes cantando juntas; ?coro=0 desliga (para comparar)
   const CORO = new URLSearchParams(location.search).get('coro') !== '0';
-  // cenas em que o grupo também marca o pulso: cerimônias (6) e o fecho (9)
-  const CENAS_CANTO = new Set([6, 9]);
+  // cenas em que o grupo também marca o pulso: cerimônias (7) e o fecho (10)
+  const CENAS_CANTO = new Set([7, 10]);
   // vogais pelos três primeiros formantes (Hz, voz grave; a aguda sobe ~17%)
   const VOGAIS = { a: [730, 1090, 2440], o: [570, 840, 2410], u: [320, 870, 2240], e: [530, 1840, 2480] };
 

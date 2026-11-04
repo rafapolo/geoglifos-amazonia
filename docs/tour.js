@@ -71,16 +71,12 @@
     if (f) abrirPopup(f);
   }
 
-  const so = (...nomes) => ['nature', 'science', 'prob', 'fotos', 'jacobs'].forEach((n) => mostrar(n, nomes.includes(n)));
+  const so = (...nomes) => ['nature', 'science', 'prob', 'fotos', 'jacobs', 'lidar'].forEach((n) => mostrar(n, nomes.includes(n)));
 
   function cenas() {
     const nat = dados.nature.features, sci = dados.science.features;
     const aquiry = nat.filter((f) => f.properties.aquiry === true).length;
     const ha = nat.reduce((s, f) => s + (f.properties.area_ha || 0), 0);
-    // um sítio grande e bem delineado do LiDAR para o close
-    const grande = nat.filter((f) => f.properties.precisao === 'boa' && f.properties.aquiry)
-      .sort((a, b) => b.properties.area_ha - a.properties.area_ha)[0];
-    const [glon, glat] = grande.geometry.coordinates;
 
     return [
       // 0 · abertura: grua subindo do mapa chapado para uma vista oblíqua, girando
@@ -129,27 +125,43 @@
         await espera(1500);
         await legenda('LiDAR · Nature 2026', t(`Das ${fmt(nat.length)} com coordenadas publicadas, ${fmt(aquiry)} seguem o padrão Aquiry: juntas, cobrem ${fmt(Math.round(ha))} hectares.`, `Of the ${fmt(nat.length)} with published coordinates, ${fmt(aquiry)} follow the Aquiry pattern: together they cover ${fmt(Math.round(ha))} hectares.`, `De las ${fmt(nat.length)} con coordenadas publicadas, ${fmt(aquiry)} siguen el patrón Aquiry: juntas cubren ${fmt(Math.round(ha))} hectáreas.`));
       } },
-      // 5 · Aquiry: recua para mostrar o território e gira devagar sobre ele
+      // 5 · o laser revela: de cima só copa de árvore; a camada de LiDAR acende e mostra o recinto quadrado
+      { dur: 14000, run: async () => {
+        so('nature');
+        const ida = voarEsperar({ center: [-66.79467, -9.41614], zoom: 15.6, pitch: 0, bearing: 0 }, 5000);
+        await legenda(t('Sob a floresta · Acre', 'Under the forest · Acre', 'Bajo el bosque · Acre'),
+          t('Daqui de cima, só copa de árvore.', 'From up here, nothing but treetops.', 'Desde aquí arriba, solo copas de árboles.'));
+        await ida;
+        await espera(1200);
+        mostrar('lidar', true);
+        orbita({ giro: 25, pitch: 35, zoom: 15.9 }, 7300);
+        await legenda(t('LiDAR aberto · EBA/INPE', 'Open LiDAR · EBA/INPE', 'LiDAR abierto · EBA/INPE'),
+          t('O laser tira as árvores da frente e mostra o chão. Aqui, a Nature registrou um recinto Aquiry de 3 hectares.',
+            'The laser strips the trees away and shows the ground. Here, Nature recorded a 3-hectare Aquiry enclosure.',
+            'El láser quita los árboles y muestra el suelo. Aquí, Nature registró un recinto Aquiry de 3 hectáreas.'));
+      } },
+      // 6 · Aquiry: recua para mostrar o território e gira devagar sobre ele
       { dur: 14000, run: async () => {
         so('nature', 'science');
         const ida = voarEsperar({ center: [-66.9, -9.8], zoom: 6.3, pitch: 50, bearing: -10 }, 4000);
-        await legenda(t('Civilização Aquiry · 600 a.C.–850 d.C.', 'Aquiry civilization · 600 BC–AD 850', 'Civilización Aquiry · 600 a. C.–850 d. C.'), t('Até 3 milhões de pessoas entre 100 e 300 d.C., em 183 mil km², pouco mais que o Uruguai.', 'Up to 3 million people between AD 100 and 300, over 183,000 km², a little more than Uruguay.', 'Hasta 3 millones de personas entre 100 y 300 d. C., en 183 000 km², un poco más que Uruguay.'));
+        await legenda(t('Civilização Aquiry · 600 a.C.–850 d.C.', 'Aquiry civilization · 600 BC–AD 850', 'Civilización Aquiry · 600 a. C.–850 d. C.'), t('Até 3 milhões de pessoas entre 100 e 300 d.C., em 183 mil km², pouco mais que o Uruguai hoje.', 'Up to 3 million people between AD 100 and 300, over 183,000 km², a little more than Uruguay today.', 'Hasta 3 millones de personas entre 100 y 300 d. C., en 183 000 km², un poco más que Uruguay hoy.'));
         await ida;
         orbita({ giro: 70, pitch: 60, zoom: 6.7 }, 9800);
         await espera(2500);
         await legenda(t('Aquiry · estradas', 'Aquiry · roads', 'Aquiry · caminos'), t('Os sítios eram ligados por estradas, 350 km já mapeados, que se alargavam ao chegar perto deles.', 'The sites were linked by roads, 350 km mapped so far, that widened as they approached them.', 'Los sitios estaban unidos por caminos, 350 km ya mapeados, que se ensanchaban al acercarse a ellos.'));
       } },
-      // 6 · um sítio sob a floresta: aproximação baixa e órbita completa
+      // 7 · um sítio cerimonial no pasto: dois círculos, um retângulo e as estradas entre eles
+      // (Acre, Iriarte et al. 2020); só o satélite, e uma órbita completa
       { dur: 14000, run: async () => {
-        so('nature');
-        const ida = voarEsperar({ center: [glon, glat], zoom: 14.8, pitch: 70, bearing: -90 }, 4500);
+        so();
+        const ida = voarEsperar({ center: [-67.65726, -10.20662], zoom: 15.65, pitch: 40, bearing: 0 }, 4500);
         await legenda(t('Cerimônias, não fortalezas', 'Ceremonies, not fortresses', 'Ceremonias, no fortalezas'), t('“Os geoglifos eram usados para encontros, para tomar decisões políticas e para organizar cerimônias religiosas, e também para festas, dança e música.”', '“The geoglyphs were used for gatherings, for making political decisions and for religious ceremonies, and also for feasts, dance and music.”', '“Los geoglifos se usaban para encuentros, para tomar decisiones políticas y para organizar ceremonias religiosas, y también para fiestas, danza y música.”'), 'Martti Pärssinen');
         await ida;
-        orbita({ giro: 240, pitch: 60, zoom: 14.4 }, 9400);
+        orbita({ giro: 240, pitch: 45, zoom: 15.6 }, 9400);
         await espera(3200);
         await legenda(t('Por volta de 850 d.C.', 'Around AD 850', 'Hacia el 850 d. C.'), t('Deixaram de ser construídos, na mesma época em que os maias abandonaram suas cidades.', 'They stopped being built, around the time the Maya abandoned their cities.', 'Dejaron de construirse en la misma época en que los mayas abandonaron sus ciudades.'));
       } },
-      // 7 · o que falta achar: sobe alto, a câmera endireita e o mapa de probabilidade se espalha
+      // 8 · o que falta achar: sobe alto, a câmera endireita e o mapa de probabilidade se espalha
       { dur: 13000, run: async () => {
         so('prob', 'nature');
         const ida = voarEsperar({ center: [-66.5, -8.8], zoom: 5.6, pitch: 55, bearing: 30 }, 4000);
@@ -159,7 +171,7 @@
         await espera(2000);
         await legenda(t('Ainda escondidos', 'Still hidden', 'Todavía ocultos'), t('Em vermelho, onde o modelo da Science prevê mais chance de encontrá-las.', 'In red, where the Science model predicts they are most likely to be found.', 'En rojo, donde el modelo de Science prevé más probabilidad de encontrarlas.'));
       } },
-      // 8 · Cotoca, na Bolívia: do satélite, só mato; o LiDAR achou ali uma cidade. A pergunta do que ainda falta achar
+      // 9 · Cotoca, na Bolívia: do satélite, só mato; o LiDAR achou ali uma cidade. A pergunta do que ainda falta achar
       { dur: 15000, run: async () => {
         so('fotos');
         const ida = voarEsperar({ center: [-64.58676, -14.99074], zoom: 16, pitch: 0, bearing: 40 }, 5000);
@@ -177,15 +189,15 @@
             'Every LiDAR flight dismantles a little more the idea of a virgin forest. What is the forest still hiding?',
             'Cada vuelo de LiDAR desmonta un poco más la idea de un bosque virgen. ¿Qué esconde todavía la selva?'));
       } },
-      // 9 · fecho: a colonização, a última órbita larga e a câmera volta ao mapa chapado
+      // 10 · fecho: a colonização, a última órbita larga e a câmera volta ao mapa chapado
       { dur: 16000, run: async () => {
         fecharBaloes();
         so('nature', 'science');
         const ida = voarEsperar({ center: [-66.9, -9.7], zoom: 6.5, pitch: 60, bearing: -40 }, 3800);
         await legenda(t('Depois de 1492 · Koch et al. 2019', 'After 1492 · Koch et al. 2019', 'Después de 1492 · Koch et al. 2019'),
-          t('Epidemias, guerras e escravidão mataram cerca de 90% dos povos das Américas em um século. A floresta cresceu sobre os jardins.',
-            'Epidemics, war and slavery killed about 90% of the peoples of the Americas within a century. The forest grew back over the gardens.',
-            'Epidemias, guerras y esclavitud mataron a cerca del 90% de los pueblos de América en un siglo. El bosque creció sobre los jardines.'));
+          t('Os colonizadores europeus trouxeram epidemias, guerra e escravidão: cerca de 90% dos povos das Américas morreram em um século. A floresta cresceu sobre os jardins.',
+            'European colonizers brought epidemics, war and slavery: about 90% of the peoples of the Americas died within a century. The forest grew back over the gardens.',
+            'Los colonizadores europeos trajeron epidemias, guerra y esclavitud: cerca del 90% de los pueblos de América murió en un siglo. El bosque creció sobre los jardines.'));
         await ida;
         orbita({ giro: 40, pitch: 0, zoom: 6.2 }, 11000);
         await espera(2800);
@@ -264,20 +276,22 @@
     cancelAnimationFrame(anim);
     map.stop();
     fecharBaloes();
-    map.setMaxZoom(16);
-    map.setMaxPitch(60);
+    // o mapa fica exatamente onde a câmera do tour estava: os limites de zoom e inclinação
+    // só voltam ao normal quando a pessoa sai dessa vista (senão a câmera daria um pulo)
+    map.once('movestart', () => { if (!ativo) { map.setMaxZoom(16); map.setMaxPitch(60); } });
     map.setLayoutProperty('ref', 'visibility', 'visible');
     salvo.camadas.forEach(([n, on]) => mostrar(n, on));
-    if (voltar) map.jumpTo(salvo.camera);
     $('tour').classList.remove('on');
     $('tour-cap').classList.remove('on');
+    // a tela volta a ter a coluna de fotos: o mapa muda de tamanho, mas a vista fica a mesma
+    const aqui = { center: map.getCenter(), zoom: map.getZoom(), pitch: map.getPitch(), bearing: map.getBearing() };
     document.body.classList.remove('touring');
     map.resize();
+    map.jumpTo(aqui);
     setTimeout(() => { if (!ativo) $('tour').hidden = true; }, 900);
-    if (!peloHistorico && history.state?.tour) {
-      if (voltar) history.back(); // Esc ou ✕: volta à entrada de antes do tour
-      else history.replaceState({ ...history.state, tour: false }, '', location.href);
-    }
+    // a entrada do tour vira a vista onde ele parou (o "voltar" do navegador leva à vista de antes)
+    if (!peloHistorico && history.state?.tour) history.replaceState({ ...history.state, tour: false }, '', location.href);
+    map.fire('moveend'); // navegacao.js grava a câmera atual no endereço
   }
 
   $('tour-abrir').addEventListener('click', () => iniciar());

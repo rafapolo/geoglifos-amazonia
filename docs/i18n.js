@@ -65,7 +65,7 @@
   <p>In July 2026, a team from universities in Finland and Brazil (Helsinki, Turku, UFAC, UFPA and others) published in <i>Nature</i> a LiDAR survey, a laser fired from a plane that sees beneath the trees, of 4,497&nbsp;km² between Acre and Amazonas. They found <b>432 structures, 396 of them never recorded</b>.</p>
   <ul>
     <li>The geoglyphs were built between <b>600 BC and AD 850</b> by the so-called Aquiry civilization.</li>
-    <li>The occupied area may have reached <b>183,000 km²</b>, a little more than Uruguay, with <b>up to 3 million people</b> between AD 100 and 300.</li>
+    <li>The occupied area may have reached <b>183,000 km²</b>, a little more than Uruguay today, with <b>up to 3 million people</b> between AD 100 and 300.</li>
     <li>The ditches are up to 15&nbsp;m wide and 5&nbsp;m deep. With no stone in the region, the earth was moved with wood and baskets.</li>
     <li>They were spaces for ceremony and political decisions, linked by <b>350&nbsp;km of roads</b> mapped so far, which widened as they approached them. They were neither fortresses nor dwellings.</li>
     <li>Around AD 850 they stopped being built, around the time the Maya abandoned their cities.</li>
@@ -130,7 +130,7 @@
   <p>En julio de 2026, un equipo de universidades de Finlandia y Brasil (Helsinki, Turku, UFAC, UFPA y otras) publicó en <i>Nature</i> un relevamiento con LiDAR, un láser lanzado desde un avión que ve bajo los árboles, de 4497&nbsp;km² entre Acre y Amazonas. Encontraron <b>432 estructuras, 396 de ellas nunca registradas</b>.</p>
   <ul>
     <li>Los geoglifos se construyeron entre <b>600 a.&nbsp;C. y 850 d.&nbsp;C.</b> por la llamada civilización Aquiry.</li>
-    <li>El área ocupada llegaría a <b>183&nbsp;000 km²</b>, un poco más que Uruguay, con <b>hasta 3 millones de personas</b> entre 100 y 300 d.&nbsp;C.</li>
+    <li>El área ocupada llegaría a <b>183&nbsp;000 km²</b>, un poco más que Uruguay hoy, con <b>hasta 3 millones de personas</b> entre 100 y 300 d.&nbsp;C.</li>
     <li>Las zanjas llegan a 15&nbsp;m de ancho y 5&nbsp;m de profundidad. Sin piedra en la región, la tierra se movía con madera y cestos.</li>
     <li>Eran espacios de ceremonia y de decisión política, unidos por <b>350&nbsp;km de caminos</b> ya mapeados, que se ensanchaban al acercarse a ellos. No eran fortalezas ni viviendas.</li>
     <li>Hacia el 850 d.&nbsp;C. dejaron de construirse, en la misma época en que los mayas abandonaron sus ciudades.</li>
