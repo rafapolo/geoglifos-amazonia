@@ -4,8 +4,9 @@ Saídas públicas (licença aberta) em docs/data/:
   nature2026.geojson   Pärssinen et al. 2026, Nature, CC BY 4.0 (estruturas por LiDAR)
   science2023.geojson  Peripato et al. 2023, Science, Zenodo (base compilada de 961 estruturas)
   probabilidade.png    modelo de probabilidade de estruturas ocultas (Science 2023), em EPSG:3857
-Saídas locais (Jacobs, "all rights reserved", fora do git) em docs/data/local/:
+Saídas de James Q. Jacobs (©, publicadas com autorização dele, informada em 2026-11-04) em docs/data/jacobs/:
   jacobs_pontos.geojson, jacobs_contornos.geojson, jacobs_linhas.geojson
+  (amazon_geoglyphs.kml + bolivia.kml, sem as áreas de busca, a topografia e as interpretações)
 
 Uso: uv run --with polars script/convert.py   (precisa de Rscript e GDAL no PATH)
 """
@@ -25,7 +26,7 @@ ROOT = Path(__file__).resolve().parent.parent
 RAW = ROOT / "data/raw"
 PROC = ROOT / "data/processed"
 OUT = ROOT / "docs/data"
-LOCAL = OUT / "local"
+JACOBS = OUT / "jacobs"
 NS = {"k": "http://www.opengis.net/kml/2.2"}
 
 FORMAS = {
@@ -134,6 +135,9 @@ def jacobs() -> None:
     pontos, contornos, linhas = [], [], []
     for folder in doc.findall("k:Folder", NS):
         grupo = folder.findtext("k:name", namespaces=NS)
+        # as áreas de busca de cada viagem (retângulos de 20 a 150 km) não são estruturas
+        if grupo == "surveys":
+            continue
         for sub in [folder, *folder.findall(".//k:Folder", NS)]:
             subgrupo = sub.findtext("k:name", namespaces=NS)
             for pm in sub.findall("k:Placemark", NS):
@@ -167,9 +171,67 @@ def jacobs() -> None:
                         geom = ({"type": "Polygon", "coordinates": [c]} if alvo is contornos
                                 else {"type": "LineString", "coordinates": c})
                         alvo.append({"type": "Feature", "properties": props, "geometry": geom})
-    write_geojson(LOCAL / "jacobs_pontos.geojson", pontos)
-    write_geojson(LOCAL / "jacobs_contornos.geojson", contornos)
-    write_geojson(LOCAL / "jacobs_linhas.geojson", linhas)
+    p2, c2, l2 = jacobs_bolivia()
+    write_geojson(JACOBS / "jacobs_pontos.geojson", pontos + p2)
+    write_geojson(JACOBS / "jacobs_contornos.geojson", contornos + c2)
+    write_geojson(JACOBS / "jacobs_linhas.geojson", linhas + l2)
+
+
+# bolivia.kml: pastas que não são estruturas (topografia, cotas, áreas de busca, leituras)
+# ou que são interpretação (alinhamentos astronômicos) ficam de fora
+BOLIVIA_FORA = {"topography", "topography map grids", "rivers", "elevations", "fields", "contours",
+                "alignments", "long lines", "surveys", "references and readings", "videos"}
+# pastas de recintos: as linhas delas são contornos, não estradas
+BOLIVIA_RECINTOS = {"outlines", "zanjas", "geoglyphs and zanjas", "features", "sites"}
+BOLIVIA_FORMAS = {"circle": "círculo", "rectangle": "retângulo", "oval": "oval", "enclosure": "recinto",
+                  "zanja": "zanja", "geoglyph": "geoglifo", "mound": "loma", "loma": "loma",
+                  "weir": "barragem de pesca", "arc": "arco"}
+
+
+def jacobs_bolivia() -> tuple[list, list, list]:
+    """Llanos de Mojos (Bolívia): calçadas e canais, contornos, zanjas, lomas e sítios."""
+    root = ET.parse(RAW / "jacobs/bolivia.kml").getroot()
+    pontos, contornos, linhas = [], [], []
+
+    def andar(pasta, caminho):
+        nomes = [n.lower() for n in caminho]
+        if any(n in BOLIVIA_FORA for n in nomes):
+            return
+        regiao = caminho[1] if len(caminho) > 1 else "bolivia"
+        tipo = caminho[-1]
+        recinto = any(n in BOLIVIA_RECINTOS for n in nomes)
+        for pm in pasta.findall("k:Placemark", NS):
+            nome = (pm.findtext("k:name", default="", namespaces=NS) or "").strip()
+            props = {"codigo": nome, "grupo": "bolivia", "subgrupo": regiao, "tipo": tipo, "fonte": "jacobs"}
+            pt = pm.find(".//k:Point/k:coordinates", NS)
+            if pt is not None:
+                c = coords(pt.text)
+                if not c or not nome:
+                    continue
+                chave = next((k for k in BOLIVIA_FORMAS if k in (nome + " " + tipo).lower()), None)
+                tam = re.search(r"(\d+(?:\.\d+)?)\s*m\b", nome)
+                props |= {"nome": nome, "forma": BOLIVIA_FORMAS.get(chave, "sítio"),
+                          "tamanho_m": float(tam.group(1)) if tam else None, "duvidoso": "?" in nome}
+                pontos.append(point(*c[0], props))
+                continue
+            for ls in pm.iterfind(".//k:LineString/k:coordinates", NS):
+                c = coords(ls.text)
+                if len(c) < 2:
+                    continue
+                if recinto:
+                    fechado = c[0] == c[-1] and len(c) >= 4
+                    geom = {"type": "Polygon", "coordinates": [c]} if fechado else {"type": "LineString", "coordinates": c}
+                    contornos.append({"type": "Feature", "properties": props, "geometry": geom})
+                else:
+                    linhas.append({"type": "Feature", "properties": props, "geometry": {"type": "LineString", "coordinates": c}})
+        for sub in pasta.findall("k:Folder", NS):
+            andar(sub, [*caminho, sub.findtext("k:name", default="", namespaces=NS)])
+
+    doc = root.find("k:Document", NS)
+    for pasta in doc.findall("k:Folder", NS):
+        andar(pasta, [pasta.findtext("k:name", default="", namespaces=NS)])
+    print(f"bolívia: {len(pontos)} pontos, {len(contornos)} contornos, {len(linhas)} linhas")
+    return pontos, contornos, linhas
 
 
 if __name__ == "__main__":

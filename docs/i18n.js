@@ -28,7 +28,7 @@
       'c-lidar': 'Open LiDAR: terrain under the forest<small>EBA project strips (INPE); zoom in to see</small>',
       'c-prob': 'Where more structures may be<small>predictive model, Science 2023</small>',
       'c-fotos': 'Photos<small>Ancient Amazonian Earthworks app (R. Walker)</small>',
-      'c-jacobs': 'Jacobs (local only)<small>points, outlines and roads</small>',
+      'c-jacobs': 'Outlines and roads<small>J. Q. Jacobs, with Mojos (Bolivia); zoom in to see</small>',
       'prob-menor': 'lower',
       'prob-maior': 'higher probability',
       'd-oque': `<summary>What are geoglyphs?</summary>
@@ -43,7 +43,7 @@
       <li>Tour: BBC News Brasil (30/09/2026); Prümers et al. 2022, <i>Nature</i>, <a href="https://doi.org/10.1038/s41586-022-04780-4">doi:10.1038/s41586-022-04780-4</a>; Koch et al. 2019, <i>Quaternary Science Reviews</i>, <a href="https://doi.org/10.1016/j.quascirev.2018.12.004">doi:10.1016/j.quascirev.2018.12.004</a>.</li>
       <li>Satellite imagery: Esri World Imagery.</li>
     </ul>
-    <p>The most complete database, with photos and outlines, is <a href="https://www.jqjacobs.net/archaeology/geoglyph.html">James Q. Jacobs</a>'s.</p>`,
+    <p>Outlines, roads, causeways and points (Brazil and the Llanos de Mojos, Bolivia): <a href="https://www.jqjacobs.net/archaeology/geoglyph.html">James Q. Jacobs</a>, published with the author's permission. Search areas, topography and alignments were left out.</p>`,
       'd-protecao': `<summary>Protecting the sites</summary>
     <p>Archaeological sites are federal property in Brazil (Law 3,924/1961). The coordinates here were already published by the authors, with a precision of about 100&nbsp;m. Do not enter private land or remove material; damaging sites is a crime.</p>`,
       rodape: 'Code and data on GitHub',
@@ -93,7 +93,7 @@
       'c-lidar': 'LiDAR abierto: relieve bajo el bosque<small>franjas del proyecto EBA (INPE); acérquese para verlas</small>',
       'c-prob': 'Dónde aún puede haber estructuras<small>modelo predictivo, Science 2023</small>',
       'c-fotos': 'Fotos<small>app Ancient Amazonian Earthworks (R. Walker)</small>',
-      'c-jacobs': 'Jacobs (solo local)<small>puntos, contornos y caminos</small>',
+      'c-jacobs': 'Contornos y caminos<small>J. Q. Jacobs, con Mojos (Bolivia); acérquese para verlos</small>',
       'prob-menor': 'menor',
       'prob-maior': 'mayor probabilidad',
       'd-oque': `<summary>¿Qué son los geoglifos?</summary>
@@ -108,7 +108,7 @@
       <li>Tour: BBC News Brasil (30/09/2026); Prümers et al. 2022, <i>Nature</i>, <a href="https://doi.org/10.1038/s41586-022-04780-4">doi:10.1038/s41586-022-04780-4</a>; Koch et al. 2019, <i>Quaternary Science Reviews</i>, <a href="https://doi.org/10.1016/j.quascirev.2018.12.004">doi:10.1016/j.quascirev.2018.12.004</a>.</li>
       <li>Imágenes de satélite: Esri World Imagery.</li>
     </ul>
-    <p>La base más completa, con fotos y contornos, es la de <a href="https://www.jqjacobs.net/archaeology/geoglyph.html">James Q. Jacobs</a>.</p>`,
+    <p>Contornos, caminos, calzadas y puntos (Brasil y los Llanos de Mojos, en Bolivia): <a href="https://www.jqjacobs.net/archaeology/geoglyph.html">James Q. Jacobs</a>, publicados con autorización del autor. Quedaron fuera las áreas de búsqueda, la topografía y los alineamientos.</p>`,
       'd-protecao': `<summary>Protección de los sitios</summary>
     <p>En Brasil, los sitios arqueológicos son bienes de la Unión (Ley 3924/1961). Las coordenadas de este mapa ya fueron publicadas por los autores, con una precisión de unos 100&nbsp;m. No entre en propiedades ni retire material; dañar sitios es delito.</p>`,
       rodape: 'Código y datos en GitHub',

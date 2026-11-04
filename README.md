@@ -14,7 +14,7 @@ Não existia um mapa web público e mantido desses sítios. A base mais completa
 | Base compilada de estruturas de terra | 961 | Peripato et al. 2023, *Science* ([doi](https://doi.org/10.1126/science.ade2541), [Zenodo](https://zenodo.org/records/10214943)) | aberta (Zenodo) |
 | Probabilidade de estruturas ainda ocultas | raster 1 km | Peripato et al. 2023, modelo preditivo | aberta (Zenodo) |
 | Fotos dos sítios | 664 | app [Ancient Amazonian Earthworks](https://robert-walker.shinyapps.io/ggshiny/) (R. Walker) | de terceiros; publicadas reduzidas e com crédito |
-| Pontos, contornos e estradas de J. Q. Jacobs | 1.805 / 1.567 / 2.928 | [jqjacobs.net](https://www.jqjacobs.net/archaeology/geoglyph.html) | **todos os direitos reservados: só na cópia local** |
+| Pontos, contornos e estradas de J. Q. Jacobs (Brasil e Llanos de Mojos, Bolívia) | 2.204 / 1.187 / 8.356 | [jqjacobs.net](https://www.jqjacobs.net/archaeology/geoglyph.html) | todos os direitos reservados; **publicado com autorização do autor** (2026-11-04), sem as áreas de busca, a topografia e os alinhamentos |
 
 Das 406 estruturas da *Nature*, 337 não estavam na base do Jacobs. As estruturas em terras indígenas foram omitidas pelos próprios autores.
 
@@ -34,7 +34,7 @@ python3 -m http.server -d docs                                            # abre
 bun install && bun run build                                              # versão de produção minificada -> dist/
 ```
 
-`data/raw/` (com `MANIFEST.tsv`: hash e data de cada arquivo) e `docs/data/local/` (camadas do Jacobs) ficam fora do git. Na cópia local, o mapa mostra também as camadas do Jacobs; na versão publicada, elas não existem.
+`data/raw/` (com `MANIFEST.tsv`: hash e data de cada arquivo) fica fora do git. As camadas do Jacobs saem convertidas em `docs/data/jacobs/` e são publicadas com autorização dele.
 
 ## Estrutura
 
@@ -53,6 +53,6 @@ Sítios arqueológicos são bens da União (Lei 3.924/1961), e vários geoglifos
 
 ## Próximos passos
 
-- Pedir a James Q. Jacobs autorização para publicar a base dele (contornos, estradas e fotos de drone).
+- Pedir a James Q. Jacobs as fotos de drone (contornos e estradas já autorizados e publicados).
 - Avisar Robert Walker (Univ. of Missouri) de que as fotos do app dele estão no mapa, com crédito, e pedir a autorização formal.
 - Pedir ao IPHAN, via LAI, os sítios georreferenciados do Acre (SICG/CNSA).

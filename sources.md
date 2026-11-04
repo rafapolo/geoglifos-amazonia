@@ -6,7 +6,8 @@ Levantamento feito em 2026-11-03. Os arquivos brutos são baixados por `script/s
 
 ### 1. James Q. Jacobs — Amazon Geoglyphs (base principal)
 - Página: https://www.jqjacobs.net/archaeology/geoglyph.html
-- **Licença: ©2026 James Q. Jacobs, "all rights reserved".** Uso local e para estudo; publicar exige autorização do autor.
+- **Licença: ©2026 James Q. Jacobs, "all rights reserved".** Publicado com autorização do autor, dada por e-mail (jqjacobs@yahoo.com) a rafapolo e registrada aqui em 2026-11-04, com crédito e link em cada balão e no painel de fontes.
+- Publicado: `amazon_geoglyphs.kml` e `bolivia.kml` (Llanos de Mojos) convertidos por `script/convert.py` em `docs/data/jacobs/` (pontos, contornos, estradas, calçadas e canais). Fora: as áreas de busca (`surveys`, retângulos de 20 a 150 km), a grade topográfica, rios, cotas, curvas de nível, campos sem nome e os alinhamentos astronômicos.
 - É o inventário mais completo que existe: compilado de imagens de satélite, drone, LiDAR e da literatura, com referências no balão de cada sítio. Atualizado várias vezes por ano (no cabeçalho do KML: 2025.01 → 2026.04).
 
 | Arquivo | Atualizado | Conteúdo |

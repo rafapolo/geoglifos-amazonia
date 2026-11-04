@@ -3,7 +3,7 @@
 // - index.html minificado, com o CSS e o JS inline
 // - som.js, tour.js e navegacao.js juntos num app.js minificado (uma requisição em vez de três)
 // - MapLibre servido pelo próprio site, não pelo unpkg.com (um bloqueador ou uma queda do CDN derrubava o mapa)
-// - dados e fotos copiados como estão; docs/data/local/ (Jacobs, "all rights reserved") nunca entra
+// - dados e fotos copiados como estão; docs/data/local/ (cópias só locais, se houver) nunca entra
 // docs/ continua funcionando sem build: `bun run dev`.
 
 import { minify } from "html-minifier-terser";
