@@ -45,7 +45,6 @@
   #painel h1, label.camada .nome { display: block; white-space: nowrap; overflow: hidden; }
   label.camada > span { min-width: 0; }
   /* camadas sem licença para publicar: só aparecem na cópia local (localhost) */
-  label.camada.fundo { border-top: 0; margin-bottom: 4px; }
   label.camada.local { display: none; }
   .tem-local label.camada.local { display: grid; }
   .lede { color: var(--suave); margin: 0 0 14px; }
@@ -318,7 +317,7 @@
   <button id="tour-abrir-painel" class="tour-btn" type="button" data-i18n="tour-painel">Tour de 3 minutos</button>
 
   <h2 data-i18n="camadas">Camadas</h2>
-  <label class="camada fundo"><input type="checkbox" id="fundo-verde"><span class="sw" style="background:#1f3d29;border:1px solid #e9b44c"></span>
+  <label class="camada fundo"><input type="checkbox" id="fundo-verde"><span class="sw" style="background:#1f3d29"></span>
     <span data-i18n="c-fundo">Fundo verde, só os desenhos<small>sem satélite: só os traçados, como num mapa desenhado</small></span><span></span></label>
   <label class="camada"><input type="checkbox" data-camada="nature" checked><span class="sw" style="background:var(--terra)"></span>
     <span data-i18n="c-nature">LiDAR: Nature 2026<small>estruturas sob a floresta (Pärssinen et al.)</small></span><span class="n" id="n-nature"></span></label>
