@@ -29,7 +29,7 @@ Testado por distância: nenhum ponto destes fica a mais de 300 m de um ponto já
 
 ## Imagens da Amazônia (44 arquivos)
 
-Antes de usar qualquer imagem, confirmar com Jacobs se a autorização de 2026-11-04 cobre também as imagens, além dos traçados.
+A autorização de 2026-11-04 cobre só os traçados, não as imagens (confirmado com rafapolo). Por isso `script/jacobs_imagens_local.py` baixa 24 delas, reduzidas a 1.600 px, para `docs/data/local/` (fora do git e do site publicado) e as mostra na camada "Imagens de Jacobs (só local)". As fotos de drone ficam no sítio exato pelo código; as outras ficam no centro dos sítios do Jacobs com o mesmo nome de lugar, com a posição marcada como aproximada. Para publicar, pedir a ele a autorização das imagens.
 
 - **Desenhos:**
   - `kml/drawings/amazon_geoglyphs.jpg`, `boa_vista_amazonas.jpg` e `amazon_geoglyphs_deskpicture.jpg` (referência do desenho em `tasks/desenho-geoglifos.md`);
@@ -64,7 +64,7 @@ Antes de usar qualquer imagem, confirmar com Jacobs se a autorização de 2026-1
 
 ## Próximos passos
 
-1. Ler a planilha `amazon_geoglyphs.xls` (com Polars) e juntar os atributos aos pontos do Jacobs pelo código.
-2. Ler a dissertação da UFPA e ver se há tabela de sítios.
-3. Perguntar a Jacobs se as imagens (desenhos e fotos aéreas) entram na autorização.
+1. ~~Ler a planilha `amazon_geoglyphs.xls` e juntar os atributos aos pontos do Jacobs~~ (feito: 1.690 pontos com forma, dimensões, altitude e data da imagem).
+2. ~~Ler a dissertação da UFPA~~ (feito: 362 recintos com valeta, integridade e uso; CC BY-NC-ND, então só na cópia local).
+3. Perguntar a Jacobs se as imagens (desenhos e fotos aéreas) entram na autorização; hoje estão só na camada local.
 4. Ver as licenças das fotos do Flickr de Edison Caetano.
