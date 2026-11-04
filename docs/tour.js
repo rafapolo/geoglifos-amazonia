@@ -1,4 +1,4 @@
-// Tour: um passeio de ~2 min pela câmera, no estilo de cinema (faixas 2.39:1, legenda com kicker e frase).
+// Tour: um passeio de ~3 min pela câmera, no estilo de cinema (faixas 2.39:1, legenda com kicker e frase).
 // Abre pelo botão "Tour" ou por ?tour=1. Esc ou "✕ esc" param e devolvem o mapa como estava.
 // Os textos vêm da reportagem da BBC News Brasil (30/09/2026) e de Pärssinen et al. 2026 (Nature);
 // as contagens são calculadas dos dados carregados.
@@ -71,6 +71,9 @@
     if (f) abrirPopup(f);
   }
 
+  // os traçados de J. Q. Jacobs sem os pontos dele, que poluiriam a vista de perto
+  const tracados = () => { mostrar('jacobs', true); if (map.getLayer('jacobs-pontos')) map.setLayoutProperty('jacobs-pontos', 'visibility', 'none'); };
+
   const so = (...nomes) => ['nature', 'science', 'prob', 'fotos', 'jacobs', 'lidar'].forEach((n) => mostrar(n, nomes.includes(n)));
 
   function cenas() {
@@ -115,7 +118,27 @@
         await espera(4000);
         await legenda('Tequinho · Acre', t('“Esse povo fazia geometria monumental na Amazônia ao mesmo tempo que Pitágoras desenvolvia seu teorema na Grécia.”', '“These people were making monumental geometry in the Amazon at the same time Pythagoras was developing his theorem in Greece.”', '“Este pueblo hacía geometría monumental en la Amazonía al mismo tiempo que Pitágoras desarrollaba su teorema en Grecia.”'), 'Alceu Ranzi');
       } },
-      // 4 · LiDAR: sobe e corre ao longo das faixas do levantamento, de lado
+      // 4 · os octógonos: os únicos quatro recintos de oito lados, todos de ~155 m; de cima, com o contorno de Jacobs,
+      // do octógono simples num campo arado (onde o satélite já não mostra nada) ao octógono duplo junto da estrada
+      { dur: 14000, run: async () => {
+        so();
+        tracados();
+        const ida = voarEsperar({ center: [-67.51921, -9.89596], zoom: 16.2, pitch: 0, bearing: 0 }, 4500);
+        await legenda(t('Octógonos · Acre e Amazonas', 'Octagons · Acre and Amazonas', 'Octógonos · Acre y Amazonas'),
+          t(`Entre os ${fmt(dados.jacobs?.features.length || 2204)} sítios mapeados por J. Q. Jacobs, só quatro têm oito lados, e os quatro medem cerca de 155 m.`,
+            `Among the ${fmt(dados.jacobs?.features.length || 2204)} sites mapped by J. Q. Jacobs, only four have eight sides, and all four are about 155 m across.`,
+            `Entre los ${fmt(dados.jacobs?.features.length || 2204)} sitios mapeados por J. Q. Jacobs, solo cuatro tienen ocho lados, y los cuatro miden unos 155 m.`));
+        await ida;
+        orbita({ giro: 20, pitch: 25, zoom: 16.4 }, 2500);
+        await espera(2500);
+        await voarEsperar({ center: [-67.23234, -9.85533], zoom: 16.2, pitch: 30, bearing: -30 }, 3000);
+        orbita({ giro: 90, pitch: 50, zoom: 16 }, 4000);
+        await legenda(t('Octógono duplo · Acre', 'Double octagon · Acre', 'Octógono doble · Acre'),
+          t('Um deles é duplo: duas valas de oito lados, uma dentro da outra, como o quadrado triplo de Tequinho.',
+            'One of them is double: two eight-sided ditches, one inside the other, like the triple square at Tequinho.',
+            'Uno de ellos es doble: dos zanjas de ocho lados, una dentro de la otra, como el cuadrado triple de Tequinho.'));
+      } },
+      // 5 · LiDAR: sobe e corre ao longo das faixas do levantamento, de lado
       { dur: 16000, run: async () => {
         so('nature');
         const ida = voarEsperar({ center: [-67.45, -9.75], zoom: 8.4, pitch: 66, bearing: 35 }, 5000);
@@ -125,7 +148,7 @@
         await espera(1500);
         await legenda('LiDAR · Nature 2026', t(`Das ${fmt(nat.length)} com coordenadas publicadas, ${fmt(aquiry)} seguem o padrão Aquiry: juntas, cobrem ${fmt(Math.round(ha))} hectares.`, `Of the ${fmt(nat.length)} with published coordinates, ${fmt(aquiry)} follow the Aquiry pattern: together they cover ${fmt(Math.round(ha))} hectares.`, `De las ${fmt(nat.length)} con coordenadas publicadas, ${fmt(aquiry)} siguen el patrón Aquiry: juntas cubren ${fmt(Math.round(ha))} hectáreas.`));
       } },
-      // 5 · o laser revela: de cima só copa de árvore; a camada de LiDAR acende e mostra o recinto quadrado
+      // 6 · o laser revela: de cima só copa de árvore; a camada de LiDAR acende e mostra o recinto quadrado
       { dur: 14000, run: async () => {
         so('nature');
         const ida = voarEsperar({ center: [-66.79467, -9.41614], zoom: 15.6, pitch: 0, bearing: 0 }, 5000);
@@ -140,7 +163,7 @@
             'The laser strips the trees away and shows the ground. Here, Nature recorded a 3-hectare Aquiry enclosure.',
             'El láser quita los árboles y muestra el suelo. Aquí, Nature registró un recinto Aquiry de 3 hectáreas.'));
       } },
-      // 6 · Aquiry: recua para mostrar o território e gira devagar sobre ele
+      // 7 · Aquiry: recua para mostrar o território e gira devagar sobre ele
       { dur: 14000, run: async () => {
         so('nature', 'science');
         const ida = voarEsperar({ center: [-66.9, -9.8], zoom: 6.3, pitch: 50, bearing: -10 }, 4000);
@@ -150,7 +173,7 @@
         await espera(2500);
         await legenda(t('Aquiry · estradas', 'Aquiry · roads', 'Aquiry · caminos'), t('Os sítios eram ligados por estradas, 350 km já mapeados, que se alargavam ao chegar perto deles.', 'The sites were linked by roads, 350 km mapped so far, that widened as they approached them.', 'Los sitios estaban unidos por caminos, 350 km ya mapeados, que se ensanchaban al acercarse a ellos.'));
       } },
-      // 7 · um sítio cerimonial no pasto: dois círculos, um retângulo e as estradas entre eles
+      // 8 · um sítio cerimonial no pasto: dois círculos, um retângulo e as estradas entre eles
       // (Acre, Iriarte et al. 2020); só o satélite, e uma órbita completa
       { dur: 14000, run: async () => {
         so();
@@ -161,7 +184,7 @@
         await espera(3200);
         await legenda(t('Por volta de 850 d.C.', 'Around AD 850', 'Hacia el 850 d. C.'), t('Deixaram de ser construídos, na mesma época em que os maias abandonaram suas cidades.', 'They stopped being built, around the time the Maya abandoned their cities.', 'Dejaron de construirse en la misma época en que los mayas abandonaron sus ciudades.'));
       } },
-      // 8 · o que falta achar: sobe alto, a câmera endireita e o mapa de probabilidade se espalha
+      // 9 · o que falta achar: sobe alto, a câmera endireita e o mapa de probabilidade se espalha
       { dur: 13000, run: async () => {
         so('prob', 'nature');
         const ida = voarEsperar({ center: [-66.5, -8.8], zoom: 5.6, pitch: 55, bearing: 30 }, 4000);
@@ -171,8 +194,9 @@
         await espera(2000);
         await legenda(t('Ainda escondidos', 'Still hidden', 'Todavía ocultos'), t('Em vermelho, onde o modelo da Science prevê mais chance de encontrá-las.', 'In red, where the Science model predicts they are most likely to be found.', 'En rojo, donde el modelo de Science prevé más probabilidad de encontrarlas.'));
       } },
-      // 9 · Cotoca, na Bolívia: do satélite, só mato; o LiDAR achou ali uma cidade. A pergunta do que ainda falta achar
-      { dur: 15000, run: async () => {
+      // 10 · Cotoca, na Bolívia: do satélite, só mato; o LiDAR achou ali uma cidade. Depois a câmera recua e
+      // as calçadas e canais de Mojos (traçados de J. Q. Jacobs) acendem saindo do sítio. A pergunta do que falta achar
+      { dur: 22000, run: async () => {
         so('fotos');
         const ida = voarEsperar({ center: [-64.58676, -14.99074], zoom: 16, pitch: 0, bearing: 40 }, 5000);
         await legenda(t('Cotoca · Bolívia · Nature 2022', 'Cotoca · Bolivia · Nature 2022', 'Cotoca · Bolivia · Nature 2022'),
@@ -182,14 +206,25 @@
         await ida;
         // a imagem de LiDAR de Cotoca (Prümers et al. 2022) abre sobre o mato que o satélite mostra
         balao('fotos', 'cotoca');
-        orbita({ giro: 60, pitch: 55, zoom: 15.4 }, 9500);
-        await espera(4500);
+        orbita({ giro: 30, pitch: 40, zoom: 15.6 }, 5500);
+        await espera(5500);
+        fecharBaloes();
+        so();
+        tracados();
+        const recuo = voarEsperar({ center: [-64.6, -15.0], zoom: 11.4, pitch: 35, bearing: 20 }, 3500);
+        await legenda(t('Llanos de Mojos · traçados de J. Q. Jacobs', 'Llanos de Mojos · outlines by J. Q. Jacobs', 'Llanos de Mojos · trazados de J. Q. Jacobs'),
+          t('Calçadas elevadas e canais saem de Cotoca em todas as direções e ligam a cidade aos sítios vizinhos.',
+            'Raised causeways and canals leave Cotoca in every direction and link the city to the sites around it.',
+            'Calzadas elevadas y canales salen de Cotoca en todas las direcciones y unen la ciudad a los sitios vecinos.'));
+        await recuo;
+        orbita({ giro: 35, pitch: 45, zoom: 11.1 }, 7500);
+        await espera(3200);
         await legenda(t('O que vem por aí', 'What comes next', 'Lo que viene'),
           t('Cada voo de LiDAR desmonta um pouco mais a ideia de uma floresta virgem. O que a mata ainda esconde?',
             'Every LiDAR flight dismantles a little more the idea of a virgin forest. What is the forest still hiding?',
             'Cada vuelo de LiDAR desmonta un poco más la idea de un bosque virgen. ¿Qué esconde todavía la selva?'));
       } },
-      // 10 · fecho: a colonização, a última órbita larga e a câmera volta ao mapa chapado
+      // 11 · fecho: a colonização, a última órbita larga e a câmera volta ao mapa chapado
       { dur: 16000, run: async () => {
         fecharBaloes();
         so('nature', 'science');
@@ -324,7 +359,7 @@
     history.replaceState(null, '', location.pathname + (q.size ? `?${q}` : '') + location.hash);
     const convite = $('tour-convite');
     $('tour-convite-txt').textContent = t('Começar o tour', 'Start the tour', 'Empezar el tour');
-    $('tour-convite-sub').textContent = t('2 minutos, com som', '2 minutes, with sound', '2 minutos, con sonido');
+    $('tour-convite-sub').textContent = t('3 minutos, com som', '3 minutes, with sound', '3 minutos, con sonido');
     convite.hidden = false;
     const fechar = () => { convite.hidden = true; removeEventListener('keydown', tecla); };
     const tecla = (e) => { if (e.key === 'Escape') fechar(); };
