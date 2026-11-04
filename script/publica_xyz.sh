@@ -20,9 +20,10 @@ bun run build
 
 git -C "$XYZ" pull --ff-only -q
 rsync -a --delete dist/ "$DESTINO/"
+# o gerador de sitemap só enxerga arquivos versionados: primeiro o add, depois o sitemap
+git -C "$XYZ" add -A dataviz/geoglifos-amazonia
 (cd "$XYZ" && bun scripts/gera_seo.ts >/dev/null)
-
-git -C "$XYZ" add -A dataviz/geoglifos-amazonia sitemap.xml
+git -C "$XYZ" add sitemap.xml
 if git -C "$XYZ" diff --cached --quiet; then
   echo "nada mudou em $DESTINO"; exit 0
 fi
