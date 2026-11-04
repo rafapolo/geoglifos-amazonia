@@ -82,4 +82,5 @@ Não há nenhum mapa web público e mantido dos geoglifos amazônicos. O KML do 
 
 - `octagons.kml` (https://www.jqjacobs.net/kml/octagons.kml): entram só os 4 octógonos da Amazônia (polígonos e sítios); as linhas de análise geométrica e os octógonos de Ohio ficam de fora.
 - `acrelandia_2022_survey.kml`: os contornos e estradas do levantamento de Acrelândia 2022, sem o contorno da área de busca.
+- `amazon_geoglyphs.xls` (abas geoglyphs, mato grosso e mound villages): juntada aos pontos pelo código; dá forma, dimensões (a × b), altitude e o registro (data da imagem do Google Earth em que o sítio foi visto, ou a referência). 1.690 dos 2.204 pontos ganham esses atributos.
 

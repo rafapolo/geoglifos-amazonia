@@ -10,7 +10,7 @@ Saídas de James Q. Jacobs (©, publicadas com autorização dele, informada em 
    sem as áreas de busca, a topografia e as interpretações)
   kalliola2024.geojson  Kalliola et al. 2024, Acta Amazonica, CC BY 4.0 (1.279 estruturas, do PDF do Fairdata)
 
-Uso: uv run --with polars script/convert.py   (precisa de Rscript e GDAL no PATH)
+Uso: uv run --with polars --with fastexcel script/convert.py   (precisa de Rscript e GDAL no PATH)
 """
 
 import html
@@ -178,9 +178,47 @@ def jacobs() -> None:
     # os extras repetem alguns códigos da base principal: o ponto fica uma vez só
     vistos = {f["properties"]["codigo"] for f in pontos + p2}
     p3 = [f for f in p3 if f["properties"]["codigo"] not in vistos]
+    # atributos da planilha (amazon_geoglyphs.xls) pelo código: dimensões, forma, altitude e registro
+    planilha = jacobs_planilha()
+    juntados = 0
+    for f in pontos + p2 + p3:
+        extra = planilha.get(f["properties"]["codigo"].lower())
+        if extra:
+            f["properties"] |= extra
+            juntados += 1
+    print(f"planilha: {len(planilha)} linhas, {juntados} pontos com atributos")
     write_geojson(JACOBS / "jacobs_pontos.geojson", pontos + p2 + p3)
     write_geojson(JACOBS / "jacobs_contornos.geojson", contornos + c2 + c3)
     write_geojson(JACOBS / "jacobs_linhas.geojson", linhas + l2 + l3)
+
+
+def jacobs_planilha() -> dict[str, dict]:
+    """amazon_geoglyphs.xls: abas geoglyphs, mato grosso e mound villages, com cabeçalho na 2ª linha:
+    nº, code, place, lat, lon, elevação (m), source (data da imagem do Google Earth ou referência),
+    a width, b width, form."""
+    abas = pl.read_excel(RAW / "jacobs/amazon_geoglyphs.xls", sheet_id=0, read_options={"header_row": 1})
+    out = {}
+    for nome in ("geoglyphs", "mato grosso", "mound villages"):
+        df = abas[nome]
+        cols = df.columns
+        for row in df.iter_rows():
+            codigo = (row[1] or "").strip().lower()
+            if not codigo or codigo == "code":
+                continue
+            num = lambda v: float(v) if v not in (None, "") and re.fullmatch(r"-?\d+(\.\d+)?", str(v).strip()) else None
+            reg = (row[6] or "").strip() if len(row) > 6 else ""
+            m = re.match(r"GE\s+(\d{4})[-.](\d{2})[-.](\d{2})", reg)
+            a, b = (num(row[7]), num(row[8])) if len(cols) > 8 else (None, None)
+            item = {"altitude_m": num(row[5]),
+                    "registro": f"{m.group(1)}-{m.group(2)}-{m.group(3)}" if m else (reg or None),
+                    "registro_tipo": "imagem" if m else ("referencia" if reg else None),
+                    "dim_a_m": a, "dim_b_m": b}
+            if len(cols) > 9 and row[9] and row[9] != "form":
+                item["forma_en"] = row[9]
+            if nome == "mound villages":
+                item["forma_en"] = "mound village"
+            out[codigo] = {k: v for k, v in item.items() if v is not None}
+    return out
 
 
 def jacobs_extras() -> tuple[list, list, list]:

@@ -570,7 +570,29 @@ map.on('load', async () => {
     if (p.fonte === 'walker') return `<img src="${esc(p.foto)}" alt="${esc(p.legenda)}" loading="lazy"><b>${esc(p.legenda)}</b><br><span class="credito">${t('Foto', 'Photo', 'Foto')}: ${esc(p.credito)}</span>`;
     if (p.fonte === 'kalliola2024') return `<b>${esc(p.nome)}</b><br><small><a href="https://doi.org/10.23729/da98421d-d65d-4045-bc93-344a0837cc93" target="_blank" rel="noopener">Kalliola et al. 2024</a>, <i>Acta Amazonica</i> (CC BY 4.0)</small>`;
     if (p.fonte === 'science2023') return `<b>${t('Estrutura de terra', 'Earthwork', 'Estructura de tierra')}</b><br><small>${t('Base', 'Database', 'Base')}: ${esc(p.base)}<br>Peripato et al. 2023, <i>Science</i></small>`;
-    return `<b>${esc(p.nome || p.codigo)}</b><br><span class="tag">${esc(p.forma || p.grupo)}</span><span class="tag">${esc(p.codigo)}</span><br><small><a href="https://www.jqjacobs.net/archaeology/geoglyph.html" target="_blank" rel="noopener">J. Q. Jacobs</a></small>`;
+    return balaoJacobs(p);
+  };
+  // ponto de J. Q. Jacobs: forma, dimensões, altitude e registro vêm da planilha dele (amazon_geoglyphs.xls)
+  const FORMAS = {
+    quadrangle: ['quadrângulo', 'quadrangle', 'cuadrángulo'], geoglyph: ['geoglifo', 'geoglyph', 'geoglifo'], zanja: ['zanja', 'zanja', 'zanja'],
+    enclosure: ['recinto', 'enclosure', 'recinto'], circle: ['círculo', 'circle', 'círculo'], oval: ['oval', 'oval', 'óvalo'],
+    square: ['quadrado', 'square', 'cuadrado'], rectangle: ['retângulo', 'rectangle', 'rectángulo'], parallelogram: ['paralelogramo', 'parallelogram', 'paralelogramo'],
+    ellipse: ['elipse', 'ellipse', 'elipse'], octagon: ['octógono', 'octagon', 'octógono'], hexagon: ['hexágono', 'hexagon', 'hexágono'],
+    pentagon: ['pentágono', 'pentagon', 'pentágono'], 'mound village': ['aldeia de montículos', 'mound village', 'aldea de montículos'],
+  };
+  const balaoJacobs = (p) => {
+    const forma = FORMAS[p.forma_en] ? t(...FORMAS[p.forma_en]) : (p.forma || p.grupo);
+    const m = (v) => `${fmt(v)} m`;
+    const dim = p.dim_a_m ? (p.dim_b_m ? `${fmt(p.dim_a_m)} × ${m(p.dim_b_m)}` : m(p.dim_a_m)) : '';
+    const linhas = [];
+    if (dim) linhas.push(dim);
+    if (p.altitude_m) linhas.push(t(`altitude ${m(p.altitude_m)}`, `elevation ${m(p.altitude_m)}`, `altitud ${m(p.altitude_m)}`));
+    if (p.registro) linhas.push(p.registro_tipo === 'imagem'
+      ? t(`visto em imagem de satélite de ${p.registro}`, `seen on satellite imagery from ${p.registro}`, `visto en imagen satelital de ${p.registro}`)
+      : t(`registro: ${esc(p.registro)}`, `record: ${esc(p.registro)}`, `registro: ${esc(p.registro)}`));
+    return `<b>${esc(p.nome || p.codigo)}</b><br><span class="tag">${esc(forma)}</span><span class="tag">${esc(p.codigo)}</span>`
+      + (linhas.length ? `<br><small>${linhas.join(' · ')}</small>` : '')
+      + `<br><small><a href="https://www.jqjacobs.net/archaeology/geoglyph.html" target="_blank" rel="noopener">J. Q. Jacobs</a></small>`;
   };
   window.abrirPopup = (f) => {
     document.querySelectorAll('.maplibregl-popup').forEach(p => p.remove());
