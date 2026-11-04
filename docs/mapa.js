@@ -84,6 +84,8 @@ function circulo(id, source, cor, raio) {
     'circle-radius': ['interpolate', ['linear'], ['zoom'], 5, raio * 0.6, 10, raio, 15, raio * 1.8],
     'circle-opacity': ['interpolate', ['linear'], ['zoom'], 5.6, 0, 7.4, 0.92],
     'circle-stroke-opacity': SURGE } });
+  // pontos com foto ficam por cima dos que caem no mesmo lugar (as camadas chegam em ordens diferentes)
+  for (const c of ['jacobsimg', 'fotos']) if (map.getLayer(c)) map.moveLayer(c);
 }
 function mancha(id, source, peso) {
   map.addLayer({ id, type: 'heatmap', source, maxzoom: 9.5, paint: {
@@ -206,9 +208,29 @@ map.on('load', async () => {
     return new maplibregl.Popup({ offset: 8, className: temFoto(f.properties) ? 'foto' : '' })
       .setLngLat(f.geometry.coordinates).setHTML(popup(f)).addTo(map);
   };
-  for (const id of ['nature', 'science', 'kalliola', 'ufpa', 'jacobsimg', 'fotos', 'jacobs-pontos']) {
-    if (!map.getLayer(id)) continue;
-    map.on('click', id, (e) => abrirSitio(e.features[0]));
+  const PONTOS = ['nature', 'science', 'kalliola', 'ufpa', 'jacobsimg', 'fotos', 'jacobs-pontos'];
+  // o ponto com foto tem prioridade, como um z-index: um ponto sem foto a até 30 m de um com foto
+  // (o mesmo sítio, em outra base) cede a vez a ele, se a camada da foto estiver ligada
+  const visivel = id => map.getLayer(id) && map.getLayoutProperty(id, 'visibility') !== 'none';
+  const metros = ([x1, y1], [x2, y2]) => Math.hypot((x2 - x1) * 111320 * Math.cos(y1 * Math.PI / 180), (y2 - y1) * 110540);
+  window.preferirFoto = (f) => {
+    if (!f || temFoto(f.properties)) return f;
+    const candidatos = [['fotos', dados.fotos], ['jacobsimg', dados.jacobsimg], ['nature', dados.nature]]
+      .filter(([id, fc]) => fc && visivel(id)).flatMap(([, fc]) => fc.features).filter(g => temFoto(g.properties));
+    let melhor = f, dmin = 30;
+    for (const g of candidatos) {
+      const d = metros(f.geometry.coordinates, g.geometry.coordinates);
+      if (d <= dmin) { melhor = g; dmin = d; }
+    }
+    return melhor;
+  };
+  // um clique só para todas as camadas: onde dois pontos se sobrepõem, abre o que tem foto no balão
+  map.on('click', (e) => {
+    const layers = PONTOS.filter(id => map.getLayer(id));
+    const fs = map.queryRenderedFeatures(e.point, { layers });
+    if (fs.length) abrirSitio(fs.find(f => temFoto(f.properties)) || preferirFoto(fs[0]));
+  });
+  for (const id of PONTOS) {
     map.on('mouseenter', id, () => map.getCanvas().style.cursor = 'pointer');
     map.on('mouseleave', id, () => map.getCanvas().style.cursor = '');
   }

@@ -197,8 +197,9 @@
   // ---------- depois de carregar os dados: índice e link direto ----------
   pronto.then(() => {
     for (const [nome, fc] of Object.entries(dados)) for (const f of fc.features) indice.set(chave(f.properties), f);
-    const k = pedido.get('sitio');
-    const f = k && indice.get(k);
+    // links antigos para um ponto sem foto abrem a foto do mesmo sítio, se houver (ver preferirFoto)
+    const f = preferirFoto(pedido.get('sitio') && indice.get(pedido.get('sitio')));
+    const k = f && chave(f.properties);
     const s = { sitio: f ? k : null, sobre: pedido.has('sobre') };
     if (f) {
       history.replaceState({ ...s, cam: cam() }, '', url({ ...s, cam: cam() }));
