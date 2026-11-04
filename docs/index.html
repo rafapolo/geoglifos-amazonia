@@ -95,6 +95,11 @@
   /* no tour o mapa ocupa a tela toda, sem a faixa do painel de fotos */
   body.touring { --fotos-w: 0px; }
   #fotos { transition: opacity 600ms; }
+  /* telas grandes: coluna de fotos mais larga, com 3 miniaturas por linha (no tour ela continua sumindo) */
+  @media (min-width: 1600px) {
+    body.tem-fotos:not(.touring) { --fotos-w: 392px; }
+    #fotos-grade { grid-template-columns: repeat(3, 1fr); }
+  }
   .maplibregl-popup-content { font: 13px/1.4 Inter, sans-serif; padding: 10px 12px; border-radius: 8px; max-width: 280px; }
   .maplibregl-popup-content b { font-family: Fraunces, Georgia, serif; font-size: 15px; }
   .tag { display: inline-block; font-size: 11px; padding: 1px 6px; border-radius: 10px; background: #efe4d2; margin: 4px 4px 0 0; }
