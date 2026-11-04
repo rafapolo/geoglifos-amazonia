@@ -44,6 +44,9 @@
   /* título e nomes das camadas numa linha só; i18n.js reduz a fonte quando a tradução é mais longa */
   #painel h1, label.camada .nome { display: block; white-space: nowrap; overflow: hidden; }
   label.camada > span { min-width: 0; }
+  /* camadas sem licença para publicar: só aparecem na cópia local (localhost) */
+  label.camada.local { display: none; }
+  .tem-local label.camada.local { display: grid; }
   .lede { color: var(--suave); margin: 0 0 14px; }
   h2 { font: 600 11px/1 Inter, sans-serif; text-transform: uppercase; letter-spacing: .08em; color: var(--suave); margin: 16px 0 8px; }
   label.camada { display: grid; grid-template-columns: 18px 14px 1fr auto; gap: 8px; align-items: center; padding: 6px 0; cursor: pointer; border-top: 1px solid var(--linha); }
@@ -319,6 +322,8 @@
     <span data-i18n="c-lidar">LiDAR aberto: relevo sob a floresta<small>faixas do projeto EBA (INPE); aproxime para ver</small></span><span class="n" id="n-lidar"></span></label>
   <label class="camada"><input type="checkbox" data-camada="kalliola"><span class="sw" style="background:#e48fa8"></span>
     <span data-i18n="c-kalliola">Lista de 2024: Acta Amazonica<small>1.279 estruturas (Kalliola et al.)</small></span><span class="n" id="n-kalliola"></span></label>
+  <label class="camada local"><input type="checkbox" data-camada="ufpa"><span class="sw" style="background:#b8a1e3"></span>
+    <span data-i18n="c-ufpa">Barbosa 2014, UFPA (só local)<small>recintos, valetas e integridade; CC BY-NC-ND</small></span><span class="n" id="n-ufpa"></span></label>
   <label class="camada"><input type="checkbox" data-camada="prob"><span class="sw q" style="background:#f03b20"></span>
     <span data-i18n="c-prob">Onde ainda pode haver estruturas<small>modelo preditivo, Science 2023</small></span><span></span></label>
   <label class="camada"><input type="checkbox" data-camada="fotos" checked><span class="sw" style="background:#9cc3e6"></span>
@@ -468,9 +473,11 @@ const recolheAtribuicao = () => document.querySelectorAll('.maplibregl-ctrl-attr
 map.once('load', recolheAtribuicao); map.once('idle', recolheAtribuicao);
 
 let prontoOk; window.pronto = new Promise(r => prontoOk = r);
-const camadas = { lidar: ['lidar', 'lidar-faixas'], nature: ['nature-mancha', 'nature'], science: ['science-mancha', 'science'], prob: ['prob'], fotos: ['fotos'], kalliola: ['kalliola'], jacobs: ['jacobs-contornos', 'jacobs-linhas', 'jacobs-pontos'] };
+const camadas = { lidar: ['lidar', 'lidar-faixas'], nature: ['nature-mancha', 'nature'], science: ['science-mancha', 'science'], prob: ['prob'], fotos: ['fotos'], kalliola: ['kalliola'], ufpa: ['ufpa'], jacobs: ['jacobs-contornos', 'jacobs-linhas', 'jacobs-pontos'] };
 // chave estável de cada ponto, usada na URL (?sitio=n-12) e no histórico
-const PREFIXO = { nature2026: 'n', science2023: 's', walker: 'f', jacobs: 'j', kalliola2024: 'k' };
+const PREFIXO = { nature2026: 'n', science2023: 's', walker: 'f', jacobs: 'j', kalliola2024: 'k', ufpa2014: 'u' };
+// dados sem licença para publicar (docs/data/local/, fora do git) só são buscados na cópia local
+const LOCAL = ['localhost', '127.0.0.1'].includes(location.hostname);
 window.chave = p => `${PREFIXO[p.fonte]}-${p.id}`;
 // pontos com imagem no balão: fotos do Walker e recortes de LiDAR da Nature
 window.figuras = {};
@@ -510,6 +517,17 @@ map.on('load', async () => {
   map.addSource('prob', { type: 'image', url: 'data/probabilidade.png', coordinates: prob.coordinates });
   map.addLayer({ id: 'prob', type: 'raster', source: 'prob', layout: { visibility: 'none' }, paint: { 'raster-opacity': 0.65, 'raster-resampling': 'linear' } }, 'ref');
 
+  // Barbosa 2014 (dissertação da UFPA, CC BY-NC-ND): só na cópia local
+  if (LOCAL) try {
+    const ufpa = await carregar('data/local/ufpa2014.geojson');
+    map.addSource('ufpa', { type: 'geojson', data: ufpa });
+    circulo('ufpa', 'ufpa', '#b8a1e3', 4);
+    map.setLayoutProperty('ufpa', 'visibility', 'none');
+    window.dadosLocais = { ...(window.dadosLocais || {}), ufpa };
+    document.getElementById('n-ufpa').textContent = fmt(ufpa.features.length);
+    document.body.classList.add('tem-local');
+  } catch (e) { /* sem a camada local */ }
+
   // Contornos, estradas e pontos de J. Q. Jacobs (publicados com autorização dele); o download
   // começou junto com a página (jacobsPedido), então aqui quase sempre já chegou
   try {
@@ -518,7 +536,7 @@ map.on('load', async () => {
     map.addSource('jacobs-linhas', { type: 'geojson', data: lin });
     pts.features.forEach((f, i) => { f.properties.id = i; });
     map.addSource('jacobs-pontos', { type: 'geojson', data: pts });
-    window.dadosLocais = { jacobs: pts };
+    window.dadosLocais = { ...(window.dadosLocais || {}), jacobs: pts };
     map.addLayer({ id: 'jacobs-contornos', type: 'line', source: 'jacobs-contornos', minzoom: 11, paint: { 'line-color': '#7fd1c7', 'line-width': 1.5 } });
     map.addLayer({ id: 'jacobs-linhas', type: 'line', source: 'jacobs-linhas', minzoom: 10, paint: { 'line-color': '#f2f2a0', 'line-width': 1.2, 'line-dasharray': [2, 1] } });
     circulo('jacobs-pontos', 'jacobs-pontos', '#7fd1c7', 4);
@@ -568,6 +586,7 @@ map.on('load', async () => {
     if (fig) return `<img src="${esc(fig.foto)}" alt="${esc(fig.legenda)}" loading="lazy"><b>${esc(p.nome)}</b><br>${p.area_ha} ha${p.aquiry === true || p.aquiry === 'true' ? '<span class="tag">Aquiry</span>' : ''}<span class="tag">LiDAR</span><br><span class="credito">${esc(fig.legenda)}. ${esc(fig.credito)}</span>`;
     if (p.fonte === 'nature2026') return `<b>${esc(p.nome)}</b><br>${p.area_ha} ha${p.aquiry === true || p.aquiry === 'true' ? '<span class="tag">Aquiry</span>' : `<span class="tag">${t('não Aquiry', 'not Aquiry', 'no Aquiry')}</span>`}<span class="tag">LiDAR</span>${p.parcial === true || p.parcial === 'true' ? `<span class="tag">${t('parcial', 'partial', 'parcial')}</span>` : ''}<br><small>Pärssinen et al. 2026, <i>Nature</i></small>`;
     if (p.fonte === 'walker') return `<img src="${esc(p.foto)}" alt="${esc(p.legenda)}" loading="lazy"><b>${esc(p.legenda)}</b><br><span class="credito">${t('Foto', 'Photo', 'Foto')}: ${esc(p.credito)}</span>`;
+    if (p.fonte === 'ufpa2014') return `<b>${esc(p.nome)}</b><br><span class="tag">${esc(p.forma)}</span><span class="tag">${esc(p.delimitacao)}</span><br><small>${esc(p.municipio)} · ${t('integridade', 'integrity', 'integridad')} ${esc(p.integridade || '?')} · ${esc(p.uso || '')}${p.encontrado ? '<br>' + t('encontrado por', 'found by', 'hallado por') + ': ' + esc(p.encontrado) : ''}</small><br><small>Barbosa 2014, UFPA (CC BY-NC-ND)</small>`;
     if (p.fonte === 'kalliola2024') return `<b>${esc(p.nome)}</b><br><small><a href="https://doi.org/10.23729/da98421d-d65d-4045-bc93-344a0837cc93" target="_blank" rel="noopener">Kalliola et al. 2024</a>, <i>Acta Amazonica</i> (CC BY 4.0)</small>`;
     if (p.fonte === 'science2023') return `<b>${t('Estrutura de terra', 'Earthwork', 'Estructura de tierra')}</b><br><small>${t('Base', 'Database', 'Base')}: ${esc(p.base)}<br>Peripato et al. 2023, <i>Science</i></small>`;
     return balaoJacobs(p);
@@ -599,7 +618,7 @@ map.on('load', async () => {
     return new maplibregl.Popup({ offset: 8, className: temFoto(f.properties) ? 'foto' : '' })
       .setLngLat(f.geometry.coordinates).setHTML(popup(f)).addTo(map);
   };
-  for (const id of ['nature', 'science', 'kalliola', 'fotos', 'jacobs-pontos']) {
+  for (const id of ['nature', 'science', 'kalliola', 'ufpa', 'fotos', 'jacobs-pontos']) {
     if (!map.getLayer(id)) continue;
     map.on('click', id, (e) => abrirSitio(e.features[0]));
     map.on('mouseenter', id, () => map.getCanvas().style.cursor = 'pointer');

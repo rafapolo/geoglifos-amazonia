@@ -84,3 +84,10 @@ Não há nenhum mapa web público e mantido dos geoglifos amazônicos. O KML do 
 - `acrelandia_2022_survey.kml`: os contornos e estradas do levantamento de Acrelândia 2022, sem o contorno da área de busca.
 - `amazon_geoglyphs.xls` (abas geoglyphs, mato grosso e mound villages): juntada aos pontos pelo código; dá forma, dimensões (a × b), altitude e o registro (data da imagem do Google Earth em que o sítio foi visto, ou a referência). 1.690 dos 2.204 pontos ganham esses atributos.
 
+## Barbosa 2014 (dissertação, UFPA): só local
+
+- Antonia Damasceno Barbosa, "Análise espacial dos sítios monumentais do leste da Amazônia Ocidental", dissertação de mestrado, UFPA, 2014 (orientação de Denise Schaan), https://www.repositorio.ufpa.br/jspui/handle/2011/8855
+- **Licença: CC BY-NC-ND 4.0.** Sem derivadas: a camada tirada dos anexos fica **só na cópia local** (`docs/data/local/ufpa2014.geojson`, fora do git e do site publicado).
+- `script/ufpa_barbosa2014.py` lê os anexos (texto do PDF pelo markitdown) e converte as coordenadas UTM 19L: 362 recintos de 209 sítios, com município, forma, tipo de valeta, grau de integridade, uso do local e quem encontrou.
+- A autora assina também a lista de Kalliola et al. 2024 (CC BY 4.0), já publicada; para publicar os atributos da dissertação, pedir autorização a ela.
+
