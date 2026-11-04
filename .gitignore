@@ -4,3 +4,4 @@ docs/data/local/
 node_modules/
 dist/
 __pycache__/
+data/desenhos-svg/

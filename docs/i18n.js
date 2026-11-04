@@ -80,6 +80,9 @@
   <blockquote>“What we see in the Amazon is not a great natural forest, but a great garden built over history.”<cite>Rhuan Carlos Lopes, archaeologist, UFPA (translated)</cite></blockquote>
   <p>Based on the report <a href="https://www.bbc.com/portuguese/articles/cm4gvnv14zlgo">“As construções monumentais ‘escondidas’ na Amazônia descobertas por cientistas”</a> by André Biernath (BBC News Brasil, 30/09/2026, in Portuguese), and on the paper <a href="https://doi.org/10.1038/s41586-026-10835-7">Pärssinen et al. 2026, <i>Nature</i></a>.</p>
 
+  <h3>Drawings</h3>
+  <p>In the spirit of J. Q. Jacobs's drawings, the outlines in ochre on a green background, at true scale, with all the map's data: <a href="desenhos/sudoeste_en.png" target="_blank" rel="noopener">southwestern Amazonia</a> · <a href="desenhos/amazonas_en.png" target="_blank" rel="noopener">Amazonas</a> · <a href="desenhos/acre_en.png" target="_blank" rel="noopener">Acre</a> · <a href="desenhos/mojos_en.png" target="_blank" rel="noopener">Llanos de Mojos</a>. On the map, the "Green background, drawings only" switch shows the same anywhere.</p>
+
   <h3>Data</h3>
   <p>Points from Supplementary Table 2 of <i>Nature</i> (CC&nbsp;BY&nbsp;4.0; without structures on Indigenous lands) and from the database compiled by <a href="https://doi.org/10.1126/science.ade2541">Peripato et al. 2023, <i>Science</i></a>, with the same authors' probability model. Code, data and list of sources: <a href="https://github.com/rafapolo/geoglifos-amazonia">github.com/rafapolo/geoglifos-amazonia</a>.</p>
   <p class="aviso">Archaeological sites are federal property in Brazil (Law 3,924/1961). Damaging them is a crime.</p>`,
@@ -149,6 +152,9 @@
   <blockquote>“Este pueblo hacía geometría monumental en la Amazonía al mismo tiempo que Pitágoras desarrollaba su teorema en Grecia.”<cite>Alceu Ranzi, paleontólogo, Instituto Geoglifos da Amazônia (traducido)</cite></blockquote>
   <blockquote>“Lo que vemos en la Amazonía no es un gran bosque natural, sino un gran jardín construido a lo largo de la historia.”<cite>Rhuan Carlos Lopes, arqueólogo, UFPA (traducido)</cite></blockquote>
   <p>Basado en el reportaje <a href="https://www.bbc.com/portuguese/articles/cm4gvnv14zlgo">“As construções monumentais ‘escondidas’ na Amazônia descobertas por cientistas”</a>, de André Biernath (BBC News Brasil, 30/09/2026, en portugués), y en el artículo <a href="https://doi.org/10.1038/s41586-026-10835-7">Pärssinen et al. 2026, <i>Nature</i></a>.</p>
+
+  <h3>Dibujos</h3>
+  <p>En el espíritu de los dibujos de J. Q. Jacobs, los trazados en ocre sobre fondo verde, a escala real, con todos los datos del mapa: <a href="desenhos/sudoeste_es.png" target="_blank" rel="noopener">suroeste de la Amazonía</a> · <a href="desenhos/amazonas_es.png" target="_blank" rel="noopener">Amazonas</a> · <a href="desenhos/acre_es.png" target="_blank" rel="noopener">Acre</a> · <a href="desenhos/mojos_es.png" target="_blank" rel="noopener">Llanos de Mojos</a>. En el mapa, el interruptor "Fondo verde, solo los dibujos" muestra lo mismo en cualquier lugar.</p>
 
   <h3>Datos</h3>
   <p>Puntos de la Tabla Suplementaria 2 de <i>Nature</i> (CC&nbsp;BY&nbsp;4.0; sin las estructuras en tierras indígenas) y de la base compilada por <a href="https://doi.org/10.1126/science.ade2541">Peripato et al. 2023, <i>Science</i></a>, con el modelo de probabilidad de los mismos autores. Código, datos y lista de fuentes: <a href="https://github.com/rafapolo/geoglifos-amazonia">github.com/rafapolo/geoglifos-amazonia</a>.</p>

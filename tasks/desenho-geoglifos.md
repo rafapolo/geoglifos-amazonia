@@ -1,6 +1,6 @@
 # Tarefa: um desenho novo dos geoglifos com todos os nossos dados
 
-Registrada em 2026-11-04. Ainda não começada.
+Registrada em 2026-11-04. **Primeira versão feita no mesmo dia**: `script/desenho.py` gera as pranchas sudoeste, amazonas, acre e mojos em pt, en e es (PNG 2560 × 1600 em `docs/desenhos/`; SVG com `--svg`, em `data/desenhos-svg/`, fora do site), com links no "Sobre". No mapa, o interruptor "Fundo verde, só os desenhos" faz o mesmo ao vivo. Faltam: a prancha de Tequinho, a do LiDAR "sob a floresta", os tamanhos 1200 × 630 e 1080 × 1080, e confirmar com Jacobs o uso impresso.
 
 ## A referência
 
