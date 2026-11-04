@@ -672,7 +672,7 @@ document.querySelectorAll('input[data-camada]').forEach(cb => cb.addEventListene
 
 // modo "só os desenhos": tira o satélite e os rótulos e pinta os traçados de ocre sobre o verde,
 // como os desenhos de J. Q. Jacobs; fica no endereço (?fundo=verde) para o link compartilhado abrir igual
-const pontosOrig = {};
+let antesDoVerde = null;
 window.fundoVerde = (on) => {
   document.body.classList.toggle('fundo-verde', on);
   document.getElementById('fundo-verde').checked = on;
@@ -685,14 +685,17 @@ window.fundoVerde = (on) => {
     if (map.getLayer('jacobs-linhas')) map.setPaintProperty('jacobs-linhas', 'line-dasharray', on ? [1, 0] : [2, 1]);
     // no verde, os contornos aparecem já de mais longe
     if (map.getLayer('jacobs-contornos')) map.setLayerZoomRange('jacobs-contornos', on ? 8 : 11, 24);
-    // os pontos encolhem e ficam translúcidos: quem manda são os traçados
-    for (const id of ['nature', 'science', 'fotos', 'kalliola', 'jacobs-pontos', 'ufpa', 'jacobsimg']) {
-      if (!map.getLayer(id)) continue;
-      const orig = (pontosOrig[id] ||= { r: map.getPaintProperty(id, 'circle-radius'), o: map.getPaintProperty(id, 'circle-opacity'), s: map.getPaintProperty(id, 'circle-stroke-width') });
-      map.setPaintProperty(id, 'circle-radius', on ? ['*', 0.45, orig.r] : orig.r);
-      map.setPaintProperty(id, 'circle-opacity', on ? ['*', 0.6, orig.o] : orig.o);
-      map.setPaintProperty(id, 'circle-stroke-width', on ? 0 : orig.s);
+    // só os traçados: pontos, manchas, fotos e o LiDAR somem; ao sair, as camadas voltam como estavam
+    const SO_PONTOS = ['nature', 'science', 'lidar', 'prob', 'fotos', 'kalliola', 'ufpa', 'jacobsimg'];
+    if (on) {
+      antesDoVerde = SO_PONTOS.map((n) => [n, document.querySelector(`input[data-camada="${n}"]`)?.checked]);
+      SO_PONTOS.forEach((n) => mostrar(n, false));
+      mostrar('jacobs', true);
+    } else if (antesDoVerde) {
+      antesDoVerde.forEach(([n, v]) => v !== undefined && mostrar(n, v));
+      antesDoVerde = null;
     }
+    if (map.getLayer('jacobs-pontos')) map.setLayoutProperty('jacobs-pontos', 'visibility', on ? 'none' : (document.querySelector('input[data-camada="jacobs"]').checked ? 'visible' : 'none'));
   };
   if (window.dados) aplicar(); else pronto.then(aplicar);
   document.dispatchEvent(new Event('fundo'));
