@@ -411,6 +411,13 @@
 const map = new maplibregl.Map({
   container: 'map',
   center: [-67.3, -9.7], zoom: 6.3, minZoom: 4.3, maxZoom: 16, attributionControl: false,
+  // botões do MapLibre no idioma do site
+  locale: {
+    'NavigationControl.ZoomIn': t('Aproximar', 'Zoom in', 'Acercar'),
+    'NavigationControl.ZoomOut': t('Afastar', 'Zoom out', 'Alejar'),
+    'NavigationControl.ResetBearing': t('Voltar ao norte', 'Reset bearing to north', 'Volver al norte'),
+    'AttributionControl.ToggleAttribution': t('Créditos do mapa', 'Toggle attribution', 'Créditos del mapa'),
+  },
   maxBounds: [[-84, -24], [-40, 10]],
   style: {
     version: 8,
@@ -525,7 +532,8 @@ map.on('load', async () => {
   const popup = (f) => conteudo(f) + botaoCompartilhar(f.properties);
   const conteudo = (f) => {
     const p = f.properties;
-    const fig = p.fonte === 'nature2026' && figuras[p.nome];
+    const fig0 = p.fonte === 'nature2026' && figuras[p.nome];
+    const fig = fig0 && { ...fig0, legenda: fig0.legenda.replace('LiDAR: grupo ', `LiDAR: ${t('grupo', 'group', 'grupo')} `) };
     if (fig) return `<img src="${esc(fig.foto)}" alt="${esc(fig.legenda)}" loading="lazy"><b>${esc(p.nome)}</b><br>${p.area_ha} ha${p.aquiry === true || p.aquiry === 'true' ? '<span class="tag">Aquiry</span>' : ''}<span class="tag">LiDAR</span><br><span class="credito">${esc(fig.legenda)}. ${esc(fig.credito)}</span>`;
     if (p.fonte === 'nature2026') return `<b>${esc(p.nome)}</b><br>${p.area_ha} ha${p.aquiry === true || p.aquiry === 'true' ? '<span class="tag">Aquiry</span>' : `<span class="tag">${t('não Aquiry', 'not Aquiry', 'no Aquiry')}</span>`}<span class="tag">LiDAR</span>${p.parcial === true || p.parcial === 'true' ? `<span class="tag">${t('parcial', 'partial', 'parcial')}</span>` : ''}<br><small>Pärssinen et al. 2026, <i>Nature</i></small>`;
     if (p.fonte === 'walker') return `<img src="${esc(p.foto)}" alt="${esc(p.legenda)}" loading="lazy"><b>${esc(p.legenda)}</b><br><span class="credito">${t('Foto', 'Photo', 'Foto')}: ${esc(p.credito)}</span>`;
