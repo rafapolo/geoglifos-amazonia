@@ -13,7 +13,7 @@ Não existia um mapa web público e mantido desses sítios. A base mais completa
 
 ## O trabalho de James Q. Jacobs
 
-Desde 2008, [James Q. Jacobs](https://www.jqjacobs.net/archaeology/geoglyph.html) procura geoglifos em imagens de satélite e os desenha, um a um, no Google Earth: hoje são mais de 2.200 sítios no Acre, no Amazonas, em Rondônia, em Mato Grosso e nos Llanos de Mojos, na Bolívia, com os contornos de cada recinto e as estradas, calçadas e canais entre eles. Sem esse trabalho, este mapa seria só uma nuvem de pontos.
+Há anos, [James Q. Jacobs](https://www.jqjacobs.net/archaeology/geoglyph.html) procura geoglifos em imagens de satélite e os desenha, um a um, no Google Earth: hoje são mais de 2.200 sítios no Acre, no Amazonas, em Rondônia, em Mato Grosso e nos Llanos de Mojos, na Bolívia, com os contornos de cada recinto e as estradas, calçadas e canais entre eles. Sem esse trabalho, este mapa seria só uma nuvem de pontos.
 
 - Página: https://www.jqjacobs.net/archaeology/geoglyph.html
 - Arquivos dele: [`amazon_geoglyphs.kml`](https://www.jqjacobs.net/amazon/amazon_geoglyphs.kml), [`amazon_geoglyphs.xls`](https://www.jqjacobs.net/amazon/amazon_geoglyphs.xls), [`bolivia.kml`](https://www.jqjacobs.net/amazon/bolivia.kml), [`octagons.kml`](https://www.jqjacobs.net/kml/octagons.kml)
