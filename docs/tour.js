@@ -199,7 +199,11 @@
   function progresso() {
     const t = Math.min(1, (performance.now() - inicio) / TOTAL);
     document.querySelector('#tour-progress i').style.transform = `scaleX(${t})`;
-    $('tour-left').textContent = `${Math.ceil((TOTAL * (1 - t)) / 1000)} s`;
+    // acima de um minuto, mm:ss (02:10); abaixo, só os segundos (45 s)
+    const resta = Math.ceil((TOTAL * (1 - t)) / 1000);
+    $('tour-left').textContent = resta > 60
+      ? `${String(Math.floor(resta / 60)).padStart(2, '0')}:${String(resta % 60).padStart(2, '0')}`
+      : `${resta} s`;
     if (ativo) raf = requestAnimationFrame(progresso);
   }
 

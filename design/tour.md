@@ -6,7 +6,7 @@ Este arquivo descreve cada cena e a música. Para mudar algo, edite aqui e peça
 
 ## Regras gerais
 
-- **Quadro.** Faixas pretas de cinema 2.39:1 (até 16% da tela cada) e uma linha fina de progresso na borda da faixa de baixo, com os segundos que faltam à direita. Painel, botões e fotos somem; o mapa ocupa a tela toda.
+- **Quadro.** Faixas pretas de cinema 2.39:1 (até 16% da tela cada) e uma linha fina de progresso na borda da faixa de baixo, com o tempo que falta à direita (02:10 acima de um minuto, 45 s abaixo). Painel, botões e fotos somem; o mapa ocupa a tela toda.
 - **Texto.** A legenda tem duas partes: um rótulo pequeno em cima (o *kicker*, lugar · fonte) e a frase; citações levam o nome de quem fala em ocre. Os textos vêm da reportagem da BBC News Brasil (30/09/2026), de Pärssinen et al. 2026 (*Nature*), de Prümers et al. 2022 (*Nature*, Cotoca) e de Koch et al. 2019 (*Quaternary Science Reviews*, a mortalidade depois de 1492).
 - **Idiomas.** Cada legenda tem versão em português, inglês e espanhol (`t('pt', 'en', 'es')` em `cenas()`); o idioma é o do site e vem só do endereço (`?lang=en|es`, `?tour=en|es` ou o seletor PT/EN/ES no topo, que recarrega com `?lang=`); sem ele, português. As citações em inglês e espanhol são traduções nossas do português da BBC.
 - **Números.** Contados no navegador a partir dos dados carregados (estruturas, sítios Aquiry, hectares); só as cifras citadas da reportagem e do artigo são fixas.
