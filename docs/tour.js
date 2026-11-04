@@ -284,14 +284,25 @@
   sobre.querySelector('.fechar').addEventListener('click', () => sobre.close());
   sobre.addEventListener('click', (e) => { if (e.target === sobre) sobre.close(); });
 
-  // ?tour=1 começa sozinho (?tour=en ou ?tour=es também trocam o idioma, em i18n.js);
-  // o parâmetro sai do endereço para um reload abrir o mapa
+  // ?tour=1 abre um convite (?tour=en ou ?tour=es também trocam o idioma, em i18n.js): o clique começa o tour
+  // e libera o som, que o navegador não toca sem um gesto. Clicar fora ou Esc deixa só o mapa.
+  // O parâmetro sai do endereço para um reload abrir o mapa.
   const q = new URLSearchParams(location.search);
   if (['1', 'pt', 'en', 'es'].includes(q.get('tour'))) {
+    // o idioma do convite fica no endereço como ?lang=, para o voltar e o recarregar manterem a língua
+    const lingua = q.get('tour');
     q.delete('tour');
-    q.delete('lang');
+    if (lingua === 'en' || lingua === 'es') q.set('lang', lingua);
     history.replaceState(null, '', location.pathname + (q.size ? `?${q}` : '') + location.hash);
-    iniciar();
+    const convite = $('tour-convite');
+    $('tour-convite-txt').textContent = t('Começar o tour', 'Start the tour', 'Empezar el tour');
+    $('tour-convite-sub').textContent = t('2 minutos, com som', '2 minutes, with sound', '2 minutos, con sonido');
+    convite.hidden = false;
+    const fechar = () => { convite.hidden = true; removeEventListener('keydown', tecla); };
+    const tecla = (e) => { if (e.key === 'Escape') fechar(); };
+    addEventListener('keydown', tecla);
+    convite.addEventListener('click', (e) => { fechar(); if (e.target.closest('button')) iniciar(); });
+    convite.querySelector('button').focus();
   }
   window.tour = { iniciar, parar, ativo: () => ativo, cena: () => cenaAtual };
 })();

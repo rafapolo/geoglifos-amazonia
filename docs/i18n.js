@@ -1,16 +1,12 @@
 // Idioma do site: pt (padrão), en ou es.
-// Vem de ?lang=xx, de ?tour=en|es ou da última escolha (localStorage "geoglifos-idioma").
+// Vem só do endereço: ?lang=xx ou ?tour=en|es; sem nenhum dos dois, português.
 // O texto em português fica no HTML; os elementos com data-i18n recebem aqui a versão em en/es.
 // Para os textos montados em JS, use t('pt', 'en', 'es') e fmt(n).
 (() => {
   const LINGUAS = ['pt', 'en', 'es'];
-  const CHAVE = 'geoglifos-idioma';
   const q = new URLSearchParams(location.search);
   const daUrl = [q.get('lang'), q.get('tour')].find((l) => LINGUAS.includes(l));
-  let guardado = null;
-  try { guardado = localStorage.getItem(CHAVE); } catch { /* sem storage */ }
-  const idioma = LINGUAS.includes(daUrl) ? daUrl : LINGUAS.includes(guardado) ? guardado : 'pt';
-  if (daUrl) try { localStorage.setItem(CHAVE, idioma); } catch { /* sem storage */ }
+  const idioma = daUrl || 'pt';
 
   const LOCALE = { pt: 'pt-BR', en: 'en-US', es: 'es' }[idioma];
   window.idioma = idioma;
@@ -161,12 +157,31 @@
     document.querySelectorAll('[data-i18n-aria]').forEach((el) => { const v = D[el.dataset.i18nAria]; if (v !== undefined) el.setAttribute('aria-label', v); });
   }
 
-  // seletor PT/EN/ES no topo: guarda a escolha e recarrega na mesma vista (a câmera e o sítio ficam no endereço)
+  // título e nomes das camadas cabem numa linha em qualquer idioma: a fonte diminui só o necessário (até 75%)
+  document.querySelectorAll('label.camada > span:nth-of-type(2)').forEach((s) => {
+    const txt = s.firstChild;
+    if (txt?.nodeType !== 3) return;
+    const nome = document.createElement('span');
+    nome.className = 'nome';
+    s.insertBefore(nome, txt);
+    nome.append(txt);
+  });
+  const caber = () => document.querySelectorAll('#painel h1, label.camada .nome').forEach((el) => {
+    el.style.fontSize = '';
+    let fs = parseFloat(getComputedStyle(el).fontSize);
+    const min = fs * 0.75;
+    while (el.scrollWidth > el.clientWidth + 0.5 && fs > min) { fs -= 0.25; el.style.fontSize = `${fs}px`; }
+  });
+  caber();
+  document.fonts?.ready.then(caber);
+  let espera = 0;
+  addEventListener('resize', () => { clearTimeout(espera); espera = setTimeout(caber, 150); });
+
+  // seletor PT/EN/ES no topo: recarrega na mesma vista, com o idioma no endereço (a câmera e o sítio também ficam lá)
   const sel = document.getElementById('idioma');
   if (sel) {
     sel.value = idioma;
     sel.addEventListener('change', () => {
-      try { localStorage.setItem(CHAVE, sel.value); } catch { /* sem storage */ }
       const u = new URL(location.href);
       u.searchParams.delete('tour');
       if (sel.value === 'pt') u.searchParams.delete('lang'); else u.searchParams.set('lang', sel.value);

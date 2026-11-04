@@ -41,6 +41,9 @@
   }
   h1 { font: 700 24px/1.1 Fraunces, Georgia, serif; margin: 0 0 6px; letter-spacing: -.01em; }
   h1 span { color: var(--terra); }
+  /* título e nomes das camadas numa linha só; i18n.js reduz a fonte quando a tradução é mais longa */
+  #painel h1, label.camada .nome { display: block; white-space: nowrap; overflow: hidden; }
+  label.camada > span { min-width: 0; }
   .lede { color: var(--suave); margin: 0 0 14px; }
   h2 { font: 600 11px/1 Inter, sans-serif; text-transform: uppercase; letter-spacing: .08em; color: var(--suave); margin: 16px 0 8px; }
   label.camada { display: grid; grid-template-columns: 18px 14px 1fr auto; gap: 8px; align-items: center; padding: 6px 0; cursor: pointer; border-top: 1px solid var(--linha); }
@@ -137,6 +140,14 @@
   #tour-cap { position: absolute; left: 0; right: 0; bottom: calc(var(--lb) + 28px); padding: 0 8vw; text-align: center;
     opacity: 0; transform: translateY(8px); transition: opacity 600ms, transform 600ms; }
   #tour-cap.on { opacity: 1; transform: none; }
+  /* convite do link ?tour=: o clique começa o tour e libera o som, que o navegador não toca sem gesto */
+  #tour-convite { position: fixed; inset: 0; z-index: 45; display: grid; place-items: center; background: rgba(15,12,8,.55); backdrop-filter: blur(2px); }
+  #tour-convite[hidden] { display: none; }
+  #tour-convite button { display: inline-flex; align-items: center; gap: 12px; font: 700 20px Inter, sans-serif; color: #16120e; background: var(--ocre);
+    border: 0; border-radius: 999px; padding: 16px 30px; cursor: pointer; box-shadow: 0 12px 40px rgba(0,0,0,.5); }
+  #tour-convite button::before { content: ""; border-left: 13px solid #16120e; border-top: 8px solid transparent; border-bottom: 8px solid transparent; }
+  #tour-convite button:hover { background: #f2c766; }
+  #tour-convite small { display: block; font: 500 13px Inter, sans-serif; opacity: .75; margin-top: 2px; text-align: left; }
   #tour-kicker { display: inline-block; padding: 6px calc(12px - .18em) 6px 12px; background: rgba(20,16,12,.72); border: 1px solid rgba(246,239,227,.18);
     border-radius: 4px; font: 600 clamp(10px, 1vw, 13px) Inter, sans-serif; letter-spacing: .18em; text-transform: uppercase; color: var(--ocre); margin-bottom: 10px; }
   #tour-kicker:empty { display: none; }
@@ -267,7 +278,6 @@
     #topo { top: calc(10px + env(safe-area-inset-top)); right: 10px !important; }
     #topo button { padding: 8px 12px; }
     #topo select { padding: 8px 26px 8px 11px; background-position: right 10px center; }
-    #compartilhar span { display: none; }
     .maplibregl-ctrl-group, .maplibregl-ctrl-scale { display: none; }
     .maplibregl-ctrl-bottom-right { bottom: calc(var(--espia) + 104px); }
     body.tem-fotos #fotos { left: 0; right: 0; bottom: calc(var(--espia) + 8px); height: 84px; padding: 0 10px; transition: opacity .25s; }
@@ -338,7 +348,7 @@
 
 <nav id="topo">
   <button id="tour-abrir" type="button" data-i18n-title="tour-titulo" title="Um passeio de 2 minutos pelos geoglifos">Tour</button>
-  <button id="compartilhar" type="button" data-i18n-title="compartilhar-titulo" title="Compartilhar esta vista"><svg class="ico" viewBox="0 0 16 16" aria-hidden="true"><path d="M8 10V2M5 4.8 8 2l3 2.8M3.5 8.5v5h9v-5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg><span data-i18n="compartilhar">Compartilhar</span></button>
+  <button id="compartilhar" type="button" data-i18n-title="compartilhar-titulo" data-i18n-aria="compartilhar-titulo" title="Compartilhar esta vista" aria-label="Compartilhar esta vista"><svg class="ico" viewBox="0 0 16 16" aria-hidden="true"><path d="M8 10V2M5 4.8 8 2l3 2.8M3.5 8.5v5h9v-5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
   <button id="sobre-abrir" type="button" aria-haspopup="dialog"><svg class="ico" viewBox="0 0 16 16" aria-hidden="true"><rect x="1.5" y="1.5" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.6"/><circle cx="8" cy="8" r="3.4" fill="none" stroke="currentColor" stroke-width="1.6"/></svg><span data-i18n="sobre">Sobre</span></button>
   <select id="idioma" data-i18n-aria="idioma" aria-label="Idioma"><option value="pt">PT</option><option value="en">EN</option><option value="es">ES</option></select>
 </nav>
@@ -395,6 +405,8 @@
   <p class="aviso">Sítios arqueológicos são bens da União (Lei 3.924/1961). Danificá-los é crime.</p>
   </div>
 </dialog>
+
+<div id="tour-convite" hidden><button type="button"><span><span id="tour-convite-txt">Começar o tour</span><small id="tour-convite-sub">2 minutos, com som</small></span></button></div>
 
 <div id="tour" hidden>
   <div class="bar top"></div><div class="bar bottom"></div>

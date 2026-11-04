@@ -1,6 +1,6 @@
 # Tour: o roteiro
 
-O tour é um passeio de câmera de 2 min 20 s pelos geoglifos, no estilo de cinema. Abre pelo botão **Tour** no topo, por **Tour de 2 minutos** no painel ou por `?tour=1`, que começa sozinho quando o mapa carrega (o parâmetro sai do endereço, então recarregar abre o mapa). `?tour=en` e `?tour=es` fazem o mesmo em inglês e em espanhol, e o site inteiro troca de idioma junto (ver `docs/i18n.js`). **Esc**, **✕ esc** ou o voltar do navegador param o tour e devolvem a câmera e as camadas como estavam.
+O tour é um passeio de câmera de 2 min 20 s pelos geoglifos, no estilo de cinema. Abre pelo botão **Tour** no topo, por **Tour de 2 minutos** no painel ou por `?tour=1`, que abre um convite (**Começar o tour**) sobre o mapa: o clique começa o tour e libera o som, que o navegador não toca sem um gesto; clicar fora ou Esc deixa só o mapa (o parâmetro sai do endereço, então recarregar abre o mapa). `?tour=en` e `?tour=es` fazem o mesmo em inglês e em espanhol, e o site inteiro troca de idioma junto (ver `docs/i18n.js`). **Esc**, **✕ esc** ou o voltar do navegador param o tour e devolvem a câmera e as camadas como estavam.
 
 Este arquivo descreve cada cena e a música. Para mudar algo, edite aqui e peça a mudança no código: as cenas ficam em `cenas()`, em `docs/tour.js`; a música em `docs/som.js`.
 
@@ -8,7 +8,7 @@ Este arquivo descreve cada cena e a música. Para mudar algo, edite aqui e peça
 
 - **Quadro.** Faixas pretas de cinema 2.39:1 (até 16% da tela cada) e uma linha fina de progresso na borda da faixa de baixo, com os segundos que faltam à direita. Painel, botões e fotos somem; o mapa ocupa a tela toda.
 - **Texto.** A legenda tem duas partes: um rótulo pequeno em cima (o *kicker*, lugar · fonte) e a frase; citações levam o nome de quem fala em ocre. Os textos vêm da reportagem da BBC News Brasil (30/09/2026), de Pärssinen et al. 2026 (*Nature*), de Prümers et al. 2022 (*Nature*, Cotoca) e de Koch et al. 2019 (*Quaternary Science Reviews*, a mortalidade depois de 1492).
-- **Idiomas.** Cada legenda tem versão em português, inglês e espanhol (`t('pt', 'en', 'es')` em `cenas()`); o idioma é o do site (seletor PT/EN/ES no topo, `?lang=`, `?tour=en|es`). As citações em inglês e espanhol são traduções nossas do português da BBC.
+- **Idiomas.** Cada legenda tem versão em português, inglês e espanhol (`t('pt', 'en', 'es')` em `cenas()`); o idioma é o do site e vem só do endereço (`?lang=en|es`, `?tour=en|es` ou o seletor PT/EN/ES no topo, que recarrega com `?lang=`); sem ele, português. As citações em inglês e espanhol são traduções nossas do português da BBC.
 - **Números.** Contados no navegador a partir dos dados carregados (estruturas, sítios Aquiry, hectares); só as cifras citadas da reportagem e do artigo são fixas.
 - **Rótulos.** Os rótulos da Esri são raster e esticam com a câmera inclinada, então somem durante o tour.
 - **Câmera.** Cada cena chega com um voo (`flyTo`) e depois faz um movimento contínuo quadro a quadro (`orbita`): gira, inclina, aproxima e desloca ao mesmo tempo, com aceleração suave na entrada e na saída. No tour o zoom vai até 17 e a inclinação até 78°.
@@ -69,7 +69,7 @@ A música é feita no navegador enquanto o tour roda, com Web Audio, sem arquivo
 | Tour até o fim | cadência: a flauta desce lá, sol, fá, ré; rufo de maracá, dois golpes de tambor e o som se apaga em ~4 s |
 | Tour parado no meio | o som some em 0,8 s |
 | Aba escondida | o som pausa e volta com ela |
-| `?tour=1` sem clique | o navegador segura o som até o primeiro toque ou tecla |
+| `?tour=1` | o convite pede um clique antes de começar, então o som já entra com o tour |
 
 | cena | nota do bordão |
 |---|---|
