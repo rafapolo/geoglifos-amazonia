@@ -70,9 +70,6 @@
   details p, details li { color: #3d3730; font-size: 13px; }
   details ul { padding-left: 18px; margin: 6px 0; }
   a { color: #8a3e12; }
-  .rodape { margin-top: 12px; font-size: 10.5px; text-align: center; }
-  .rodape a { color: var(--suave); text-decoration: none; border-bottom: 1px solid var(--linha); }
-  .rodape a:hover { color: var(--terra); }
   .lede b { color: var(--tinta); }
   .tour-btn { display: inline-flex; align-items: center; gap: 8px; font: 600 13px Inter, sans-serif; color: var(--papel); background: var(--tinta);
     border: 0; border-radius: 999px; padding: 8px 16px; cursor: pointer; margin: 0 0 4px; }
@@ -97,7 +94,7 @@
   #fotos-grade button:hover, #fotos-grade button.ativo { border-color: var(--ocre); }
   #fotos-grade img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; display: block; transition: transform .3s; }
   #fotos-grade button:hover img { transform: scale(1.06); }
-  #fotos footer { padding: 8px 14px 12px; font-size: 11px; color: #a99b88; border-top: 1px solid rgba(246,239,227,.1); }
+  #fotos footer { padding: 8px 14px 12px; font-size: 11px; color: #a99b88; border-top: 1px solid rgba(246,239,227,.1); text-align: center; }
   #fotos footer a { color: var(--ocre); }
   #topo { right: calc(var(--fotos-w) + 12px) !important; }
   #map { right: var(--fotos-w); }
@@ -209,8 +206,6 @@
   aside summary { color: var(--papel); }
   aside details p, aside details li { color: #d8ccb9; }
   aside a { color: var(--ocre); }
-  aside .rodape a { color: #a99b88; border-bottom-color: rgba(246,239,227,.2); }
-  aside .rodape a:hover { color: var(--ocre); }
   aside #legenda-prob div:last-child { color: #a99b88 !important; }
   aside .tour-btn { background: var(--ocre); color: var(--tinta); display: flex; width: fit-content; margin-left: auto; }
   aside .tour-btn::before { border-left-color: var(--tinta); }
@@ -349,12 +344,12 @@
   <div id="legenda-prob" style="display:none;margin:6px 0 0"><div class="grad"></div>
     <div style="display:flex;justify-content:space-between;font-size:11px;color:var(--suave)"><span data-i18n="prob-menor">menor</span><span data-i18n="prob-maior">maior probabilidade</span></div></div>
 
-  <details data-i18n="d-oque">
+  <details name="painel-info" data-i18n="d-oque">
     <summary>O que são os geoglifos?</summary>
     <p>São recintos de terra (círculos, quadrados, octógonos, elipses) delimitados por valas de até 15&nbsp;m de largura e 5&nbsp;m de profundidade, às vezes ligados por estradas com aterros paralelos. Segundo Pärssinen et al. (2026), foram construídos pela chamada civilização Aquiry e serviam a cerimônias e encontros políticos, não a moradia.</p>
     <p>O LiDAR de 4.497&nbsp;km² encontrou 432 estruturas, 396 delas inéditas, e os autores estimam que haja de 24 a 30 mil na região.</p>
   </details>
-  <details data-i18n="d-fontes">
+  <details name="painel-info" data-i18n="d-fontes">
     <summary>Fontes e licenças</summary>
     <ul>
       <li>Pärssinen et al. 2026, <i>Nature</i>, <a href="https://doi.org/10.1038/s41586-026-10835-7">doi:10.1038/s41586-026-10835-7</a> (CC&nbsp;BY&nbsp;4.0). Tabela Suplementar&nbsp;2; as estruturas em terras indígenas foram omitidas pelos autores. Os recortes de LiDAR nos balões vêm da Fig.&nbsp;2 e da Extended Data Fig.&nbsp;4 do artigo.</li>
@@ -367,11 +362,10 @@
     </ul>
     <p>Contornos, estradas, calçadas e pontos (Brasil e Llanos de Mojos, na Bolívia): <a href="https://www.jqjacobs.net/archaeology/geoglyph.html">James Q. Jacobs</a>, publicados com autorização do autor. Ficaram de fora as áreas de busca, a topografia e os alinhamentos.</p>
   </details>
-  <details data-i18n="d-protecao">
+  <details name="painel-info" data-i18n="d-protecao">
     <summary>Proteção dos sítios</summary>
     <p>Sítios arqueológicos são bens da União (Lei 3.924/1961). As coordenadas aqui já foram publicadas pelos autores, com precisão de cerca de 100&nbsp;m. Não entre em propriedades nem remova material; danos a sítios são crime.</p>
   </details>
-  <p class="rodape"><a href="https://github.com/rafapolo/geoglifos-amazonia" target="_blank" rel="noopener" data-i18n="rodape">Código e dados no GitHub</a></p>
 </aside>
 
 <section id="fotos" aria-label="Fotos dos sítios" data-i18n-aria="fotos-aria">

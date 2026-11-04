@@ -51,7 +51,6 @@
     <p>Outlines, roads, causeways and points (Brazil and the Llanos de Mojos, Bolivia): <a href="https://www.jqjacobs.net/archaeology/geoglyph.html">James Q. Jacobs</a>, published with the author's permission. Search areas, topography and alignments were left out.</p>`,
       'd-protecao': `<summary>Protecting the sites</summary>
     <p>Archaeological sites are federal property in Brazil (Law 3,924/1961). The coordinates here were already published by the authors, with a precision of about 100&nbsp;m. Do not enter private land or remove material; damaging sites is a crime.</p>`,
-      rodape: 'Code and data on GitHub',
       'fotos-aria': 'Photos of the sites',
       'fotos-cab': '<b>Photos</b> <span id="fotos-n"></span><small>click to fly to the site</small>',
       'fotos-rodape': 'Photos: <a href="https://robert-walker.shinyapps.io/ggshiny/">Ancient Amazonian Earthworks</a> (R. Walker)',
@@ -124,7 +123,6 @@
     <p>Contornos, caminos, calzadas y puntos (Brasil y los Llanos de Mojos, en Bolivia): <a href="https://www.jqjacobs.net/archaeology/geoglyph.html">James Q. Jacobs</a>, publicados con autorización del autor. Quedaron fuera las áreas de búsqueda, la topografía y los alineamientos.</p>`,
       'd-protecao': `<summary>Protección de los sitios</summary>
     <p>En Brasil, los sitios arqueológicos son bienes de la Unión (Ley 3924/1961). Las coordenadas de este mapa ya fueron publicadas por los autores, con una precisión de unos 100&nbsp;m. No entre en propiedades ni retire material; dañar sitios es delito.</p>`,
-      rodape: 'Código y datos en GitHub',
       'fotos-aria': 'Fotos de los sitios',
       'fotos-cab': '<b>Fotos</b> <span id="fotos-n"></span><small>haga clic para ir al sitio</small>',
       'fotos-rodape': 'Fotos: <a href="https://robert-walker.shinyapps.io/ggshiny/">Ancient Amazonian Earthworks</a> (R. Walker)',
