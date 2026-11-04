@@ -140,7 +140,7 @@
   #tour.on .bar { transform: scaleY(1); }
   #tour-progress { position: absolute; left: 0; right: 0; bottom: var(--lb); height: 2px; background: rgba(246,239,227,.12); }
   #tour-progress i { display: block; height: 100%; background: var(--ocre); transform: scaleX(0); transform-origin: left; }
-  #tour-left { position: absolute; right: 16px; top: min(8px, calc(var(--lb) - 18px)); font: 12px ui-monospace, Menlo, monospace;
+  #tour-left { position: absolute; right: 10px; bottom: calc(var(--lb) + 6px); /* logo acima da linha de progresso, colado à direita */ font: 12px ui-monospace, Menlo, monospace;
     font-variant-numeric: tabular-nums; letter-spacing: .04em; color: var(--ocre); }
   #tour-parar { position: absolute; left: 16px; top: max(6px, calc(var(--lb) - 40px)); pointer-events: auto; padding: 5px 12px; font-size: 12px;
     background: rgba(0,0,0,.6); color: var(--papel); border-color: rgba(246,239,227,.25); box-shadow: none; }
