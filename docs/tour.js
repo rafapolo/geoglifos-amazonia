@@ -226,6 +226,8 @@
     document.body.classList.add('touring');
     map.resize();
     $('tour').hidden = false;
+    $('tour').classList.remove('saindo');
+    document.querySelector('#tour-progress i').style.transform = 'scaleX(0)';
     requestAnimationFrame(() => $('tour').classList.add('on'));
     inicio = performance.now();
     progresso();
@@ -241,6 +243,9 @@
         await cena.run();
         await espera(inicio + fim - performance.now());
       }
+      // chegou ao fim: a linha de progresso e o tempo saem já, antes das faixas
+      cancelAnimationFrame(raf);
+      $('tour').classList.add('saindo');
       await espera(800);
       parar(false);
     } catch (e) {
@@ -253,6 +258,7 @@
     ativo = false;
     somTour.parar(!voltar); // tour até o fim: cadência; parado no meio: some rápido
     cancelAnimationFrame(raf);
+    $('tour').classList.add('saindo');
     for (const p of pendentes) { clearTimeout(p.id); p.falha(new Parado()); }
     pendentes.clear();
     cancelAnimationFrame(anim);
