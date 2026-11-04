@@ -317,6 +317,8 @@
     <span data-i18n="c-science">Base compilada: Science 2023<small>Amazon Arch, CNSA, PAST, INRAP, INPE</small></span><span class="n" id="n-science"></span></label>
   <label class="camada"><input type="checkbox" data-camada="lidar" checked><span class="sw q" style="background:linear-gradient(135deg,#d9cdb6 45%,#3c8c87 55%)"></span>
     <span data-i18n="c-lidar">LiDAR aberto: relevo sob a floresta<small>faixas do projeto EBA (INPE); aproxime para ver</small></span><span class="n" id="n-lidar"></span></label>
+  <label class="camada"><input type="checkbox" data-camada="kalliola"><span class="sw" style="background:#e48fa8"></span>
+    <span data-i18n="c-kalliola">Lista de 2024: Acta Amazonica<small>1.279 estruturas (Kalliola et al.)</small></span><span class="n" id="n-kalliola"></span></label>
   <label class="camada"><input type="checkbox" data-camada="prob"><span class="sw q" style="background:#f03b20"></span>
     <span data-i18n="c-prob">Onde ainda pode haver estruturas<small>modelo preditivo, Science 2023</small></span><span></span></label>
   <label class="camada"><input type="checkbox" data-camada="fotos" checked><span class="sw" style="background:#9cc3e6"></span>
@@ -339,6 +341,7 @@
       <li>Fotos: app <a href="https://robert-walker.shinyapps.io/ggshiny/">Ancient Amazonian Earthworks</a> (R. Walker, Univ. of Missouri), que reúne figuras de artigos e fotos de pesquisadores; os créditos de cada foto seguem a legenda original.</li>
       <li>LiDAR aberto: transectos do projeto EBA (INPE), <a href="https://zenodo.org/records/4968706">Zenodo</a> (CC&nbsp;BY&nbsp;4.0). Modelo de terreno de 2&nbsp;m feito aqui a partir das nuvens de pontos, com filtro próprio de chão, relevo sombreado e realce do relevo local (valas em verde-azulado, aterros em ocre).</li>
       <li>Tour: BBC News Brasil (30/09/2026); Prümers et al. 2022, <i>Nature</i>, <a href="https://doi.org/10.1038/s41586-022-04780-4">doi:10.1038/s41586-022-04780-4</a>; Koch et al. 2019, <i>Quaternary Science Reviews</i>, <a href="https://doi.org/10.1016/j.quascirev.2018.12.004">doi:10.1016/j.quascirev.2018.12.004</a>.</li>
+      <li>Kalliola, Pärssinen, Ranzi, Seppä e Damasceno Barbosa 2024, <i>Acta Amazonica</i>: lista de 1.279 estruturas, <a href="https://doi.org/10.23729/da98421d-d65d-4045-bc93-344a0837cc93">Fairdata</a> (CC&nbsp;BY&nbsp;4.0).</li>
       <li>Imagens de satélite: Esri World Imagery.</li>
     </ul>
     <p>Contornos, estradas, calçadas e pontos (Brasil e Llanos de Mojos, na Bolívia): <a href="https://www.jqjacobs.net/archaeology/geoglyph.html">James Q. Jacobs</a>, publicados com autorização do autor. Ficaram de fora as áreas de busca, a topografia e os alinhamentos.</p>
@@ -465,9 +468,9 @@ const recolheAtribuicao = () => document.querySelectorAll('.maplibregl-ctrl-attr
 map.once('load', recolheAtribuicao); map.once('idle', recolheAtribuicao);
 
 let prontoOk; window.pronto = new Promise(r => prontoOk = r);
-const camadas = { lidar: ['lidar', 'lidar-faixas'], nature: ['nature-mancha', 'nature'], science: ['science-mancha', 'science'], prob: ['prob'], fotos: ['fotos'], jacobs: ['jacobs-contornos', 'jacobs-linhas', 'jacobs-pontos'] };
+const camadas = { lidar: ['lidar', 'lidar-faixas'], nature: ['nature-mancha', 'nature'], science: ['science-mancha', 'science'], prob: ['prob'], fotos: ['fotos'], kalliola: ['kalliola'], jacobs: ['jacobs-contornos', 'jacobs-linhas', 'jacobs-pontos'] };
 // chave estável de cada ponto, usada na URL (?sitio=n-12) e no histórico
-const PREFIXO = { nature2026: 'n', science2023: 's', walker: 'f', jacobs: 'j' };
+const PREFIXO = { nature2026: 'n', science2023: 's', walker: 'f', jacobs: 'j', kalliola2024: 'k' };
 window.chave = p => `${PREFIXO[p.fonte]}-${p.id}`;
 // pontos com imagem no balão: fotos do Walker e recortes de LiDAR da Nature
 window.figuras = {};
@@ -533,7 +536,7 @@ map.on('load', async () => {
     'line-color': '#d9cdb6', 'line-width': ['interpolate', ['linear'], ['zoom'], 5, 1.5, 12, 1], 'line-opacity': ['interpolate', ['linear'], ['zoom'], 11, 0.9, 13, 0] } }, 'ref');
   document.getElementById('n-lidar').textContent = fmt(faixas.features.length);
 
-  const [sci, nat, fot] = await Promise.all(['science2023', 'nature2026', 'walker_fotos'].map(n => carregar(`data/${n}.geojson`)));
+  const [sci, nat, fot, kal] = await Promise.all(['science2023', 'nature2026', 'walker_fotos', 'kalliola2024'].map(n => carregar(`data/${n}.geojson`)));
   // recortes de LiDAR das figuras da Nature (CC BY 4.0), ligados ao ponto pelo nome
   window.figuras = await carregar('data/nature_figuras.json').catch(() => ({}));
   map.addSource('science', { type: 'geojson', data: sci });
@@ -542,12 +545,17 @@ map.on('load', async () => {
   mancha('science-mancha', 'science', 0.6);
   mancha('nature-mancha', 'nature', 0.7);
   circulo('fotos', 'fotos', '#9cc3e6', 3.6);
+  // Kalliola et al. 2024 (Acta Amazonica, CC BY 4.0): começa desligada, porque repete muitos pontos das outras bases
+  map.addSource('kalliola', { type: 'geojson', data: kal });
+  circulo('kalliola', 'kalliola', '#e48fa8', 4);
+  map.setLayoutProperty('kalliola', 'visibility', 'none');
   circulo('science', 'science', '#e9b44c', 4.5);
   circulo('nature', 'nature', ['case', ['get', 'aquiry'], '#c8642a', '#8c6b52'], 5.5);
   const n = { nature: nat.features.length, science: sci.features.length, fotos: fot.features.length };
+  document.getElementById('n-kalliola').textContent = fmt(kal.features.length);
   for (const k in n) { document.getElementById(`n-${k}`).textContent = fmt(n[k]); document.getElementById(`lede-${k}`).textContent = fmt(n[k]); }
   document.getElementById('lede-total').textContent = fmt(n.nature + n.science);
-  window.dados = { nature: nat, science: sci, fotos: fot, ...(window.dadosLocais || {}) };
+  window.dados = { nature: nat, science: sci, fotos: fot, kalliola: kal, ...(window.dadosLocais || {}) };
   montarFotos(fot.features);
 
   // só os pontos com foto têm o botão de compartilhar no balão
@@ -560,6 +568,7 @@ map.on('load', async () => {
     if (fig) return `<img src="${esc(fig.foto)}" alt="${esc(fig.legenda)}" loading="lazy"><b>${esc(p.nome)}</b><br>${p.area_ha} ha${p.aquiry === true || p.aquiry === 'true' ? '<span class="tag">Aquiry</span>' : ''}<span class="tag">LiDAR</span><br><span class="credito">${esc(fig.legenda)}. ${esc(fig.credito)}</span>`;
     if (p.fonte === 'nature2026') return `<b>${esc(p.nome)}</b><br>${p.area_ha} ha${p.aquiry === true || p.aquiry === 'true' ? '<span class="tag">Aquiry</span>' : `<span class="tag">${t('não Aquiry', 'not Aquiry', 'no Aquiry')}</span>`}<span class="tag">LiDAR</span>${p.parcial === true || p.parcial === 'true' ? `<span class="tag">${t('parcial', 'partial', 'parcial')}</span>` : ''}<br><small>Pärssinen et al. 2026, <i>Nature</i></small>`;
     if (p.fonte === 'walker') return `<img src="${esc(p.foto)}" alt="${esc(p.legenda)}" loading="lazy"><b>${esc(p.legenda)}</b><br><span class="credito">${t('Foto', 'Photo', 'Foto')}: ${esc(p.credito)}</span>`;
+    if (p.fonte === 'kalliola2024') return `<b>${esc(p.nome)}</b><br><small><a href="https://doi.org/10.23729/da98421d-d65d-4045-bc93-344a0837cc93" target="_blank" rel="noopener">Kalliola et al. 2024</a>, <i>Acta Amazonica</i> (CC BY 4.0)</small>`;
     if (p.fonte === 'science2023') return `<b>${t('Estrutura de terra', 'Earthwork', 'Estructura de tierra')}</b><br><small>${t('Base', 'Database', 'Base')}: ${esc(p.base)}<br>Peripato et al. 2023, <i>Science</i></small>`;
     return `<b>${esc(p.nome || p.codigo)}</b><br><span class="tag">${esc(p.forma || p.grupo)}</span><span class="tag">${esc(p.codigo)}</span><br><small><a href="https://www.jqjacobs.net/archaeology/geoglyph.html" target="_blank" rel="noopener">J. Q. Jacobs</a></small>`;
   };
@@ -568,7 +577,7 @@ map.on('load', async () => {
     return new maplibregl.Popup({ offset: 8, className: temFoto(f.properties) ? 'foto' : '' })
       .setLngLat(f.geometry.coordinates).setHTML(popup(f)).addTo(map);
   };
-  for (const id of ['nature', 'science', 'fotos', 'jacobs-pontos']) {
+  for (const id of ['nature', 'science', 'kalliola', 'fotos', 'jacobs-pontos']) {
     if (!map.getLayer(id)) continue;
     map.on('click', id, (e) => abrirSitio(e.features[0]));
     map.on('mouseenter', id, () => map.getCanvas().style.cursor = 'pointer');

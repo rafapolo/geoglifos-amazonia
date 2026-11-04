@@ -8,6 +8,8 @@ UA="geoglifos-amazonia-sync/0.1"
 mkdir -p "$RAW"
 
 # destino|url
+# (Kalliola et al. 2024, Fairdata/IDA, CC BY 4.0, não tem link direto: o PDF vem pelo botão Download de
+#  https://etsin.fairdata.fi/dataset/54f01053-3ea7-4679-a36b-f7146911c345 e fica em data/raw/kalliola2024/)
 SOURCES=$(cat <<'EOF'
 jacobs/amazon_geoglyphs.kml|https://www.jqjacobs.net/amazon/amazon_geoglyphs.kml
 jacobs/amazon_geoglyphs.xls|https://www.jqjacobs.net/amazon/amazon_geoglyphs.xls
@@ -15,6 +17,7 @@ jacobs/bolivia.kml|https://www.jqjacobs.net/amazon/bolivia.kml
 jacobs/brazil_geoglifos.kml|https://www.jqjacobs.net/amazon/brazil_geoglifos.kml
 jacobs/brazil_geoglifos.xls|https://www.jqjacobs.net/amazon/brazil_geoglifos.xls
 jacobs/acrelandia_2022_survey.kml|https://www.jqjacobs.net/kml/acrelandia_2022_survey.kml
+jacobs/octagons.kml|https://www.jqjacobs.net/kml/octagons.kml
 nature2026/41586_2026_10835_MOESM1_ESM.docx|https://static-content.springer.com/esm/art%3A10.1038%2Fs41586-026-10835-7/MediaObjects/41586_2026_10835_MOESM1_ESM.docx
 nature2026/41586_2026_10835_MOESM2_ESM.pdf|https://static-content.springer.com/esm/art%3A10.1038%2Fs41586-026-10835-7/MediaObjects/41586_2026_10835_MOESM2_ESM.pdf
 nature2026/41586_2026_10835_MOESM3_ESM.pdf|https://static-content.springer.com/esm/art%3A10.1038%2Fs41586-026-10835-7/MediaObjects/41586_2026_10835_MOESM3_ESM.pdf

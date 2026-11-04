@@ -26,6 +26,7 @@
       'c-nature': 'LiDAR: Nature 2026<small>structures under the forest (Pärssinen et al.)</small>',
       'c-science': 'Compiled database: Science 2023<small>Amazon Arch, CNSA, PAST, INRAP, INPE</small>',
       'c-lidar': 'Open LiDAR: terrain under the forest<small>EBA project strips (INPE); zoom in to see</small>',
+      'c-kalliola': '2024 list: Acta Amazonica<small>1,279 earthworks (Kalliola et al.)</small>',
       'c-prob': 'Where more structures may be<small>predictive model, Science 2023</small>',
       'c-fotos': 'Photos<small>Ancient Amazonian Earthworks app (R. Walker)</small>',
       'c-jacobs': 'Outlines and roads<small>J. Q. Jacobs, with Mojos (Bolivia); zoom in to see</small>',
@@ -41,6 +42,7 @@
       <li>Photos: <a href="https://robert-walker.shinyapps.io/ggshiny/">Ancient Amazonian Earthworks</a> app (R. Walker, Univ. of Missouri), which gathers figures from papers and researchers' photos; each photo keeps its original caption credits.</li>
       <li>Open LiDAR: EBA project transects (INPE), <a href="https://zenodo.org/records/4968706">Zenodo</a> (CC&nbsp;BY&nbsp;4.0). 2&nbsp;m terrain model made here from the point clouds, with our own ground filter, hillshade and local relief enhancement (ditches in teal, embankments in ochre).</li>
       <li>Tour: BBC News Brasil (30/09/2026); Prümers et al. 2022, <i>Nature</i>, <a href="https://doi.org/10.1038/s41586-022-04780-4">doi:10.1038/s41586-022-04780-4</a>; Koch et al. 2019, <i>Quaternary Science Reviews</i>, <a href="https://doi.org/10.1016/j.quascirev.2018.12.004">doi:10.1016/j.quascirev.2018.12.004</a>.</li>
+      <li>Kalliola, Pärssinen, Ranzi, Seppä and Damasceno Barbosa 2024, <i>Acta Amazonica</i>: list of 1,279 earthworks, <a href="https://doi.org/10.23729/da98421d-d65d-4045-bc93-344a0837cc93">Fairdata</a> (CC&nbsp;BY&nbsp;4.0).</li>
       <li>Satellite imagery: Esri World Imagery.</li>
     </ul>
     <p>Outlines, roads, causeways and points (Brazil and the Llanos de Mojos, Bolivia): <a href="https://www.jqjacobs.net/archaeology/geoglyph.html">James Q. Jacobs</a>, published with the author's permission. Search areas, topography and alignments were left out.</p>`,
@@ -91,6 +93,7 @@
       'c-nature': 'LiDAR: Nature 2026<small>estructuras bajo el bosque (Pärssinen et al.)</small>',
       'c-science': 'Base compilada: Science 2023<small>Amazon Arch, CNSA, PAST, INRAP, INPE</small>',
       'c-lidar': 'LiDAR abierto: relieve bajo el bosque<small>franjas del proyecto EBA (INPE); acérquese para verlas</small>',
+      'c-kalliola': 'Lista de 2024: Acta Amazonica<small>1279 estructuras (Kalliola et al.)</small>',
       'c-prob': 'Dónde aún puede haber estructuras<small>modelo predictivo, Science 2023</small>',
       'c-fotos': 'Fotos<small>app Ancient Amazonian Earthworks (R. Walker)</small>',
       'c-jacobs': 'Contornos y caminos<small>J. Q. Jacobs, con Mojos (Bolivia); acérquese para verlos</small>',
@@ -106,6 +109,7 @@
       <li>Fotos: app <a href="https://robert-walker.shinyapps.io/ggshiny/">Ancient Amazonian Earthworks</a> (R. Walker, Univ. of Missouri), que reúne figuras de artículos y fotos de investigadores; los créditos de cada foto siguen la leyenda original.</li>
       <li>LiDAR abierto: transectos del proyecto EBA (INPE), <a href="https://zenodo.org/records/4968706">Zenodo</a> (CC&nbsp;BY&nbsp;4.0). Modelo de terreno de 2&nbsp;m hecho aquí a partir de las nubes de puntos, con filtro de suelo propio, relieve sombreado y realce del relieve local (zanjas en verde azulado, terraplenes en ocre).</li>
       <li>Tour: BBC News Brasil (30/09/2026); Prümers et al. 2022, <i>Nature</i>, <a href="https://doi.org/10.1038/s41586-022-04780-4">doi:10.1038/s41586-022-04780-4</a>; Koch et al. 2019, <i>Quaternary Science Reviews</i>, <a href="https://doi.org/10.1016/j.quascirev.2018.12.004">doi:10.1016/j.quascirev.2018.12.004</a>.</li>
+      <li>Kalliola, Pärssinen, Ranzi, Seppä y Damasceno Barbosa 2024, <i>Acta Amazonica</i>: lista de 1279 estructuras, <a href="https://doi.org/10.23729/da98421d-d65d-4045-bc93-344a0837cc93">Fairdata</a> (CC&nbsp;BY&nbsp;4.0).</li>
       <li>Imágenes de satélite: Esri World Imagery.</li>
     </ul>
     <p>Contornos, caminos, calzadas y puntos (Brasil y los Llanos de Mojos, en Bolivia): <a href="https://www.jqjacobs.net/archaeology/geoglyph.html">James Q. Jacobs</a>, publicados con autorización del autor. Quedaron fuera las áreas de búsqueda, la topografía y los alineamientos.</p>`,

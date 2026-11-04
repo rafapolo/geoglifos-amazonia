@@ -6,7 +6,9 @@ Saídas públicas (licença aberta) em docs/data/:
   probabilidade.png    modelo de probabilidade de estruturas ocultas (Science 2023), em EPSG:3857
 Saídas de James Q. Jacobs (©, publicadas com autorização dele, informada em 2026-11-04) em docs/data/jacobs/:
   jacobs_pontos.geojson, jacobs_contornos.geojson, jacobs_linhas.geojson
-  (amazon_geoglyphs.kml + bolivia.kml, sem as áreas de busca, a topografia e as interpretações)
+  (amazon_geoglyphs.kml + bolivia.kml + octagons.kml + acrelandia_2022_survey.kml,
+   sem as áreas de busca, a topografia e as interpretações)
+  kalliola2024.geojson  Kalliola et al. 2024, Acta Amazonica, CC BY 4.0 (1.279 estruturas, do PDF do Fairdata)
 
 Uso: uv run --with polars script/convert.py   (precisa de Rscript e GDAL no PATH)
 """
@@ -172,9 +174,86 @@ def jacobs() -> None:
                                 else {"type": "LineString", "coordinates": c})
                         alvo.append({"type": "Feature", "properties": props, "geometry": geom})
     p2, c2, l2 = jacobs_bolivia()
-    write_geojson(JACOBS / "jacobs_pontos.geojson", pontos + p2)
-    write_geojson(JACOBS / "jacobs_contornos.geojson", contornos + c2)
-    write_geojson(JACOBS / "jacobs_linhas.geojson", linhas + l2)
+    p3, c3, l3 = jacobs_extras()
+    # os extras repetem alguns códigos da base principal: o ponto fica uma vez só
+    vistos = {f["properties"]["codigo"] for f in pontos + p2}
+    p3 = [f for f in p3 if f["properties"]["codigo"] not in vistos]
+    write_geojson(JACOBS / "jacobs_pontos.geojson", pontos + p2 + p3)
+    write_geojson(JACOBS / "jacobs_contornos.geojson", contornos + c2 + c3)
+    write_geojson(JACOBS / "jacobs_linhas.geojson", linhas + l2 + l3)
+
+
+def jacobs_extras() -> tuple[list, list, list]:
+    """Octógonos do Acre e do Amazonas (só os polígonos e os sítios da Amazônia; as linhas de análise
+    geométrica são interpretação) e o levantamento de Acrelândia 2022 (sem o contorno da área de busca)."""
+    pontos, contornos, linhas = [], [], []
+    na_amazonia = lambda c: -75 < c[0] < -55 and -16 < c[1] < 0
+    oct_ = ET.parse(RAW / "jacobs/octagons.kml").getroot()
+    for pasta in oct_.iter(f"{{{NS['k']}}}Folder"):
+        nome_pasta = pasta.findtext("k:name", default="", namespaces=NS)
+        if nome_pasta not in ("octagon polygons", "sites"):
+            continue
+        for pm in pasta.findall("k:Placemark", NS):
+            nome = (pm.findtext("k:name", default="", namespaces=NS) or "").strip()
+            props = {"codigo": nome.replace(" polygon", ""), "grupo": "octagons", "subgrupo": nome_pasta, "fonte": "jacobs"}
+            pt = pm.find("k:Point/k:coordinates", NS)
+            if pt is not None:
+                c = coords(pt.text)
+                if c and na_amazonia(c[0]):
+                    pontos.append(point(*c[0], props | {"nome": f"{props['codigo']} (octógono)", "forma": "octógono", "tamanho_m": None, "duvidoso": False}))
+                continue
+            for ring in pm.iterfind(".//k:coordinates", NS):
+                c = coords(ring.text)
+                if len(c) >= 4 and na_amazonia(c[0]):
+                    contornos.append({"type": "Feature", "properties": props, "geometry": {"type": "Polygon", "coordinates": [c]}})
+    acr = ET.parse(RAW / "jacobs/acrelandia_2022_survey.kml").getroot()
+    for pm in acr.iter(f"{{{NS['k']}}}Placemark"):
+        nome = (pm.findtext("k:name", default="", namespaces=NS) or "").strip()
+        if "survey" in nome:
+            continue
+        props = {"codigo": nome, "grupo": "acrelandia 2022", "subgrupo": "acrelandia 2022", "fonte": "jacobs"}
+        pt = pm.find(".//k:Point/k:coordinates", NS)
+        if pt is not None:
+            c = coords(pt.text)
+            if c:
+                pontos.append(point(*c[0], props | {"nome": nome, "forma": "outro", "tamanho_m": None, "duvidoso": False}))
+            continue
+        for ls in pm.iterfind(".//k:LineString/k:coordinates", NS):
+            c = coords(ls.text)
+            if len(c) < 2:
+                continue
+            recinto = c[0] == c[-1] and len(c) >= 4 or any(w in nome for w in ("geoglyph", "quadrangle", "enclosure"))
+            geom = ({"type": "Polygon", "coordinates": [c]} if c[0] == c[-1] and len(c) >= 4 else {"type": "LineString", "coordinates": c})
+            (contornos if recinto else linhas).append({"type": "Feature", "properties": props, "geometry": geom})
+    print(f"extras (octógonos, Acrelândia 2022): {len(pontos)} pontos, {len(contornos)} contornos, {len(linhas)} linhas")
+    return pontos, contornos, linhas
+
+
+def kalliola() -> None:
+    """Kalliola et al. 2024 (Acta Amazonica), lista de 1.279 estruturas do Fairdata (CC BY 4.0).
+    O PDF vira texto pelo markitdown; o cabeçalho diz "latitude longitude", mas a 1ª coluna é a longitude."""
+    md = RAW / "kalliola2024/lista_2024-08-25.md"
+    if not md.exists():
+        subprocess.run(f'markitdown "{RAW}/kalliola2024/lista_2024-08-25.pdf" > "{md}"', shell=True, check=True)
+    linha = re.compile(r"^\|?\s*(\d+)\s+(.+?)\s*\|\s*(-?\d+(?:\.\d+)?)\s*\|\s*(-?\d+(?:\.\d+)?)\s*\|?")
+    # algumas linhas saem do PDF sem as barras da tabela: só "número nome lon lat"
+    solta = re.compile(r"^(\d+)\s+(.+?)\s+(-?\d+\.\d+)\s+(-?\d+\.\d+)$")
+    feats, vistos = [], set()
+    for t in md.read_text().replace("cÃ rculo", "círculo").replace("cÃ\xa0rculo", "círculo").splitlines():
+        m = linha.match(t.strip()) or solta.match(t.strip())
+        if not m:
+            continue
+        n, nome, a, b = int(m.group(1)), m.group(2).strip(), float(m.group(3)), float(m.group(4))
+        lon, lat = (a, b) if a < -30 else (b, a)
+        if n in vistos or not (-75 < lon < -55 and -16 < lat < 0):
+            continue
+        vistos.add(n)
+        feats.append(point(lon, lat, {"id": n, "nome": nome, "fonte": "kalliola2024"}))
+    feats.sort(key=lambda f: f["properties"]["id"])
+    faltam = sorted(set(range(1, 1280)) - vistos)
+    if faltam:
+        print(f"  aviso: {len(faltam)} linhas da lista não lidas: {faltam[:20]}")
+    write_geojson(OUT / "kalliola2024.geojson", feats)
 
 
 # bolivia.kml: pastas que não são estruturas (topografia, cotas, áreas de busca, leituras)
@@ -239,3 +318,4 @@ if __name__ == "__main__":
     science()
     probabilidade()
     jacobs()
+    kalliola()

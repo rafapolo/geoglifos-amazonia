@@ -70,3 +70,16 @@ Não há nenhum mapa web público e mantido dos geoglifos amazônicos. O KML do 
 
 - **Licença:** só a Nature (CC BY 4.0) e a Science/Zenodo são abertas. Os dados do Jacobs precisam da autorização dele para serem publicados.
 - **Proteção dos sítios:** sítios arqueológicos são bens da União (Lei 3.924/1961) e já sofreram danos (vide os acordos do MPF). Ao publicar, considerar reduzir a precisão das coordenadas no zoom alto. A própria Nature já omite as estruturas em terras indígenas.
+
+## Kalliola et al. 2024 (Acta Amazonica)
+
+- Kalliola, R.; Pärssinen, M.; Ranzi, A.; Seppä, I.; Damasceno Barbosa, A. "List of ancient geometric earthworks in southwestern Amazonia", Fairdata/IDA, 2024-08-25, https://doi.org/10.23729/da98421d-d65d-4045-bc93-344a0837cc93 (artigo: "Geography of ancient geometric earthworks and their builders in southwestern Amazonia", *Acta Amazonica*, 2024).
+- **Licença: CC BY 4.0**, acesso aberto.
+- Arquivo: um PDF com número, nome e coordenadas (WGS84) de 1.279 estruturas. Não tem link direto; baixa-se pelo botão Download de https://etsin.fairdata.fi/dataset/54f01053-3ea7-4679-a36b-f7146911c345 para `data/raw/kalliola2024/lista_2024-08-25.pdf`. `script/convert.py` lê o texto (markitdown) e gera `docs/data/kalliola2024.geojson`; o cabeçalho diz "latitude longitude", mas a 1ª coluna é a longitude.
+- Os nomes usam os códigos de J. Q. Jacobs (acrc13, acrg17…) e os nomes de campo das estruturas.
+
+## J. Q. Jacobs: arquivos extras
+
+- `octagons.kml` (https://www.jqjacobs.net/kml/octagons.kml): entram só os 4 octógonos da Amazônia (polígonos e sítios); as linhas de análise geométrica e os octógonos de Ohio ficam de fora.
+- `acrelandia_2022_survey.kml`: os contornos e estradas do levantamento de Acrelândia 2022, sem o contorno da área de busca.
+
