@@ -258,6 +258,8 @@
     #fotos-grade { display: flex; gap: 6px; overflow-x: auto; overflow-y: hidden; padding: 0; scroll-snap-type: x proximity; }
     #fotos-grade button { flex: 0 0 92px; height: 92px; scroll-snap-align: start; box-shadow: 0 4px 14px rgba(0,0,0,.45); }
     .maplibregl-ctrl-bottom-right { bottom: 110px; }
+    /* com o painel curto, acima da faixa, as fotos ocupam a largura toda (navegacao.js liga a classe) */
+    body.tem-fotos.fotos-livres #fotos { left: 12px; }
   }
 
   /* ---------- celular: o painel vira uma folha recolhível embaixo ---------- */

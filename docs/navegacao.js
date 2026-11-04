@@ -180,6 +180,18 @@
     if (Math.abs(dy) > 30) folha(dy < 0);
   });
 
+  // ---------- faixa de fotos (tablet): largura toda quando o painel termina acima dela ----------
+  const faixaFotos = matchMedia('(min-width: 641px) and (max-width: 900px)');
+  function livrarFotos() {
+    // a faixa tem 96 px e fica a 12 px do fundo; folga de 8 px acima dela
+    const livre = faixaFotos.matches && painel.getBoundingClientRect().bottom < innerHeight - 12 - 96 - 8;
+    document.body.classList.toggle('fotos-livres', livre);
+  }
+  new ResizeObserver(livrarFotos).observe(painel);
+  addEventListener('resize', livrarFotos);
+  faixaFotos.addEventListener('change', livrarFotos);
+  livrarFotos();
+
   // ---------- depois de carregar os dados: índice e link direto ----------
   pronto.then(() => {
     for (const [nome, fc] of Object.entries(dados)) for (const f of fc.features) indice.set(chave(f.properties), f);
