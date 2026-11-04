@@ -31,7 +31,7 @@ Este arquivo descreve cada cena e a música. Para mudar algo, edite aqui e peça
 
 ## Som
 
-A música é feita no navegador enquanto o tour roda, com Web Audio, sem arquivo de som, e toca só no tour. Inspira-se em música indígena amazônica: escala pentatônica de ré menor (ré, fá, sol, lá, dó), flauta de bambu, maracá, chuva de sementes e tambor grave, sobre um bordão. Cada execução é diferente: as frases e os golpes são sorteados, mas sempre na escala e no pulso de 92 bpm. O botão **♪**, ao lado de **✕ esc**, liga e desliga; a escolha fica no `localStorage` (`geoglifos-som`) e o som vem ligado. Com `?som=debug`, `window.som` expõe o motor, e `som.pico()` mede a saída.
+A música é feita no navegador enquanto o tour roda, com Web Audio, sem arquivo de som, e toca só no tour. Inspira-se em música indígena amazônica: escala pentatônica de ré menor (ré, fá, sol, lá, dó), flauta de bambu, maracá, chuva de sementes, tambor grave e um coro de vozes que responde à flauta, sobre um bordão. O coro canta só vogais, sem palavras, e fica discreto, como textura de gente cantando junto. Cada execução é diferente: as frases e os golpes são sorteados, mas sempre na escala e no pulso de 92 bpm. O botão **♪**, ao lado de **✕ esc**, liga e desliga; a escolha fica no `localStorage` (`geoglifos-som`) e o som vem ligado. Com `?som=debug`, `window.som` expõe o motor, e `som.pico()` mede a saída.
 
 ### A câmera toca a música
 
@@ -40,6 +40,7 @@ A música é feita no navegador enquanto o tour roda, com Web Audio, sem arquivo
 | zoom | brilho do bordão (passa-baixas) | 220 Hz × 2^((zoom − 5) / 2,6), entre 150 e 2.600 Hz |
 | zoom | o tambor só bate de perto: no 1 de cada compasso a partir do zoom 8, e também no "e" do 3 quando perto | força 0,3 → 1 do zoom 8 ao 15 |
 | zoom | a flauta: de longe, frases curtas de notas longas e graves; de perto, mais altas, rápidas e com apojaturas | 3 a 7 notas; ornamento 15% → 45% |
+| zoom | o coro responde mais de perto | chance de resposta 45% → 75% do zoom 5 ao 15 (90% nas cenas 6 e 9) |
 | inclinação | quanto vai para o eco da sala | 0,2 + inclinação / 78 × 0,45 |
 | rumo | posição esquerda/direita do bordão e da flauta | sen(rumo) × 0,5 (flauta × 0,45) |
 | velocidade | densidade do maracá: parado só marca o tempo; rápido, enche até as semicolcheias, mais forte e mais brilhante | √(pixels + zoom × 800 + graus × 4 por segundo ÷ 1.500), sobe rápido, desce devagar |
@@ -55,6 +56,7 @@ A música é feita no navegador enquanto o tour roda, com Web Audio, sem arquivo
 | Flauta | seno com deslize de entrada (−3,5%), vibrato de 5,2 Hz que entra devagar, oitava fraca e sopro (ruído em banda) | ganho 0,09 × força; muito eco |
 | Maracá | cada golpe são 3 a 6 sementes em 30 ms: ruído em banda de 4,5 a 7 kHz, decaimento de 35 a 85 ms | acento no tempo (1), meio tempo (0,6), semicolcheia (0,3) |
 | Tambor | seno caindo de tom em 80 ms, com estalo | 0,9 s de decaimento |
+| Coro | 8 vozes, metade grave e metade aguda (uma oitava acima): serra com vibrato próprio (4,6 a 6 Hz) pelos três formantes de uma vogal (a, o, u, e), mais sopro; cada voz desafina até ±12 cents, entra até 90 ms depois das outras e fica num ponto da roda, da esquerda à direita | ganho 0,11 por voz; mais sala que os outros (0,7); `?coro=0` desliga, `som.coro()` toca com `?som=debug` |
 | Sala | 3 s de ruído morrendo, os agudos primeiro | pré-atraso de 15 ms |
 | Mestre | passa-altas → compressor → limitador → teto suave (tanh) | 30 Hz; −18 dB, 3:1; −3 dB, 20:1 |
 
@@ -66,7 +68,9 @@ A música é feita no navegador enquanto o tour roda, com Web Audio, sem arquivo
 | Cada cena nova | o bordão desliza para a nota da cena e o tambor bate duas vezes |
 | Cada legenda nova | uma frase da flauta, se ela não estiver no meio de outra |
 | Câmera calma | a flauta volta sozinha a cada 7 a 11 s |
-| Tour até o fim | cadência: a flauta desce lá, sol, fá, ré; rufo de maracá, dois golpes de tambor e o som se apaga em ~4 s |
+| Fim de uma frase da flauta | pergunta e resposta: o coro repete as últimas 2 ou 3 notas e segura a final |
+| Cenas 6 e 9 (cerimônias, fecho) | o grupo marca o pulso a cada dois compassos: duas sílabas curtas na nota da cena e uma longa na quinta abaixo |
+| Tour até o fim | cadência: a flauta e o coro descem lá, sol, fá, ré; rufo de maracá, dois golpes de tambor e o som se apaga em ~4 s |
 | Tour parado no meio | o som some em 0,8 s |
 | Aba escondida | o som pausa e volta com ela |
 | `?tour=1` | o convite pede um clique antes de começar, então o som já entra com o tour |

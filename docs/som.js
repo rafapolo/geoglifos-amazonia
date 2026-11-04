@@ -13,8 +13,15 @@
   // nota do bordão de cada cena (semitons sobre ré, sempre dentro da escala)
   const RAIZ_CENA = [0, 3, 5, -2, 7, 0, 3, -2, 5, 0];
   const CHAVE = 'geoglifos-som';
+  // coro de vozes cantando juntas; ?coro=0 desliga (para comparar)
+  const CORO = new URLSearchParams(location.search).get('coro') !== '0';
+  // cenas em que o grupo também marca o pulso: cerimônias (6) e o fecho (9)
+  const CENAS_CANTO = new Set([6, 9]);
+  // vogais pelos três primeiros formantes (Hz, voz grave; a aguda sobe ~17%)
+  const VOGAIS = { a: [730, 1090, 2440], o: [570, 840, 2410], u: [320, 870, 2240], e: [530, 1840, 2480] };
 
-  let ctx = null, saida, bus, sala, bordao, ventoG, ventoF, ruido;
+  let ctx = null, saida, bus, sala, bordao, ventoG, ventoF, ruido, coroBus;
+  let cenaN = 0;
   let tocando = false, ligado = true, raf = 0, timer = 0;
   let prox = 0, passo = 0, raiz = 0;
   let vel = 0, ultimo = null, ultimaFrase = 0;
@@ -80,6 +87,11 @@
     [o1, o2, o3, o4].forEach((o) => o.start());
     bordao = { g, f, pan, o1, o2, o3, o4, env };
     afinarBordao(0, 0);
+
+    // coro: soma das vozes, com mais sala que os outros instrumentos (canto em roda, ao ar livre)
+    coroBus = ctx.createGain(); coroBus.gain.value = 1;
+    const coroSala = ctx.createGain(); coroSala.gain.value = 0.7;
+    coroBus.connect(bus); coroBus.connect(coroSala); coroSala.connect(sala);
 
     // vento dos voos: ruído em banda, mais alto e mais agudo quanto mais rápido
     const vs = ctx.createBufferSource(); vs.buffer = ruido; vs.loop = true;
@@ -151,6 +163,54 @@
     semente(t, v * 0.35, pan, 1800, 0.02);
   }
 
+  // ---------- coro ----------
+
+  // a voz canta numa tessitura confortável: grave entre lá 2 e ré 4, a aguda uma oitava acima
+  const dobrar = (semi) => { while (semi > 12) semi -= 12; while (semi < -5) semi += 12; return semi; };
+
+  // uma voz: serra (pregas vocais) com vibrato próprio, pelos três formantes da vogal, mais sopro;
+  // as notas seguem em ligadura, como se canta
+  function voz(notas, vogal, v, pan, aguda) {
+    const t0 = notas[0].t, ult = notas[notas.length - 1], fim = ult.t + ult.d;
+    const oit = aguda ? 1 : 0, desaf = 2 ** ((Math.random() * 24 - 12) / 1200);
+    const o = ctx.createOscillator(); o.type = 'sawtooth';
+    notas.forEach((n, i) => {
+      const f = hz(n.semi, oit) * desaf;
+      if (i === 0) { o.frequency.setValueAtTime(f * 0.97, n.t); o.frequency.exponentialRampToValueAtTime(f, n.t + 0.12); }
+      else o.frequency.setTargetAtTime(f, n.t, 0.035);
+    });
+    const vib = ctx.createOscillator(); vib.frequency.value = 4.6 + Math.random() * 1.4;
+    const vg = ctx.createGain(); vg.gain.setValueAtTime(0, t0); vg.gain.linearRampToValueAtTime(hz(notas[0].semi, oit) * 0.009, t0 + 0.7);
+    vib.connect(vg); vg.connect(o.frequency);
+    const esc = aguda ? 1.17 : 1;
+    const g = ctx.createGain(), p = ctx.createStereoPanner(); p.pan.value = lim(pan, -1, 1);
+    VOGAIS[vogal].forEach((fm, k) => {
+      const bp = ctx.createBiquadFilter(); bp.type = 'bandpass'; bp.frequency.value = fm * esc; bp.Q.value = [8, 10, 12][k];
+      const kg = ctx.createGain(); kg.gain.value = [1, 0.6, 0.3][k];
+      o.connect(bp); bp.connect(kg); kg.connect(g);
+    });
+    const s = ctx.createBufferSource(); s.buffer = ruido; s.loop = true;
+    const sf = ctx.createBiquadFilter(); sf.type = 'bandpass'; sf.frequency.value = VOGAIS[vogal][1] * esc; sf.Q.value = 1.5;
+    const sg = ctx.createGain(); sg.gain.value = 0.05; s.connect(sf); sf.connect(sg); sg.connect(g);
+    const pico = 0.11 * v, ataque = 0.08 + Math.random() * 0.14;
+    g.gain.setValueAtTime(0, t0); g.gain.linearRampToValueAtTime(pico, t0 + ataque);
+    g.gain.setTargetAtTime(pico * 0.8, t0 + ataque, 0.4);
+    g.gain.setTargetAtTime(0, fim, 0.16 + Math.random() * 0.12);
+    g.connect(p); p.connect(coroBus);
+    [o, vib, s].forEach((x) => { x.start(t0); x.stop(fim + 1.5); });
+  }
+
+  // o grupo: 8 vozes (metade grave, metade aguda) que entram cada uma no seu tempo, espalhadas em roda
+  function coro(notas, forca = 1, vogal = sorte(['a', 'a', 'o', 'e', 'u'])) {
+    if (!CORO || !notas.length) return;
+    const N = 8;
+    for (let i = 0; i < N; i++) {
+      const atraso = Math.random() * 0.09;
+      const minhas = notas.map((n) => ({ semi: dobrar(n.semi), t: n.t + atraso, d: n.d }));
+      voz(minhas, vogal, forca * (0.65 + Math.random() * 0.35), -0.8 + (1.6 * i) / (N - 1) + (Math.random() - 0.5) * 0.2, i % 2 === 1);
+    }
+  }
+
   // ---------- composição ----------
 
   // frase da flauta: passeio na pentatônica; de longe notas longas e graves, de perto mais altas e ornadas
@@ -159,7 +219,7 @@
     const pan = Math.sin((cam.bearing * Math.PI) / 180) * 0.45;
     const n = 3 + Math.floor(Math.random() * 3 + perto * 2);
     let grau = 5 + Math.floor(perto * 3), t = t0;
-    const batida = 60 / BPM;
+    const batida = 60 / BPM, tocadas = [];
     for (let i = 0; i < n; i++) {
       grau = lim(grau + sorte([-2, -1, -1, 1, 1, 2, 0]), 2, 11);
       const semi = ESCALA[grau % 5] + 12 * Math.floor(grau / 5) + raiz;
@@ -168,7 +228,21 @@
       // ornamento: apojatura de cima, mais comum de perto
       if (!ultima && Math.random() < 0.15 + perto * 0.3) flauta(hz(semi + 2, 1), t, 0.07, 0.4, pan);
       flauta(hz(semi, 1), t, d * 0.95, 0.55 + Math.random() * 0.25, pan);
+      tocadas.push(semi);
       t += d;
+    }
+    // pergunta e resposta: o grupo repete o fim da frase e segura a última nota
+    // (quase sempre nas cenas de cerimônia; de perto, mais vezes que de longe)
+    const chance = CENAS_CANTO.has(cenaN) ? 0.9 : 0.45 + perto * 0.3;
+    if (CORO && Math.random() < chance) {
+      let tr = t + batida * 0.5;
+      const fim = tocadas.slice(-Math.min(3, tocadas.length));
+      const resposta = fim.map((semi, i) => {
+        const d = (i === fim.length - 1 ? 3 : 1) * batida;
+        const n = { semi, t: tr, d }; tr += d; return n;
+      });
+      coro(resposta, 0.8 + perto * 0.4);
+      t = tr;
     }
     ultimaFrase = performance.now() + (t - t0) * 1000;
   }
@@ -191,6 +265,11 @@
       // tambor: só de perto (zoom 8 → 15), no 1 e no "e" do 3
       const perto = lim((cam.zoom - 8) / 7, 0, 1);
       if (perto > 0.05 && (s === 0 || (s === 10 && perto > 0.4)) ) tambor(t, (s === 0 ? 0.5 : 0.3) * (0.3 + 0.7 * perto), 0, hz(raiz, -3) * 0.75 + 20);
+      // cenas de cerimônia: o grupo marca o pulso a cada dois compassos, "rê-ê" na nota da cena e na quinta abaixo
+      if (CORO && CENAS_CANTO.has(cenaN) && passo % 32 === 0 && performance.now() > ultimaFrase - 200) {
+        const b = 60 / BPM;
+        coro([{ semi: raiz, t, d: b * 0.45 }, { semi: raiz, t: t + b, d: b * 0.45 }, { semi: raiz - 5, t: t + 2 * b, d: b * 1.6 }], 0.55, sorte(['e', 'a']));
+      }
       passo++; prox += PASSO;
     }
     // com a câmera calma, a flauta volta sozinha
@@ -244,6 +323,7 @@
   // nova cena: o bordão desliza para a nota da cena e o tambor marca a chegada
   function cena(i) {
     if (!tocando) return;
+    cenaN = i;
     raiz = RAIZ_CENA[i % RAIZ_CENA.length];
     afinarBordao(raiz, 0.8);
     const t = ctx.currentTime + 0.02;
@@ -268,6 +348,8 @@
     if (cadencia) {
       raiz = 0; afinarBordao(0, 0.5);
       [7, 5, 3, 0].forEach((s, i) => flauta(hz(s, 1), t + i * 0.32, i === 3 ? 2.4 : 0.34, 0.6));
+      // o grupo desce junto e segura o ré
+      coro([7, 5, 3, 0].map((semi, i) => ({ semi, t: t + i * 0.32, d: i === 3 ? 3 : 0.32 })), 0.9, 'a');
       for (let i = 0; i < 14; i++) maraca(t + i * 0.07, 0.25 + i * 0.03, (i % 2 ? -0.4 : 0.4));
       tambor(t + 0.96, 0.9); tambor(t + 1.28, 0.6);
       fade = 3.2;
@@ -310,6 +392,9 @@
       let m = 0, q = 0; for (const x of d) { m = Math.max(m, Math.abs(x)); q += x * x; }
       return { pico: +m.toFixed(3), rms: +Math.sqrt(q / d.length).toFixed(3) };
     };
-    window.som = { ...api, ctx: () => ctx, cam, vel: () => vel, frase, pico };
+    window.som = { ...api, ctx: () => ctx, cam, vel: () => vel, frase, pico, coro: (semis = [0, 3, 5, 0], f = 1) => {
+      const b = 60 / BPM, t = ctx.currentTime + 0.1;
+      coro(semis.map((semi, i) => ({ semi, t: t + i * b, d: i === semis.length - 1 ? 3 * b : b })), f);
+    } };
   }
 })();
