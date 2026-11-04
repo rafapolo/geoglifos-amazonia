@@ -322,11 +322,8 @@
     salvo.camadas.forEach(([n, on]) => mostrar(n, on));
     $('tour').classList.remove('on');
     $('tour-cap').classList.remove('on');
-    // a tela volta a ter a coluna de fotos: o mapa muda de tamanho, mas a vista fica a mesma
-    const aqui = { center: map.getCenter(), zoom: map.getZoom(), pitch: map.getPitch(), bearing: map.getBearing() };
-    document.body.classList.remove('touring');
-    map.resize();
-    map.jumpTo(aqui);
+    // a tela volta a ter a coluna de fotos: o mapa fica mais estreito, mas o que se via à esquerda não se mexe
+    redimensionar(() => document.body.classList.remove('touring'));
     setTimeout(() => { if (!ativo) $('tour').hidden = true; }, 900);
     // a entrada do tour vira a vista onde ele parou (o "voltar" do navegador leva à vista de antes)
     if (!peloHistorico && history.state?.tour) history.replaceState({ ...history.state, tour: false }, '', location.href);

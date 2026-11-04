@@ -670,6 +670,18 @@ function montarFotos(feats) {
   map.resize();
 }
 
+// quando a coluna de fotos aparece ou some, o mapa muda de largura; o MapLibre manteria o centro e tudo
+// escorregaria para o lado. Aqui a parte que continua visível fica parada: o novo centro é o ponto que,
+// antes do ajuste, estava no meio da área que sobra (a borda esquerda do mapa não se mexe)
+window.redimensionar = (mudar) => {
+  const h = map.getCanvas().clientHeight;
+  mudar();
+  const larg = document.getElementById('map').clientWidth;  // já com a coluna nova (força o layout)
+  const centro = map.unproject([larg / 2, h / 2]);           // ainda na projeção antiga
+  map.resize();
+  map.jumpTo({ center: centro });
+};
+
 window.mostrar = (nome, on) => { const cb = document.querySelector(`input[data-camada="${nome}"]`); if (cb && cb.checked !== on) { cb.checked = on; cb.dispatchEvent(new Event('change')); } };
 document.querySelectorAll('input[data-camada]').forEach(cb => cb.addEventListener('change', () => {
   for (const id of camadas[cb.dataset.camada]) if (map.getLayer(id)) map.setLayoutProperty(id, 'visibility', cb.checked ? 'visible' : 'none');
@@ -680,9 +692,8 @@ document.querySelectorAll('input[data-camada]').forEach(cb => cb.addEventListene
 // como os desenhos de J. Q. Jacobs; fica no endereço (?fundo=verde) para o link compartilhado abrir igual
 let antesDoVerde = null;
 window.fundoVerde = (on) => {
-  document.body.classList.toggle('fundo-verde', on);
+  redimensionar(() => document.body.classList.toggle('fundo-verde', on));
   document.getElementById('fundo-verde').checked = on;
-  map.resize();
   const aplicar = () => {
     map.setLayoutProperty('sat', 'visibility', on ? 'none' : 'visible');
     map.setLayoutProperty('ref', 'visibility', on ? 'none' : 'visible');
