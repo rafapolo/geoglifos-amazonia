@@ -51,7 +51,8 @@ Requisitos: `curl`, [`uv`](https://docs.astral.sh/uv/), R (`Rscript`) e GDAL (`g
 ```sh
 ./script/sync.sh                                                          # baixa as fontes para data/raw/ (só o que mudou)
 uv run --with polars --with 'markitdown[docx]' script/extract_nature2026.py  # tabela da Nature -> data/processed/
-uv run --with polars --with fastexcel script/convert.py                   # GeoJSON e raster -> docs/data/ (inclui Jacobs e Kalliola)
+uv run --with polars --with fastexcel --with pillow script/convert.py     # GeoJSON e raster -> docs/data/ (inclui Jacobs e Kalliola)
+uv run --with fonttools --with brotli script/fontes.py                    # fontes enxutas -> docs/fontes/
 uv run --with playwright script/extrai_walker_marcadores.py                # marcadores do app do Walker
 uv run --with pillow script/sync_walker.py                                 # fotos e miniaturas -> docs/data/
 uv run --with matplotlib --with pyproj script/desenho.py                  # pranchas desenhadas -> docs/desenhos/
@@ -76,11 +77,15 @@ script/desenho.py            desenha as pranchas no espírito de Jacobs
 script/lidar_eba.py          relevo do LiDAR aberto (EBA) em tiles
 script/publica_xyz.sh        publica em xn--2dk.xyz
 data/processed/              CSVs derivados das fontes abertas
-docs/                        site: index.html, i18n.js, tour.js, som.js, navegacao.js, data/ e desenhos/ (o build gera dist/)
+docs/                        site: index.html, i18n.js, mapa.js, tour.js, som.js, navegacao.js, sw.js, fontes/, data/ e desenhos/ (o build gera dist/)
 design/tour.md               roteiro do tour: cenas, legendas em três línguas e música
 tasks/                       tarefas e inventários (desenho, site de Jacobs)
 sources.md                   levantamento das fontes de dados
 ```
+
+## Desempenho
+
+A abertura do site baixa cerca de 0,9 MB (comprimido). O mapa de probabilidade e os contornos e estradas de Jacobs só são baixados quando aparecem. As fontes são servidas pelo próprio site, enxutas. Os scripts usam `defer`, e um service worker (`docs/sw.js`) guarda o site, os dados e os tiles para as visitas seguintes. Lighthouse local (2026-11-04): celular 91–92 de desempenho e 100 em acessibilidade e SEO; computador 100 em desempenho, acessibilidade e SEO.
 
 ## Proteção dos sítios
 

@@ -3,14 +3,14 @@
 Saídas públicas (licença aberta) em docs/data/:
   nature2026.geojson   Pärssinen et al. 2026, Nature, CC BY 4.0 (estruturas por LiDAR)
   science2023.geojson  Peripato et al. 2023, Science, Zenodo (base compilada de 961 estruturas)
-  probabilidade.png    modelo de probabilidade de estruturas ocultas (Science 2023), em EPSG:3857
+  probabilidade.webp   modelo de probabilidade de estruturas ocultas (Science 2023), em EPSG:3857
 Saídas de James Q. Jacobs (©, publicadas com autorização dele, informada em 2026-11-04) em docs/data/jacobs/:
   jacobs_pontos.geojson, jacobs_contornos.geojson, jacobs_linhas.geojson
   (amazon_geoglyphs.kml + bolivia.kml + octagons.kml + acrelandia_2022_survey.kml,
    sem as áreas de busca, a topografia e as interpretações)
   kalliola2024.geojson  Kalliola et al. 2024, Acta Amazonica, CC BY 4.0 (1.279 estruturas, do PDF do Fairdata)
 
-Uso: uv run --with polars --with fastexcel script/convert.py   (precisa de Rscript e GDAL no PATH)
+Uso: uv run --with polars --with fastexcel --with pillow script/convert.py   (precisa de Rscript e GDAL no PATH)
 """
 
 import html
@@ -108,7 +108,12 @@ def probabilidade() -> None:
         {"coordinates": [[-79.44, 8.66], [-44.4, 8.66], [-44.4, -18.0], [-79.44, -18.0]]}))
     for aux in OUT.glob("probabilidade.png.aux.xml"):
         aux.unlink()
-    print(f"      raster -> {png.relative_to(ROOT)} ({png.stat().st_size // 1024} KB)")
+    # o site usa WebP (qualidade 80: ~550 KB, contra 1,5 MB do PNG, sem diferença visível a 65% de opacidade)
+    from PIL import Image
+    webp = OUT / "probabilidade.webp"
+    Image.open(png).save(webp, quality=80, method=6)
+    png.unlink()
+    print(f"      raster -> {webp.relative_to(ROOT)} ({webp.stat().st_size // 1024} KB)")
 
 
 def clean(texto: str) -> str:
@@ -187,9 +192,38 @@ def jacobs() -> None:
             f["properties"] |= extra
             juntados += 1
     print(f"planilha: {len(planilha)} linhas, {juntados} pontos com atributos")
-    write_geojson(JACOBS / "jacobs_pontos.geojson", pontos + p2 + p3)
-    write_geojson(JACOBS / "jacobs_contornos.geojson", contornos + c2 + c3)
-    write_geojson(JACOBS / "jacobs_linhas.geojson", linhas + l2 + l3)
+    write_geojson(JACOBS / "jacobs_pontos.geojson", enxugar(pontos + p2 + p3))
+    # contornos e linhas não são clicáveis no mapa: guardam só o código (os atributos ficam nos pontos)
+    so_codigo = lambda fs: [{**f, "properties": {"codigo": f["properties"].get("codigo", "")}} for f in fs]
+    write_geojson(JACOBS / "jacobs_contornos.geojson", enxugar(so_codigo(contornos + c2 + c3)))
+    write_geojson(JACOBS / "jacobs_linhas.geojson", enxugar(so_codigo(linhas + l2 + l3)))
+
+
+def enxugar(features: list[dict], tol: float = 0.00001) -> list[dict]:
+    """5 casas decimais (~1 m) e linhas simplificadas por Douglas-Peucker com tolerância de ~1 m:
+    o traçado fica igual na tela e o arquivo encolhe."""
+    def rdp(pts):
+        if len(pts) < 3:
+            return pts
+        (x0, y0), (x1, y1) = pts[0], pts[-1]
+        dx, dy = x1 - x0, y1 - y0
+        n = (dx * dx + dy * dy) ** 0.5
+        dist = [abs(dy * x - dx * y + x1 * y0 - y1 * x0) / n if n else ((x - x0) ** 2 + (y - y0) ** 2) ** 0.5 for x, y in pts[1:-1]]
+        i = max(range(len(dist)), key=dist.__getitem__)
+        if dist[i] <= tol:
+            return [pts[0], pts[-1]]
+        return rdp(pts[: i + 2])[:-1] + rdp(pts[i + 1 :])
+    arred = lambda pts: [[round(x, 5), round(y, 5)] for x, y in pts]
+    for f in features:
+        g = f["geometry"]
+        if g["type"] == "Point":
+            g["coordinates"] = [round(g["coordinates"][0], 5), round(g["coordinates"][1], 5)]
+        elif g["type"] == "LineString":
+            g["coordinates"] = arred(rdp(g["coordinates"]))
+        elif g["type"] == "Polygon":
+            aneis = [arred(rdp(a)) for a in g["coordinates"]]
+            g["coordinates"] = [a if len(a) >= 4 else arred(b) for a, b in zip(aneis, g["coordinates"])]
+    return features
 
 
 def jacobs_planilha() -> dict[str, dict]:

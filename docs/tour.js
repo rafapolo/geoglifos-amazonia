@@ -72,7 +72,11 @@
   }
 
   // os traçados de J. Q. Jacobs sem os pontos dele, que poluiriam a vista de perto
-  const tracados = () => { mostrar('jacobs', true); if (map.getLayer('jacobs-pontos')) map.setLayoutProperty('jacobs-pontos', 'visibility', 'none'); };
+  const tracados = async () => {
+    await garantirTracados();
+    mostrar('jacobs', true);
+    if (map.getLayer('jacobs-pontos')) map.setLayoutProperty('jacobs-pontos', 'visibility', 'none');
+  };
 
   const so = (...nomes) => ['nature', 'science', 'prob', 'fotos', 'jacobs', 'lidar'].forEach((n) => mostrar(n, nomes.includes(n)));
 
@@ -122,7 +126,7 @@
       // do octógono simples num campo arado (onde o satélite já não mostra nada) ao octógono duplo junto da estrada
       { dur: 14000, run: async () => {
         so();
-        tracados();
+        await tracados();
         const ida = voarEsperar({ center: [-67.51921, -9.89596], zoom: 16.2, pitch: 0, bearing: 0 }, 4500);
         await legenda(t('Octógonos · Acre e Amazonas', 'Octagons · Acre and Amazonas', 'Octógonos · Acre y Amazonas'),
           t(`Entre os ${fmt(dados.jacobs?.features.length || 2204)} sítios mapeados por J. Q. Jacobs, só quatro têm oito lados, e os quatro medem cerca de 155 m.`,
@@ -210,7 +214,7 @@
         await espera(5500);
         fecharBaloes();
         so();
-        tracados();
+        await tracados();
         const recuo = voarEsperar({ center: [-64.6, -15.0], zoom: 11.4, pitch: 35, bearing: 20 }, 3500);
         await legenda(t('Llanos de Mojos · traçados de J. Q. Jacobs', 'Llanos de Mojos · outlines by J. Q. Jacobs', 'Llanos de Mojos · trazados de J. Q. Jacobs'),
           t('Calçadas elevadas e canais saem de Cotoca em todas as direções e ligam a cidade aos sítios vizinhos.',
@@ -267,6 +271,9 @@
     };
     map.setMaxZoom(17);
     map.setMaxPitch(78);
+    // o que o tour vai usar mais adiante começa a baixar já
+    garantirProb();
+    garantirTracados();
     // o tour é feito sobre o satélite: o modo "só os desenhos" volta quando ele termina
     salvo.verde = document.body.classList.contains('fundo-verde');
     if (salvo.verde) fundoVerde(false);

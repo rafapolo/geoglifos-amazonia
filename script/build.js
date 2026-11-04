@@ -39,7 +39,7 @@ mkdirSync(join(DIST, "vendor"), { recursive: true });
 for (const f of ["maplibre-gl.js", "maplibre-gl.css"]) copyFileSync(join(ML, f), join(DIST, "vendor", f));
 
 // ── 3. scripts juntos e minificados ──
-const SCRIPTS = ["som.js", "tour.js", "navegacao.js"];
+const SCRIPTS = ["mapa.js", "som.js", "tour.js", "navegacao.js"];
 const fonteJs = SCRIPTS.map((f) => readFileSync(join(DOCS, f), "utf-8")).join("\n;\n");
 // sem toplevel: os scripts conversam por globais (map, chave, pronto, tour…)
 const app = await terser(fonteJs, { compress: { passes: 2 }, mangle: true, format: { comments: false } });
@@ -48,17 +48,24 @@ for (const f of SCRIPTS) rmSync(join(DIST, f));
 // i18n.js roda antes do script do mapa (traduz a página e define t/fmt), então fica num arquivo à parte
 const i18n = await terser(readFileSync(join(DOCS, "i18n.js"), "utf-8"), { compress: { passes: 2 }, mangle: true, format: { comments: false } });
 writeFileSync(join(DIST, "i18n.js"), i18n.code);
+// service worker: a versão do cache é o commit, para cada deploy começar um cache novo do site
+const sw = await terser(readFileSync(join(DOCS, "sw.js"), "utf-8").replace("__VERSAO__", sha), { compress: { passes: 2 }, mangle: true, format: { comments: false } });
+writeFileSync(join(DIST, "sw.js"), sw.code);
 
 // ── 4. index.html ──
 let html = readFileSync(join(DOCS, "index.html"), "utf-8");
 const troca = (de, para) => {
   if (!html.includes(de)) throw new Error(`index.html: não achei ${de}`);
-  html = html.replace(de, para);
+  html = html.split(de).join(para); // todas as ocorrências (a URL do MapLibre aparece no preload e no script)
 };
 troca(`https://unpkg.com/maplibre-gl@${mlVersao}/dist/maplibre-gl.css`, `vendor/maplibre-gl.css?v=${mlVersao}`);
 troca(`https://unpkg.com/maplibre-gl@${mlVersao}/dist/maplibre-gl.js`, `vendor/maplibre-gl.js?v=${mlVersao}`);
-troca(`<script src="i18n.js"></script>`, `<script src="i18n.js?v=${sha}"></script>`);
-troca(SCRIPTS.map((f) => `<script src="${f}"></script>`).join("\n"), `<script src="app.js?v=${sha}"></script>`);
+// i18n.js (7 KB) roda antes de tudo: vai embutido na página, sem um pedido a mais bloqueando a primeira pintura
+troca(`<script src="i18n.js"></script>`, `<script>${i18n.code.replace(/<\/script/gi, "<\\/script")}</script>`);
+// tudo com defer (MapLibre, depois app.js = mapa + som + tour + navegação): o painel pinta antes de o mapa existir
+troca(SCRIPTS.map((f) => `<script src="${f}" defer></script>`).join("\n"), `<script src="app.js?v=${sha}" defer></script>`);
+// o CSS do MapLibre só estiliza os controles do mapa: carrega sem bloquear a primeira pintura
+troca(`<link rel="stylesheet" href="vendor/maplibre-gl.css?v=${mlVersao}">`, `<link rel="preload" as="style" href="vendor/maplibre-gl.css?v=${mlVersao}" onload="this.rel='stylesheet'"><noscript><link rel="stylesheet" href="vendor/maplibre-gl.css?v=${mlVersao}"></noscript>`);
 
 const min = await minify(html, {
   collapseWhitespace: true,
