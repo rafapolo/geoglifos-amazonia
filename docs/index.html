@@ -96,6 +96,9 @@
   body.touring #fotos { opacity: 0; pointer-events: none; }
   /* no tour o mapa ocupa a tela toda, sem a faixa do painel de fotos */
   body.touring { --fotos-w: 0px; }
+  /* fundo verde: só o mapa desenhado, sem a coluna de fotos */
+  body.fundo-verde { --fotos-w: 0px !important; }
+  body.fundo-verde #fotos { display: none !important; }
   #fotos { transition: opacity 600ms; }
   /* telas grandes: coluna de fotos mais larga, com 3 miniaturas por linha (no tour ela continua sumindo) */
   @media (min-width: 1600px) {
@@ -468,8 +471,9 @@ const map = new maplibregl.Map({
         tiles: ['https://server.arcgisonline.com/ArcGIS/rest/services/Reference/World_Boundaries_and_Places/MapServer/tile/{z}/{y}/{x}'] }
     },
     layers: [
-      // fundo verde-escuro liso, que só aparece quando o satélite some (modo "só os desenhos")
-      { id: 'fundo', type: 'background', paint: { 'background-color': '#1f3d29' } },
+      // mar azul liso, que só aparece quando o satélite some (modo "só os desenhos"); a terra das
+      // Américas entra por cima dele em verde (camada 'terra', carregada só quando o modo liga)
+      { id: 'fundo', type: 'background', paint: { 'background-color': '#173a4f' } },
       { id: 'sat', type: 'raster', source: 'sat', paint: { 'raster-saturation': -0.3, 'raster-brightness-max': 0.68, 'raster-contrast': 0.08 } },
       { id: 'ref', type: 'raster', source: 'ref', paint: { 'raster-opacity': 0.55 } }
     ]
@@ -679,6 +683,7 @@ let antesDoVerde = null;
 window.fundoVerde = (on) => {
   document.body.classList.toggle('fundo-verde', on);
   document.getElementById('fundo-verde').checked = on;
+  map.resize();
   const aplicar = () => {
     map.setLayoutProperty('sat', 'visibility', on ? 'none' : 'visible');
     map.setLayoutProperty('ref', 'visibility', on ? 'none' : 'visible');
@@ -686,8 +691,19 @@ window.fundoVerde = (on) => {
     linha('jacobs-contornos', on ? '#e9b44c' : '#7fd1c7', on ? ['interpolate', ['linear'], ['zoom'], 9, 1, 14, 2.2] : 1.5);
     linha('jacobs-linhas', on ? '#d9b46a' : '#f2f2a0', on ? ['interpolate', ['linear'], ['zoom'], 9, 0.8, 14, 1.6] : 1.2);
     if (map.getLayer('jacobs-linhas')) map.setPaintProperty('jacobs-linhas', 'line-dasharray', on ? [1, 0] : [2, 1]);
-    // no verde, os contornos aparecem já de mais longe
-    if (map.getLayer('jacobs-contornos')) map.setLayerZoomRange('jacobs-contornos', on ? 8 : 11, 24);
+    // terra das Américas em verde sobre o mar azul (Natural Earth 1:50 mi, domínio público)
+    if (on && !map.getSource('americas')) {
+      map.addSource('americas', { type: 'geojson', data: 'data/americas.geojson' });
+      map.addLayer({ id: 'terra', type: 'fill', source: 'americas', paint: { 'fill-color': '#1f3d29', 'fill-antialias': true } }, 'sat');
+      map.addLayer({ id: 'costa', type: 'line', source: 'americas', paint: { 'line-color': '#2e5a3e', 'line-width': 0.8 } }, 'sat');
+    }
+    for (const id of ['terra', 'costa']) if (map.getLayer(id)) map.setLayoutProperty(id, 'visibility', on ? 'visible' : 'none');
+    // no verde, os traçados aparecem desde longe: de perto, finos e na escala real; de longe, um pouco mais
+    // grossos, para cada recinto virar uma marca e cada calçada um risco visível no continente
+    if (map.getLayer('jacobs-contornos')) map.setLayerZoomRange('jacobs-contornos', on ? 0 : 11, 24);
+    if (map.getLayer('jacobs-linhas')) map.setLayerZoomRange('jacobs-linhas', on ? 0 : 10, 24);
+    linha('jacobs-contornos', on ? '#e9b44c' : '#7fd1c7', on ? ['interpolate', ['linear'], ['zoom'], 4, 3, 7, 2.4, 10, 1.4, 14, 2.2] : 1.5);
+    linha('jacobs-linhas', on ? '#d9b46a' : '#f2f2a0', on ? ['interpolate', ['linear'], ['zoom'], 4, 1.1, 7, 1, 10, 0.9, 14, 1.6] : 1.2);
     // só os traçados: pontos, manchas, fotos e o LiDAR somem; ao sair, as camadas voltam como estavam
     const SO_PONTOS = ['nature', 'science', 'lidar', 'prob', 'fotos', 'kalliola', 'ufpa', 'jacobsimg'];
     if (on) {

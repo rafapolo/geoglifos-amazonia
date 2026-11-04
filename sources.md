@@ -91,3 +91,8 @@ Não há nenhum mapa web público e mantido dos geoglifos amazônicos. O KML do 
 - `script/ufpa_barbosa2014.py` lê os anexos (texto do PDF pelo markitdown) e converte as coordenadas UTM 19L: 362 recintos de 209 sítios, com município, forma, tipo de valeta, grau de integridade, uso do local e quem encontrou.
 - A autora assina também a lista de Kalliola et al. 2024 (CC BY 4.0), já publicada; para publicar os atributos da dissertação, pedir autorização a ela.
 
+## Natural Earth (contorno das Américas)
+
+- Natural Earth, "Land" 1:50 milhões, https://www.naturalearthdata.com (domínio público), via https://github.com/nvkelso/natural-earth-vector
+- `docs/data/americas.geojson`: só os polígonos das Américas, coordenadas com 3 casas. É a terra verde do modo "Fundo verde, só os desenhos", sobre o mar azul.
+
