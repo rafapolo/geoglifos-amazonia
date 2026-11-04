@@ -3,3 +3,4 @@ docs/data/local/
 .DS_Store
 node_modules/
 dist/
+__pycache__/
