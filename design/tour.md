@@ -1,6 +1,6 @@
 # Tour: o roteiro
 
-O tour é um passeio de câmera de ~2 minutos pelos geoglifos, no estilo de cinema. Abre pelo botão **Tour** no topo, por **Tour de 2 minutos** no painel ou por `?tour=1`, que começa sozinho quando o mapa carrega (o parâmetro sai do endereço, então recarregar abre o mapa). **Esc**, **✕ esc** ou o voltar do navegador param o tour e devolvem a câmera e as camadas como estavam.
+O tour é um passeio de câmera de ~2 minutos pelos geoglifos, no estilo de cinema. Abre pelo botão **Tour** no topo, por **Tour de 2 minutos** no painel ou por `?tour=1`, que começa sozinho quando o mapa carrega; `?tour=en` faz o mesmo com as legendas em inglês, para mandar a quem não lê português (o resto do site segue em português) (o parâmetro sai do endereço, então recarregar abre o mapa). **Esc**, **✕ esc** ou o voltar do navegador param o tour e devolvem a câmera e as camadas como estavam.
 
 Este arquivo descreve cada cena e a música. Para mudar algo, edite aqui e peça a mudança no código: as cenas ficam em `cenas()`, em `docs/tour.js`; a música em `docs/som.js`.
 

@@ -5,7 +5,10 @@
 (() => {
   const $ = (id) => document.getElementById(id);
   const reduz = matchMedia('(prefers-reduced-motion: reduce)').matches;
-  const fmt = (n) => n.toLocaleString('pt-BR');
+  // ?tour=en abre o tour com as legendas em inglês (para mandar a quem não lê português)
+  let idioma = 'pt';
+  const tr = (pt, en) => (idioma === 'en' ? en : pt);
+  const fmt = (n) => n.toLocaleString(idioma === 'en' ? 'en-US' : 'pt-BR');
   const TOTAL = 120000;
 
   let ativo = false, inicio = 0, raf = 0, salvo = null, cenaAtual = 0;
@@ -81,13 +84,13 @@
         so('nature', 'science');
         map.jumpTo({ center: [-66.2, -9.2], zoom: 4.8, pitch: 0, bearing: 20 });
         orbita({ giro: -55, pitch: 62, zoom: 6.6, centro: [-67.1, -9.75] }, 9000);
-        await legenda('Geoglifos da Amazônia', 'Sob a floresta e o pasto do sudoeste da Amazônia, desenhos de terra com mais de 2.000 anos.');
+        await legenda(tr('Geoglifos da Amazônia', 'Geoglyphs of the Amazon'), tr('Sob a floresta e o pasto do sudoeste da Amazônia, desenhos de terra com mais de 2.000 anos.', 'Beneath the forest and pasture of the southwestern Amazon, earthen drawings more than 2,000 years old.'));
       } },
       // 1 · a Amazônia toda: recua alto e varre o horizonte
       { dur: 12000, run: async () => {
         so('science');
         const ida = voarEsperar({ center: [-63, -7.8], zoom: 4.6, pitch: 30, bearing: -20 }, 3500);
-        await legenda('Amazônia · Science 2023', `${fmt(sci.length)} estruturas de terra já catalogadas por arqueólogos em toda a Amazônia.`);
+        await legenda(tr('Amazônia · Science 2023', 'Amazonia · Science 2023'), tr(`${fmt(sci.length)} estruturas de terra já catalogadas por arqueólogos em toda a Amazônia.`, `${fmt(sci.length)} earthworks already catalogued by archaeologists across the Amazon.`));
         await ida;
         orbita({ giro: 50, pitch: 55, zoom: 5.1, centro: [-64.8, -9.2] }, 8400);
       } },
@@ -95,72 +98,72 @@
       { dur: 15000, run: async () => {
         so('science', 'nature');
         const ida = voarEsperar({ center: [-67.75, -10.12], zoom: 10.4, pitch: 72, bearing: -50 }, 5000);
-        await legenda('Acre · há mais de 40 anos', 'Alceu Ranzi viu os primeiros de um avião, voltando a Rio Branco: só apareciam onde a floresta tinha virado pasto.');
+        await legenda(tr('Acre · há mais de 40 anos', 'Acre · over 40 years ago'), tr('Alceu Ranzi viu os primeiros de um avião, voltando a Rio Branco: só apareciam onde a floresta tinha virado pasto.', 'Alceu Ranzi spotted the first ones from a plane flying back to Rio Branco: they only showed where forest had become pasture.'));
         await ida;
         orbita({ giro: 40, pitch: 66, zoom: 10.9, centro: [-67.42, -9.9] }, 9800);
         await espera(4500);
-        await legenda('Acre', '“São desenhos de 400, 500 metros de diâmetro.”', 'Alceu Ranzi');
+        await legenda('Acre', tr('“São desenhos de 400, 500 metros de diâmetro.”', '“These are drawings 400, 500 metres across.”'), 'Alceu Ranzi');
       } },
       // 3 · Tequinho: chega de cima, depois a grua desce e dá a volta no quadrado triplo
       { dur: 17000, run: async () => {
         so();
         // coordenada da Tabela Suplementar 1 da Nature; o quadrado triplo aparece nítido no satélite
         const ida = voarEsperar({ center: [-67.4235, -9.89774], zoom: 16.5, pitch: 0, bearing: 0 }, 5000);
-        await legenda('Tequinho · Acre', 'Valas de até 15 m de largura e 5 m de profundidade, cavadas sem pedra: com madeira e cestos.');
+        await legenda('Tequinho · Acre', tr('Valas de até 15 m de largura e 5 m de profundidade, cavadas sem pedra: com madeira e cestos.', 'Ditches up to 15 m wide and 5 m deep, dug without stone tools: with wood and baskets.'));
         await ida;
         orbita({ giro: 200, pitch: 64, zoom: 16.1 }, 11800);
         await espera(4000);
-        await legenda('Tequinho · Acre', '“Esse povo fazia geometria monumental na Amazônia ao mesmo tempo que Pitágoras desenvolvia seu teorema na Grécia.”', 'Alceu Ranzi');
+        await legenda('Tequinho · Acre', tr('“Esse povo fazia geometria monumental na Amazônia ao mesmo tempo que Pitágoras desenvolvia seu teorema na Grécia.”', '“These people were making monumental geometry in the Amazon at the same time Pythagoras was developing his theorem in Greece.”'), 'Alceu Ranzi');
       } },
       // 4 · LiDAR: sobe e corre ao longo das faixas do levantamento, de lado
       { dur: 16000, run: async () => {
         so('nature');
         const ida = voarEsperar({ center: [-67.45, -9.75], zoom: 8.4, pitch: 66, bearing: 35 }, 5000);
-        await legenda('LiDAR · Nature 2026', 'Um laser lançado de avião enxerga sob as árvores: em 4.497 km², 432 estruturas, 396 nunca registradas.');
+        await legenda('LiDAR · Nature 2026', tr('Um laser lançado de avião enxerga sob as árvores: em 4.497 km², 432 estruturas, 396 nunca registradas.', 'A laser fired from a plane sees beneath the trees: across 4,497 km², 432 structures, 396 never recorded before.'));
         await ida;
         orbita({ giro: -30, pitch: 58, zoom: 8.1, centro: [-66.55, -9.05] }, 10800);
         await espera(1500);
-        await legenda('LiDAR · Nature 2026', `Das ${fmt(nat.length)} com coordenadas publicadas, ${fmt(aquiry)} seguem o padrão Aquiry: juntas, cobrem ${fmt(Math.round(ha))} hectares.`);
+        await legenda('LiDAR · Nature 2026', tr(`Das ${fmt(nat.length)} com coordenadas publicadas, ${fmt(aquiry)} seguem o padrão Aquiry: juntas, cobrem ${fmt(Math.round(ha))} hectares.`, `Of the ${fmt(nat.length)} with published coordinates, ${fmt(aquiry)} follow the Aquiry pattern: together they cover ${fmt(Math.round(ha))} hectares.`));
       } },
       // 5 · Aquiry: recua para mostrar o território e gira devagar sobre ele
       { dur: 14000, run: async () => {
         so('nature', 'science');
         const ida = voarEsperar({ center: [-66.9, -9.8], zoom: 6.3, pitch: 50, bearing: -10 }, 4000);
-        await legenda('Civilização Aquiry · 600 a.C.–850 d.C.', 'Até 3 milhões de pessoas entre 100 e 300 d.C., em 183 mil km², pouco mais que o Uruguai.');
+        await legenda(tr('Civilização Aquiry · 600 a.C.–850 d.C.', 'Aquiry civilization · 600 BC–AD 850'), tr('Até 3 milhões de pessoas entre 100 e 300 d.C., em 183 mil km², pouco mais que o Uruguai.', 'Up to 3 million people between AD 100 and 300, over 183,000 km², a little more than Uruguay.'));
         await ida;
         orbita({ giro: 70, pitch: 60, zoom: 6.7 }, 9800);
         await espera(2500);
-        await legenda('Aquiry · estradas', 'Os sítios eram ligados por estradas, 350 km já mapeados, que se alargavam ao chegar perto deles.');
+        await legenda(tr('Aquiry · estradas', 'Aquiry · roads'), tr('Os sítios eram ligados por estradas, 350 km já mapeados, que se alargavam ao chegar perto deles.', 'The sites were linked by roads, 350 km mapped so far, that widened as they approached them.'));
       } },
       // 6 · um sítio sob a floresta: aproximação baixa e órbita completa
       { dur: 14000, run: async () => {
         so('nature');
         const ida = voarEsperar({ center: [glon, glat], zoom: 14.8, pitch: 70, bearing: -90 }, 4500);
-        await legenda('Cerimônias, não fortalezas', '“Os geoglifos eram usados para encontros, para tomar decisões políticas e para organizar cerimônias religiosas, e também para festas, dança e música.”', 'Martti Pärssinen');
+        await legenda(tr('Cerimônias, não fortalezas', 'Ceremonies, not fortresses'), tr('“Os geoglifos eram usados para encontros, para tomar decisões políticas e para organizar cerimônias religiosas, e também para festas, dança e música.”', '“The geoglyphs were used for gatherings, for making political decisions and for religious ceremonies, and also for feasts, dance and music.”'), 'Martti Pärssinen');
         await ida;
         orbita({ giro: 240, pitch: 60, zoom: 14.4 }, 9400);
         await espera(3200);
-        await legenda('Por volta de 850 d.C.', 'Deixaram de ser construídos, na mesma época em que os maias abandonaram suas cidades.');
+        await legenda(tr('Por volta de 850 d.C.', 'Around AD 850'), tr('Deixaram de ser construídos, na mesma época em que os maias abandonaram suas cidades.', 'They stopped being built, around the time the Maya abandoned their cities.'));
       } },
       // 7 · o que falta achar: sobe alto, a câmera endireita e o mapa de probabilidade se espalha
       { dur: 13000, run: async () => {
         so('prob', 'nature');
         const ida = voarEsperar({ center: [-66.5, -8.8], zoom: 5.6, pitch: 55, bearing: 30 }, 4000);
-        await legenda('Ainda escondidos', 'Os autores estimam de 24 a 30 mil estruturas na região, a maioria ainda sob a floresta.');
+        await legenda(tr('Ainda escondidos', 'Still hidden'), tr('Os autores estimam de 24 a 30 mil estruturas na região, a maioria ainda sob a floresta.', 'The authors estimate 24,000 to 30,000 structures in the region, most still under the forest.'));
         await ida;
         orbita({ giro: -30, pitch: 10, zoom: 5.1 }, 8800);
         await espera(2000);
-        await legenda('Ainda escondidos', 'Em vermelho, onde o modelo da Science prevê mais chance de encontrá-las.');
+        await legenda(tr('Ainda escondidos', 'Still hidden'), tr('Em vermelho, onde o modelo da Science prevê mais chance de encontrá-las.', 'In red, where the Science model predicts they are most likely to be found.'));
       } },
       // 8 · fecho: última órbita larga e a câmera volta ao mapa chapado
       { dur: 10000, run: async () => {
         so('nature', 'science');
         const ida = voarEsperar({ center: [-66.9, -9.7], zoom: 6.5, pitch: 60, bearing: -40 }, 3800);
-        await legenda('Um grande jardim', '“O que a gente vê na Amazônia não é uma grande floresta natural, mas, sim, um grande jardim construído historicamente.”', 'Rhuan Carlos Lopes');
+        await legenda(tr('Um grande jardim', 'A great garden'), tr('“O que a gente vê na Amazônia não é uma grande floresta natural, mas, sim, um grande jardim construído historicamente.”', '“What we see in the Amazon is not a great natural forest, but a great garden built over history.”'), 'Rhuan Carlos Lopes');
         await ida;
         orbita({ giro: 40, pitch: 0, zoom: 6.2 }, 6000);
         await espera(2400);
-        await legenda('Geoglifos da Amazônia', 'Explore o mapa.');
+        await legenda(tr('Geoglifos da Amazônia', 'Geoglyphs of the Amazon'), tr('Explore o mapa.', 'Explore the map.'));
       } },
     ];
   }
@@ -172,8 +175,10 @@
     if (ativo) raf = requestAnimationFrame(progresso);
   }
 
-  async function iniciar() {
+  async function iniciar(lingua = 'pt') {
     if (ativo) return;
+    idioma = lingua === 'en' ? 'en' : 'pt';
+    $('tour-cap').lang = idioma === 'en' ? 'en' : 'pt-BR';
     await pronto;
     ativo = true;
     // o tour vira uma entrada no histórico: o "voltar" do navegador o encerra
@@ -235,8 +240,8 @@
     }
   }
 
-  $('tour-abrir').addEventListener('click', iniciar);
-  $('tour-abrir-painel').addEventListener('click', iniciar);
+  $('tour-abrir').addEventListener('click', () => iniciar());
+  $('tour-abrir-painel').addEventListener('click', () => iniciar());
   $('tour-parar').addEventListener('click', () => parar(true));
   const botaoSom = $('tour-som');
   const marcarSom = () => { botaoSom.classList.toggle('mudo', !somTour.ligado()); botaoSom.setAttribute('aria-pressed', somTour.ligado()); };
@@ -249,12 +254,13 @@
   sobre.querySelector('.fechar').addEventListener('click', () => sobre.close());
   sobre.addEventListener('click', (e) => { if (e.target === sobre) sobre.close(); });
 
-  // ?tour=1 começa sozinho; o parâmetro sai do endereço para um reload abrir o mapa
+  // ?tour=1 (ou ?tour=en, com legendas em inglês) começa sozinho; o parâmetro sai do endereço para um reload abrir o mapa
   const q = new URLSearchParams(location.search);
-  if (q.get('tour') === '1') {
+  const pedido = q.get('tour');
+  if (pedido === '1' || pedido === 'en') {
     q.delete('tour');
     history.replaceState(null, '', location.pathname + (q.size ? `?${q}` : '') + location.hash);
-    iniciar();
+    iniciar(pedido);
   }
   window.tour = { iniciar, parar, ativo: () => ativo, cena: () => cenaAtual };
 })();
