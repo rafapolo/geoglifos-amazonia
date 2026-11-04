@@ -1,0 +1,1906 @@
+{
+ "paginas": [
+  "https://jqjacobs.net/archaeology/newark_arcs.html",
+  "https://www.jqjacobs.net/andes/",
+  "https://www.jqjacobs.net/archaeo/",
+  "https://www.jqjacobs.net/archaeo/index.html",
+  "https://www.jqjacobs.net/archaeology/geoglyph.html",
+  "https://www.jqjacobs.net/kml/",
+  "https://www.jqjacobs.net/kml/index.html"
+ ],
+ "arquivos": [
+  {
+   "url": "http://jqjacobs.net/amazon/images/llanos_de_mojos_2022_kml.jpg",
+   "status": 200,
+   "tipo": "image/jpeg",
+   "bytes": 272075,
+   "modificado": "Mon, 09 Sep 2024 14:32:15 GMT",
+   "origens": [
+    "https://www.jqjacobs.net/archaeology/geoglyph.html"
+   ]
+  },
+  {
+   "url": "http://jqjacobs.net/amazon/images/llanos_de_mojos_kml.jpg",
+   "status": 200,
+   "tipo": "image/jpeg",
+   "bytes": 1027035,
+   "modificado": "Mon, 09 Sep 2024 14:31:23 GMT",
+   "origens": [
+    "https://www.jqjacobs.net/archaeology/geoglyph.html"
+   ]
+  },
+  {
+   "url": "http://jqjacobs.net/amazon/images/na_trilha_dos_geoglifos.jpg",
+   "status": 200,
+   "tipo": "image/jpeg",
+   "bytes": 80394,
+   "modificado": "Mon, 09 Sep 2024 14:36:05 GMT",
+   "origens": [
+    "https://www.jqjacobs.net/archaeology/geoglyph.html"
+   ]
+  },
+  {
+   "url": "http://jqjacobs.net/kml/images/newark_amazon_octagons.jpg",
+   "status": 200,
+   "tipo": "image/jpeg",
+   "bytes": 591599,
+   "modificado": "Thu, 15 Aug 2024 08:59:41 GMT",
+   "origens": [
+    "https://jqjacobs.net/archaeology/newark_arcs.html"
+   ]
+  },
+  {
+   "url": "http://jqjacobs.net/kml/images/octagon_phi.jpg",
+   "status": 200,
+   "tipo": "image/jpeg",
+   "bytes": 358671,
+   "modificado": "Thu, 15 Aug 2024 08:58:37 GMT",
+   "origens": [
+    "https://jqjacobs.net/archaeology/newark_arcs.html"
+   ]
+  },
+  {
+   "url": "http://portal.iphan.gov.br/uploads/ckfinder/arquivos/Geoglifos_paisagens_da_amazonia_ocidental.pdf",
+   "status": "externo",
+   "tipo": "",
+   "bytes": 0,
+   "modificado": "",
+   "origens": [
+    "https://www.jqjacobs.net/archaeology/geoglyph.html"
+   ]
+  },
+  {
+   "url": "http://www.jqjacobs.net/amazon/amazon_geoglyphs.kml",
+   "status": 200,
+   "tipo": "application/vnd.google-earth.kml+xml",
+   "bytes": 3898281,
+   "modificado": "Thu, 27 Aug 2026 13:48:02 GMT",
+   "origens": [
+    "https://www.jqjacobs.net/kml/",
+    "https://www.jqjacobs.net/kml/index.html"
+   ]
+  },
+  {
+   "url": "http://www.jqjacobs.net/amazon/bolivia.kml",
+   "status": 200,
+   "tipo": "application/vnd.google-earth.kml+xml",
+   "bytes": 2752565,
+   "modificado": "Wed, 26 Aug 2026 22:49:59 GMT",
+   "origens": [
+    "https://www.jqjacobs.net/kml/",
+    "https://www.jqjacobs.net/kml/index.html"
+   ]
+  },
+  {
+   "url": "http://www.jqjacobs.net/andes/sechin.kml",
+   "status": 200,
+   "tipo": "application/vnd.google-earth.kml+xml",
+   "bytes": 268451,
+   "modificado": "Thu, 02 Apr 2026 01:21:29 GMT",
+   "origens": [
+    "https://www.jqjacobs.net/kml/",
+    "https://www.jqjacobs.net/kml/index.html"
+   ]
+  },
+  {
+   "url": "http://www.jqjacobs.net/archaeogeodesy/tumichucua.jpg",
+   "status": 200,
+   "tipo": "image/jpeg",
+   "bytes": 333258,
+   "modificado": "Thu, 15 Aug 2024 13:23:25 GMT",
+   "origens": [
+    "https://jqjacobs.net/archaeology/newark_arcs.html"
+   ]
+  },
+  {
+   "url": "http://www.jqjacobs.net/astro/xls/archaeogeodesy.xls",
+   "status": 200,
+   "tipo": "application/vnd.ms-excel",
+   "bytes": 3640832,
+   "modificado": "Wed, 19 Aug 2026 14:17:49 GMT",
+   "origens": [
+    "https://www.jqjacobs.net/kml/",
+    "https://www.jqjacobs.net/kml/index.html"
+   ]
+  },
+  {
+   "url": "http://www.jqjacobs.net/kml/aerial/acrs6.jpg",
+   "status": 200,
+   "tipo": "image/jpeg",
+   "bytes": 66002,
+   "modificado": "Thu, 15 Aug 2024 03:39:34 GMT",
+   "origens": [
+    "https://jqjacobs.net/archaeology/newark_arcs.html"
+   ]
+  },
+  {
+   "url": "http://www.jqjacobs.net/kml/aerial/rpars.jpg",
+   "status": 200,
+   "tipo": "image/jpeg",
+   "bytes": 52258,
+   "modificado": "Thu, 15 Aug 2024 03:39:53 GMT",
+   "origens": [
+    "https://jqjacobs.net/archaeology/newark_arcs.html"
+   ]
+  },
+  {
+   "url": "http://www.jqjacobs.net/kml/archaeogeodesy.kml",
+   "status": 200,
+   "tipo": "application/vnd.google-earth.kml+xml",
+   "bytes": 10028786,
+   "modificado": "Wed, 19 Aug 2026 13:52:22 GMT",
+   "origens": [
+    "https://jqjacobs.net/archaeology/newark_arcs.html",
+    "https://www.jqjacobs.net/kml/",
+    "https://www.jqjacobs.net/kml/index.html"
+   ]
+  },
+  {
+   "url": "http://www.jqjacobs.net/kml/cahokia_3650.kml",
+   "status": 200,
+   "tipo": "application/vnd.google-earth.kml+xml",
+   "bytes": 7313,
+   "modificado": "Wed, 26 Aug 2026 22:49:25 GMT",
+   "origens": [
+    "https://www.jqjacobs.net/kml/",
+    "https://www.jqjacobs.net/kml/index.html"
+   ]
+  },
+  {
+   "url": "http://www.jqjacobs.net/kml/chavin.kml",
+   "status": 200,
+   "tipo": "application/vnd.google-earth.kml+xml",
+   "bytes": 191997,
+   "modificado": "Thu, 23 Jan 2025 22:30:29 GMT",
+   "origens": [
+    "https://www.jqjacobs.net/kml/",
+    "https://www.jqjacobs.net/kml/index.html"
+   ]
+  },
+  {
+   "url": "http://www.jqjacobs.net/kml/drawings/pcolc_arcs.jpg",
+   "status": 200,
+   "tipo": "image/jpeg",
+   "bytes": 1266582,
+   "modificado": "Thu, 15 Aug 2024 08:53:25 GMT",
+   "origens": [
+    "https://jqjacobs.net/archaeology/newark_arcs.html"
+   ]
+  },
+  {
+   "url": "http://www.jqjacobs.net/kml/drawings/pcolc_arcs_t.jpg",
+   "status": 200,
+   "tipo": "image/jpeg",
+   "bytes": 777149,
+   "modificado": "Thu, 15 Aug 2024 08:51:18 GMT",
+   "origens": [
+    "https://jqjacobs.net/archaeology/newark_arcs.html"
+   ]
+  },
+  {
+   "url": "http://www.jqjacobs.net/kml/drawings/ute_circle_arc.jpg",
+   "status": 200,
+   "tipo": "image/jpeg",
+   "bytes": 1849164,
+   "modificado": "Thu, 15 Aug 2024 08:53:28 GMT",
+   "origens": [
+    "https://jqjacobs.net/archaeology/newark_arcs.html"
+   ]
+  },
+  {
+   "url": "http://www.jqjacobs.net/kml/drawings/ute_circle_arc_t.jpg",
+   "status": 200,
+   "tipo": "image/jpeg",
+   "bytes": 776899,
+   "modificado": "Thu, 15 Aug 2024 08:52:39 GMT",
+   "origens": [
+    "https://jqjacobs.net/archaeology/newark_arcs.html"
+   ]
+  },
+  {
+   "url": "http://www.jqjacobs.net/kml/images/newark_itza_machupicchu.jpg",
+   "status": 200,
+   "tipo": "image/jpeg",
+   "bytes": 614001,
+   "modificado": "Thu, 15 Aug 2024 09:01:46 GMT",
+   "origens": [
+    "https://jqjacobs.net/archaeology/newark_arcs.html"
+   ]
+  },
+  {
+   "url": "http://www.jqjacobs.net/kml/machupicchu.kml",
+   "status": 200,
+   "tipo": "application/vnd.google-earth.kml+xml",
+   "bytes": 1124251,
+   "modificado": "Sun, 27 Sep 2026 23:57:58 GMT",
+   "origens": [
+    "https://www.jqjacobs.net/kml/",
+    "https://www.jqjacobs.net/kml/index.html"
+   ]
+  },
+  {
+   "url": "http://www.jqjacobs.net/kml/newark_arcs.kml",
+   "status": 200,
+   "tipo": "application/vnd.google-earth.kml+xml",
+   "bytes": 525148,
+   "modificado": "Thu, 27 Aug 2026 14:01:29 GMT",
+   "origens": [
+    "https://jqjacobs.net/archaeology/newark_arcs.html"
+   ]
+  },
+  {
+   "url": "http://www.jqjacobs.net/kml/octagons.kml",
+   "status": 200,
+   "tipo": "application/vnd.google-earth.kml+xml",
+   "bytes": 89860,
+   "modificado": "Sun, 24 Aug 2025 14:18:09 GMT",
+   "origens": [
+    "https://jqjacobs.net/archaeology/newark_arcs.html"
+   ]
+  },
+  {
+   "url": "http://www.jqjacobs.net/kml/orkney.kml",
+   "status": 200,
+   "tipo": "application/vnd.google-earth.kml+xml",
+   "bytes": 100622,
+   "modificado": "Thu, 15 Aug 2024 03:37:35 GMT",
+   "origens": [
+    "https://www.jqjacobs.net/kml/",
+    "https://www.jqjacobs.net/kml/index.html"
+   ]
+  },
+  {
+   "url": "http://www.jqjacobs.net/kml/phi_golden_ratios.kml",
+   "status": 200,
+   "tipo": "application/vnd.google-earth.kml+xml",
+   "bytes": 116048,
+   "modificado": "Wed, 26 Aug 2026 22:49:22 GMT",
+   "origens": [
+    "https://jqjacobs.net/archaeology/newark_arcs.html",
+    "https://www.jqjacobs.net/kml/",
+    "https://www.jqjacobs.net/kml/index.html"
+   ]
+  },
+  {
+   "url": "http://www.jqjacobs.net/kml/pinson.kml",
+   "status": 200,
+   "tipo": "application/vnd.google-earth.kml+xml",
+   "bytes": 13254,
+   "modificado": "Wed, 26 Aug 2026 22:49:24 GMT",
+   "origens": [
+    "https://www.jqjacobs.net/kml/",
+    "https://www.jqjacobs.net/kml/index.html"
+   ]
+  },
+  {
+   "url": "http://www.jqjacobs.net/kml/poverty_point.kml",
+   "status": 200,
+   "tipo": "application/vnd.google-earth.kml+xml",
+   "bytes": 189408,
+   "modificado": "Thu, 15 Aug 2024 03:38:04 GMT",
+   "origens": [
+    "https://jqjacobs.net/archaeology/newark_arcs.html",
+    "https://www.jqjacobs.net/kml/",
+    "https://www.jqjacobs.net/kml/index.html"
+   ]
+  },
+  {
+   "url": "http://www.jqjacobs.net/kml/qin.kml",
+   "status": 200,
+   "tipo": "application/vnd.google-earth.kml+xml",
+   "bytes": 11198,
+   "modificado": "Thu, 15 Aug 2024 03:37:54 GMT",
+   "origens": [
+    "https://www.jqjacobs.net/kml/",
+    "https://www.jqjacobs.net/kml/index.html"
+   ]
+  },
+  {
+   "url": "http://www.jqjacobs.net/kml/tumichucua.kml",
+   "status": 200,
+   "tipo": "application/vnd.google-earth.kml+xml",
+   "bytes": 15930,
+   "modificado": "Thu, 15 Aug 2024 03:38:53 GMT",
+   "origens": [
+    "https://www.jqjacobs.net/kml/",
+    "https://www.jqjacobs.net/kml/index.html"
+   ]
+  },
+  {
+   "url": "https://jqjacobs.net/amazon/images/abuno.jpg",
+   "status": 200,
+   "tipo": "image/jpeg",
+   "bytes": 201500,
+   "modificado": "Sat, 15 Feb 2025 00:58:09 GMT",
+   "origens": [
+    "https://www.jqjacobs.net/archaeology/geoglyph.html"
+   ]
+  },
+  {
+   "url": "https://jqjacobs.net/amazon/images/vista_alegre.jpg",
+   "status": 200,
+   "tipo": "image/jpeg",
+   "bytes": 1359084,
+   "modificado": "Thu, 24 Jul 2025 16:17:48 GMT",
+   "origens": [
+    "https://www.jqjacobs.net/archaeology/geoglyph.html"
+   ]
+  },
+  {
+   "url": "https://jqjacobs.net/archaeo/drawings/serpent_squier_drawing.jpg",
+   "status": 200,
+   "tipo": "image/jpeg",
+   "bytes": 231898,
+   "modificado": "Wed, 14 Aug 2024 22:02:34 GMT",
+   "origens": [
+    "https://jqjacobs.net/archaeology/newark_arcs.html"
+   ]
+  },
+  {
+   "url": "https://jqjacobs.net/archaeo/drawings/serpent_squier_drawing_t.jpg",
+   "status": 200,
+   "tipo": "image/jpeg",
+   "bytes": 30691,
+   "modificado": "Wed, 14 Aug 2024 22:02:06 GMT",
+   "origens": [
+    "https://jqjacobs.net/archaeology/newark_arcs.html"
+   ]
+  },
+  {
+   "url": "https://jqjacobs.net/archaeo/images/great_circle_ge.jpg",
+   "status": 200,
+   "tipo": "image/jpeg",
+   "bytes": 162344,
+   "modificado": "Wed, 14 Aug 2024 22:03:11 GMT",
+   "origens": [
+    "https://jqjacobs.net/archaeology/newark_arcs.html"
+   ]
+  },
+  {
+   "url": "https://jqjacobs.net/archaeo/images/marietta_conus3.jpg",
+   "status": 200,
+   "tipo": "image/jpeg",
+   "bytes": 171044,
+   "modificado": "Wed, 14 Aug 2024 22:05:03 GMT",
+   "origens": [
+    "https://jqjacobs.net/archaeology/newark_arcs.html"
+   ]
+  },
+  {
+   "url": "https://jqjacobs.net/archaeo/images/marietta_earthwork_latitudes.jpg",
+   "status": 200,
+   "tipo": "image/jpeg",
+   "bytes": 91291,
+   "modificado": "Wed, 14 Aug 2024 22:06:01 GMT",
+   "origens": [
+    "https://jqjacobs.net/archaeology/newark_arcs.html"
+   ]
+  },
+  {
+   "url": "https://jqjacobs.net/archaeo/images/newark_circle1.jpg",
+   "status": 200,
+   "tipo": "image/jpeg",
+   "bytes": 442456,
+   "modificado": "Wed, 14 Aug 2024 22:04:34 GMT",
+   "origens": [
+    "https://jqjacobs.net/archaeology/newark_arcs.html"
+   ]
+  },
+  {
+   "url": "https://jqjacobs.net/archaeo/images/newark_circles.jpg",
+   "status": 200,
+   "tipo": "image/jpeg",
+   "bytes": 73969,
+   "modificado": "Wed, 14 Aug 2024 22:04:01 GMT",
+   "origens": [
+    "https://jqjacobs.net/archaeology/newark_arcs.html"
+   ]
+  },
+  {
+   "url": "https://jqjacobs.net/archaeo/images/observatory_mound_t.jpg",
+   "status": 200,
+   "tipo": "image/jpeg",
+   "bytes": 128076,
+   "modificado": "Wed, 14 Aug 2024 22:05:57 GMT",
+   "origens": [
+    "https://jqjacobs.net/archaeology/newark_arcs.html"
+   ]
+  },
+  {
+   "url": "https://jqjacobs.net/archaeo/images/octagon_ge.jpg",
+   "status": 200,
+   "tipo": "image/jpeg",
+   "bytes": 188273,
+   "modificado": "Wed, 14 Aug 2024 22:08:00 GMT",
+   "origens": [
+    "https://jqjacobs.net/archaeology/newark_arcs.html"
+   ]
+  },
+  {
+   "url": "https://jqjacobs.net/archaeo/images/serpent_mound_oval.jpg",
+   "status": 200,
+   "tipo": "image/jpeg",
+   "bytes": 172080,
+   "modificado": "Wed, 14 Aug 2024 22:05:38 GMT",
+   "origens": [
+    "https://jqjacobs.net/archaeology/newark_arcs.html"
+   ]
+  },
+  {
+   "url": "https://jqjacobs.net/archaeology/images/chavin_area.jpg",
+   "status": 200,
+   "tipo": "image/jpeg",
+   "bytes": 163956,
+   "modificado": "Wed, 17 Jun 2026 01:26:47 GMT",
+   "origens": [
+    "https://jqjacobs.net/archaeology/newark_arcs.html"
+   ]
+  },
+  {
+   "url": "https://jqjacobs.net/archaeology/images/chavin_de_huantar_map.jpg",
+   "status": 200,
+   "tipo": "image/jpeg",
+   "bytes": 187981,
+   "modificado": "Wed, 17 Jun 2026 01:27:31 GMT",
+   "origens": [
+    "https://jqjacobs.net/archaeology/newark_arcs.html"
+   ]
+  },
+  {
+   "url": "https://jqjacobs.net/archaeology/images/pachacamac_huacas.jpg",
+   "status": 200,
+   "tipo": "image/jpeg",
+   "bytes": 221712,
+   "modificado": "Wed, 17 Jun 2026 01:26:18 GMT",
+   "origens": [
+    "https://jqjacobs.net/archaeology/newark_arcs.html"
+   ]
+  },
+  {
+   "url": "https://jqjacobs.net/astro/xls/middle_ohio_gps.xls",
+   "status": 200,
+   "tipo": "application/vnd.ms-excel",
+   "bytes": 43008,
+   "modificado": "Tue, 13 Aug 2024 16:12:04 GMT",
+   "origens": [
+    "https://jqjacobs.net/archaeology/newark_arcs.html"
+   ]
+  },
+  {
+   "url": "https://jqjacobs.net/blog/images/miamisburg_t.jpg",
+   "status": 200,
+   "tipo": "image/jpeg",
+   "bytes": 38415,
+   "modificado": "Wed, 14 Aug 2024 14:31:52 GMT",
+   "origens": [
+    "https://jqjacobs.net/archaeology/newark_arcs.html"
+   ]
+  },
+  {
+   "url": "https://jqjacobs.net/blog/images/newark_circle3.jpg",
+   "status": 200,
+   "tipo": "image/jpeg",
+   "bytes": 114416,
+   "modificado": "Wed, 14 Aug 2024 14:32:04 GMT",
+   "origens": [
+    "https://jqjacobs.net/archaeology/newark_arcs.html"
+   ]
+  },
+  {
+   "url": "https://jqjacobs.net/blog/images/quadranau_deskpicture.jpg",
+   "status": 200,
+   "tipo": "image/jpeg",
+   "bytes": 1195331,
+   "modificado": "Wed, 14 Aug 2024 14:32:49 GMT",
+   "origens": [
+    "https://jqjacobs.net/archaeology/newark_arcs.html"
+   ]
+  },
+  {
+   "url": "https://jqjacobs.net/images/bar-gb.gif",
+   "status": 200,
+   "tipo": "image/gif",
+   "bytes": 170,
+   "modificado": "Tue, 13 Aug 2024 03:06:27 GMT",
+   "origens": [
+    "https://jqjacobs.net/archaeology/newark_arcs.html"
+   ]
+  },
+  {
+   "url": "https://jqjacobs.net/kml/chavin.kml",
+   "status": 200,
+   "tipo": "application/vnd.google-earth.kml+xml",
+   "bytes": 191997,
+   "modificado": "Thu, 23 Jan 2025 22:30:29 GMT",
+   "origens": [
+    "https://jqjacobs.net/archaeology/newark_arcs.html"
+   ]
+  },
+  {
+   "url": "https://jqjacobs.net/kml/images/chavin_newark.jpg",
+   "status": 200,
+   "tipo": "image/jpeg",
+   "bytes": 596643,
+   "modificado": "Thu, 15 Aug 2024 09:06:46 GMT",
+   "origens": [
+    "https://jqjacobs.net/archaeology/newark_arcs.html"
+   ]
+  },
+  {
+   "url": "https://jqjacobs.net/kml/images/chavin_newark_t.jpg",
+   "status": 200,
+   "tipo": "image/jpeg",
+   "bytes": 255035,
+   "modificado": "Thu, 15 Aug 2024 09:11:38 GMT",
+   "origens": [
+    "https://jqjacobs.net/archaeology/newark_arcs.html"
+   ]
+  },
+  {
+   "url": "https://jqjacobs.net/kml/images/golden_ratios.jpg",
+   "status": 200,
+   "tipo": "image/jpeg",
+   "bytes": 455566,
+   "modificado": "Thu, 15 Aug 2024 08:54:33 GMT",
+   "origens": [
+    "https://jqjacobs.net/archaeology/newark_arcs.html"
+   ]
+  },
+  {
+   "url": "https://jqjacobs.net/kml/images/newark-pachacamac.jpg",
+   "status": 200,
+   "tipo": "image/jpeg",
+   "bytes": 483353,
+   "modificado": "Thu, 15 Aug 2024 09:05:58 GMT",
+   "origens": [
+    "https://jqjacobs.net/archaeology/newark_arcs.html"
+   ]
+  },
+  {
+   "url": "https://jqjacobs.net/kml/images/newark_chichen_machu_picchu.jpg",
+   "status": 200,
+   "tipo": "image/jpeg",
+   "bytes": 348305,
+   "modificado": "Thu, 15 Aug 2024 09:11:27 GMT",
+   "origens": [
+    "https://jqjacobs.net/archaeology/newark_arcs.html"
+   ]
+  },
+  {
+   "url": "https://jqjacobs.net/kml/newark_arcs.kml",
+   "status": 200,
+   "tipo": "application/vnd.google-earth.kml+xml",
+   "bytes": 525148,
+   "modificado": "Thu, 27 Aug 2026 14:01:29 GMT",
+   "origens": [
+    "https://jqjacobs.net/archaeology/newark_arcs.html"
+   ]
+  },
+  {
+   "url": "https://jqjacobs.net/kml/octagons.kml",
+   "status": 200,
+   "tipo": "application/vnd.google-earth.kml+xml",
+   "bytes": 89860,
+   "modificado": "Sun, 24 Aug 2025 14:18:09 GMT",
+   "origens": [
+    "https://jqjacobs.net/archaeology/newark_arcs.html",
+    "https://www.jqjacobs.net/archaeology/geoglyph.html"
+   ]
+  },
+  {
+   "url": "https://jqjacobs.net/southwest/images/betatakin_talastima.jpg",
+   "status": 200,
+   "tipo": "image/jpeg",
+   "bytes": 195786,
+   "modificado": "Fri, 16 Aug 2024 00:54:53 GMT",
+   "origens": [
+    "https://jqjacobs.net/archaeology/newark_arcs.html"
+   ]
+  },
+  {
+   "url": "https://jqjacobs.net/southwest/images/betatakin_talastima_deskpicture.jpg",
+   "status": 200,
+   "tipo": "image/jpeg",
+   "bytes": 345410,
+   "modificado": "Fri, 16 Aug 2024 01:23:53 GMT",
+   "origens": [
+    "https://jqjacobs.net/archaeology/newark_arcs.html"
+   ]
+  },
+  {
+   "url": "https://jqjacobs.net/southwest/images/betatakin_talastima_t.jpg",
+   "status": 200,
+   "tipo": "image/jpeg",
+   "bytes": 62174,
+   "modificado": "Fri, 16 Aug 2024 01:08:16 GMT",
+   "origens": [
+    "https://jqjacobs.net/archaeology/newark_arcs.html"
+   ]
+  },
+  {
+   "url": "https://web.archive.org/web/20140430034328/http://www.geoglifos.com.br/ScienceMann2008AncientEarthmoversoftheAmazon.pdf",
+   "status": "externo",
+   "tipo": "",
+   "bytes": 0,
+   "modificado": "",
+   "origens": [
+    "https://www.jqjacobs.net/archaeology/geoglyph.html"
+   ]
+  },
+  {
+   "url": "https://web.archive.org/web/20140722002910/http://www.geoglifos.com.br/2007EO210003_Ranzi_et_al_Geoglyphs.pdf",
+   "status": "externo",
+   "tipo": "",
+   "bytes": 0,
+   "modificado": "",
+   "origens": [
+    "https://www.jqjacobs.net/archaeology/geoglyph.html"
+   ]
+  },
+  {
+   "url": "https://www.jqjacobs.net/amazon/amazon_geoglyphs.kml",
+   "status": 200,
+   "tipo": "application/vnd.google-earth.kml+xml",
+   "bytes": 3898281,
+   "modificado": "Thu, 27 Aug 2026 13:48:02 GMT",
+   "origens": [
+    "https://www.jqjacobs.net/andes/",
+    "https://www.jqjacobs.net/archaeology/geoglyph.html",
+    "https://www.jqjacobs.net/kml/",
+    "https://www.jqjacobs.net/kml/index.html"
+   ]
+  },
+  {
+   "url": "https://www.jqjacobs.net/amazon/amazon_geoglyphs.xls",
+   "status": 200,
+   "tipo": "application/vnd.ms-excel",
+   "bytes": 452096,
+   "modificado": "Wed, 19 Aug 2026 17:15:11 GMT",
+   "origens": [
+    "https://www.jqjacobs.net/archaeology/geoglyph.html"
+   ]
+  },
+  {
+   "url": "https://www.jqjacobs.net/amazon/bolivia.kml",
+   "status": 200,
+   "tipo": "application/vnd.google-earth.kml+xml",
+   "bytes": 2752565,
+   "modificado": "Wed, 26 Aug 2026 22:49:59 GMT",
+   "origens": [
+    "https://www.jqjacobs.net/andes/",
+    "https://www.jqjacobs.net/archaeology/geoglyph.html",
+    "https://www.jqjacobs.net/kml/",
+    "https://www.jqjacobs.net/kml/index.html"
+   ]
+  },
+  {
+   "url": "https://www.jqjacobs.net/amazon/brazil_geoglifos.kml",
+   "status": 200,
+   "tipo": "application/vnd.google-earth.kml+xml",
+   "bytes": 569076,
+   "modificado": "Mon, 09 Sep 2024 14:30:04 GMT",
+   "origens": [
+    "https://www.jqjacobs.net/archaeology/geoglyph.html"
+   ]
+  },
+  {
+   "url": "https://www.jqjacobs.net/amazon/brazil_geoglifos.xls",
+   "status": 200,
+   "tipo": "application/vnd.ms-excel",
+   "bytes": 184832,
+   "modificado": "Mon, 09 Sep 2024 14:29:25 GMT",
+   "origens": [
+    "https://www.jqjacobs.net/archaeology/geoglyph.html"
+   ]
+  },
+  {
+   "url": "https://www.jqjacobs.net/amazon/geoglyphs.jpg",
+   "status": 200,
+   "tipo": "image/jpeg",
+   "bytes": 351440,
+   "modificado": "Mon, 09 Sep 2024 14:29:30 GMT",
+   "origens": [
+    "https://www.jqjacobs.net/andes/",
+    "https://www.jqjacobs.net/archaeology/geoglyph.html",
+    "https://www.jqjacobs.net/kml/",
+    "https://www.jqjacobs.net/kml/index.html"
+   ]
+  },
+  {
+   "url": "https://www.jqjacobs.net/amazon/geoglyphs.kml",
+   "status": 200,
+   "tipo": "application/vnd.google-earth.kml+xml",
+   "bytes": 110687,
+   "modificado": "Mon, 09 Sep 2024 14:29:52 GMT",
+   "origens": [
+    "https://www.jqjacobs.net/archaeology/geoglyph.html"
+   ]
+  },
+  {
+   "url": "https://www.jqjacobs.net/amazon/geoglyphs_2015.04.kml",
+   "status": 404,
+   "tipo": "",
+   "bytes": 0,
+   "modificado": "",
+   "origens": [
+    "https://www.jqjacobs.net/archaeology/geoglyph.html"
+   ]
+  },
+  {
+   "url": "https://www.jqjacobs.net/amazon/images/acre_earthworks.jpg",
+   "status": 200,
+   "tipo": "image/jpeg",
+   "bytes": 852069,
+   "modificado": "Mon, 09 Sep 2024 14:31:20 GMT",
+   "origens": [
+    "https://www.jqjacobs.net/archaeology/geoglyph.html"
+   ]
+  },
+  {
+   "url": "https://www.jqjacobs.net/amazon/images/acre_earthworks_t.jpg",
+   "status": 200,
+   "tipo": "image/jpeg",
+   "bytes": 144434,
+   "modificado": "Mon, 09 Sep 2024 14:31:31 GMT",
+   "origens": [
+    "https://www.jqjacobs.net/archaeology/geoglyph.html"
+   ]
+  },
+  {
+   "url": "https://www.jqjacobs.net/amazon/images/acre_geoglyphs.jpg",
+   "status": 200,
+   "tipo": "image/jpeg",
+   "bytes": 93827,
+   "modificado": "Mon, 09 Sep 2024 14:35:55 GMT",
+   "origens": [
+    "https://www.jqjacobs.net/archaeology/geoglyph.html"
+   ]
+  },
+  {
+   "url": "https://www.jqjacobs.net/amazon/images/acre_geoglyphs_l.jpg",
+   "status": 200,
+   "tipo": "image/jpeg",
+   "bytes": 590719,
+   "modificado": "Mon, 09 Sep 2024 14:33:36 GMT",
+   "origens": [
+    "https://www.jqjacobs.net/archaeology/geoglyph.html"
+   ]
+  },
+  {
+   "url": "https://www.jqjacobs.net/amazon/images/acre_quadrangles.jpg",
+   "status": 200,
+   "tipo": "image/jpeg",
+   "bytes": 728590,
+   "modificado": "Mon, 09 Sep 2024 14:34:18 GMT",
+   "origens": [
+    "https://www.jqjacobs.net/archaeology/geoglyph.html"
+   ]
+  },
+  {
+   "url": "https://www.jqjacobs.net/amazon/images/acre_quadrangles_t.jpg",
+   "status": 200,
+   "tipo": "image/jpeg",
+   "bytes": 165695,
+   "modificado": "Mon, 09 Sep 2024 14:33:29 GMT",
+   "origens": [
+    "https://www.jqjacobs.net/archaeology/geoglyph.html"
+   ]
+  },
+  {
+   "url": "https://www.jqjacobs.net/amazon/images/acrelandia_geoglifos.jpg",
+   "status": 200,
+   "tipo": "image/jpeg",
+   "bytes": 917199,
+   "modificado": "Mon, 09 Sep 2024 14:33:00 GMT",
+   "origens": [
+    "https://www.jqjacobs.net/archaeology/geoglyph.html"
+   ]
+  },
+  {
+   "url": "https://www.jqjacobs.net/amazon/images/acrelandia_geoglifos_t.jpg",
+   "status": 200,
+   "tipo": "image/jpeg",
+   "bytes": 165988,
+   "modificado": "Mon, 09 Sep 2024 14:32:16 GMT",
+   "origens": [
+    "https://www.jqjacobs.net/archaeology/geoglyph.html"
+   ]
+  },
+  {
+   "url": "https://www.jqjacobs.net/amazon/images/amazon_bolivia.jpg",
+   "status": 200,
+   "tipo": "image/jpeg",
+   "bytes": 401048,
+   "modificado": "Mon, 09 Sep 2024 14:31:15 GMT",
+   "origens": [
+    "https://www.jqjacobs.net/andes/",
+    "https://www.jqjacobs.net/archaeology/geoglyph.html"
+   ]
+  },
+  {
+   "url": "https://www.jqjacobs.net/amazon/images/amazon_geoglyphs.jpg",
+   "status": 200,
+   "tipo": "image/jpeg",
+   "bytes": 471021,
+   "modificado": "Mon, 09 Sep 2024 14:33:14 GMT",
+   "origens": [
+    "https://www.jqjacobs.net/archaeology/geoglyph.html"
+   ]
+  },
+  {
+   "url": "https://www.jqjacobs.net/amazon/images/amazon_geoglyphs_t.jpg",
+   "status": 200,
+   "tipo": "image/jpeg",
+   "bytes": 216151,
+   "modificado": "Mon, 09 Sep 2024 14:33:47 GMT",
+   "origens": [
+    "https://www.jqjacobs.net/archaeology/geoglyph.html"
+   ]
+  },
+  {
+   "url": "https://www.jqjacobs.net/amazon/images/bella_flor.jpg",
+   "status": 200,
+   "tipo": "image/jpeg",
+   "bytes": 614444,
+   "modificado": "Mon, 09 Sep 2024 14:32:31 GMT",
+   "origens": [
+    "https://www.jqjacobs.net/archaeology/geoglyph.html"
+   ]
+  },
+  {
+   "url": "https://www.jqjacobs.net/amazon/images/bella_flor_t.jpg",
+   "status": 200,
+   "tipo": "image/jpeg",
+   "bytes": 132947,
+   "modificado": "Mon, 09 Sep 2024 14:33:49 GMT",
+   "origens": [
+    "https://www.jqjacobs.net/archaeology/geoglyph.html"
+   ]
+  },
+  {
+   "url": "https://www.jqjacobs.net/amazon/images/boca_acre_geoglyph.jpg",
+   "status": 200,
+   "tipo": "image/jpeg",
+   "bytes": 667322,
+   "modificado": "Mon, 09 Sep 2024 14:35:06 GMT",
+   "origens": [
+    "https://www.jqjacobs.net/archaeology/geoglyph.html"
+   ]
+  },
+  {
+   "url": "https://www.jqjacobs.net/amazon/images/cruzeirinho_geoglyphs.jpg",
+   "status": 200,
+   "tipo": "image/jpeg",
+   "bytes": 692677,
+   "modificado": "Mon, 09 Sep 2024 14:32:59 GMT",
+   "origens": [
+    "https://www.jqjacobs.net/archaeology/geoglyph.html"
+   ]
+  },
+  {
+   "url": "https://www.jqjacobs.net/amazon/images/llanos_de_mojos_kml.jpg",
+   "status": 200,
+   "tipo": "image/jpeg",
+   "bytes": 1027035,
+   "modificado": "Mon, 09 Sep 2024 14:31:23 GMT",
+   "origens": [
+    "https://www.jqjacobs.net/kml/",
+    "https://www.jqjacobs.net/kml/index.html"
+   ]
+  },
+  {
+   "url": "https://www.jqjacobs.net/amazon/images/placido_castro_geoglyph.jpg",
+   "status": 200,
+   "tipo": "image/jpeg",
+   "bytes": 222987,
+   "modificado": "Mon, 09 Sep 2024 14:32:52 GMT",
+   "origens": [
+    "https://www.jqjacobs.net/archaeology/geoglyph.html"
+   ]
+  },
+  {
+   "url": "https://www.jqjacobs.net/amazon/images/rio_branco_enclosure.jpg",
+   "status": 200,
+   "tipo": "image/jpeg",
+   "bytes": 1017504,
+   "modificado": "Mon, 09 Sep 2024 14:35:10 GMT",
+   "origens": [
+    "https://www.jqjacobs.net/archaeology/geoglyph.html"
+   ]
+  },
+  {
+   "url": "https://www.jqjacobs.net/amazon/images/rio_branco_enclosure_t.jpg",
+   "status": 200,
+   "tipo": "image/jpeg",
+   "bytes": 165664,
+   "modificado": "Mon, 09 Sep 2024 14:34:24 GMT",
+   "origens": [
+    "https://www.jqjacobs.net/archaeology/geoglyph.html"
+   ]
+  },
+  {
+   "url": "https://www.jqjacobs.net/amazon/images/rio_branco_geoglifo.jpg",
+   "status": 200,
+   "tipo": "image/jpeg",
+   "bytes": 335840,
+   "modificado": "Mon, 09 Sep 2024 14:34:48 GMT",
+   "origens": [
+    "https://www.jqjacobs.net/archaeology/geoglyph.html"
+   ]
+  },
+  {
+   "url": "https://www.jqjacobs.net/amazon/images/rio_branco_geoglifo_t.jpg",
+   "status": 200,
+   "tipo": "image/jpeg",
+   "bytes": 90855,
+   "modificado": "Mon, 09 Sep 2024 14:31:02 GMT",
+   "origens": [
+    "https://www.jqjacobs.net/archaeology/geoglyph.html"
+   ]
+  },
+  {
+   "url": "https://www.jqjacobs.net/amazon/images/rio_branco_geoglifos.jpg",
+   "status": 200,
+   "tipo": "image/jpeg",
+   "bytes": 741184,
+   "modificado": "Mon, 09 Sep 2024 14:34:48 GMT",
+   "origens": [
+    "https://www.jqjacobs.net/archaeology/geoglyph.html"
+   ]
+  },
+  {
+   "url": "https://www.jqjacobs.net/amazon/images/rio_branco_geoglifos_t.jpg",
+   "status": 200,
+   "tipo": "image/jpeg",
+   "bytes": 119695,
+   "modificado": "Mon, 09 Sep 2024 14:33:27 GMT",
+   "origens": [
+    "https://www.jqjacobs.net/archaeology/geoglyph.html"
+   ]
+  },
+  {
+   "url": "https://www.jqjacobs.net/amazon/images/rio_branco_quadrangle.jpg",
+   "status": 200,
+   "tipo": "image/jpeg",
+   "bytes": 873930,
+   "modificado": "Mon, 09 Sep 2024 14:36:32 GMT",
+   "origens": [
+    "https://www.jqjacobs.net/archaeology/geoglyph.html"
+   ]
+  },
+  {
+   "url": "https://www.jqjacobs.net/amazon/images/rio_branco_quadrangle_t.jpg",
+   "status": 200,
+   "tipo": "image/jpeg",
+   "bytes": 150164,
+   "modificado": "Mon, 09 Sep 2024 14:30:39 GMT",
+   "origens": [
+    "https://www.jqjacobs.net/archaeology/geoglyph.html"
+   ]
+  },
+  {
+   "url": "https://www.jqjacobs.net/andes/images/alpaca_l.jpg",
+   "status": 200,
+   "tipo": "image/jpeg",
+   "bytes": 15279,
+   "modificado": "Wed, 14 Aug 2024 21:50:56 GMT",
+   "origens": [
+    "https://www.jqjacobs.net/andes/"
+   ]
+  },
+  {
+   "url": "https://www.jqjacobs.net/andes/images/alpaca_r.jpg",
+   "status": 200,
+   "tipo": "image/jpeg",
+   "bytes": 15264,
+   "modificado": "Wed, 14 Aug 2024 21:55:33 GMT",
+   "origens": [
+    "https://www.jqjacobs.net/andes/"
+   ]
+  },
+  {
+   "url": "https://www.jqjacobs.net/andes/images/chavin_kmz_t.jpg",
+   "status": 200,
+   "tipo": "image/jpeg",
+   "bytes": 111725,
+   "modificado": "Wed, 14 Aug 2024 21:53:11 GMT",
+   "origens": [
+    "https://www.jqjacobs.net/andes/"
+   ]
+  },
+  {
+   "url": "https://www.jqjacobs.net/andes/images/chiza.jpg",
+   "status": 200,
+   "tipo": "image/jpeg",
+   "bytes": 199548,
+   "modificado": "Wed, 14 Aug 2024 21:51:37 GMT",
+   "origens": [
+    "https://www.jqjacobs.net/andes/",
+    "https://www.jqjacobs.net/archaeology/geoglyph.html"
+   ]
+  },
+  {
+   "url": "https://www.jqjacobs.net/andes/images/huaca_del_sol_outline.jpg",
+   "status": 200,
+   "tipo": "image/jpeg",
+   "bytes": 351976,
+   "modificado": "Wed, 14 Aug 2024 21:52:25 GMT",
+   "origens": [
+    "https://www.jqjacobs.net/andes/"
+   ]
+  },
+  {
+   "url": "https://www.jqjacobs.net/andes/images/huaca_del_sol_outline_t.jpg",
+   "status": 200,
+   "tipo": "image/jpeg",
+   "bytes": 98180,
+   "modificado": "Wed, 14 Aug 2024 21:52:57 GMT",
+   "origens": [
+    "https://www.jqjacobs.net/andes/"
+   ]
+  },
+  {
+   "url": "https://www.jqjacobs.net/andes/images/kalasaya.jpg",
+   "status": 200,
+   "tipo": "image/jpeg",
+   "bytes": 32330,
+   "modificado": "Wed, 14 Aug 2024 21:55:09 GMT",
+   "origens": [
+    "https://www.jqjacobs.net/andes/"
+   ]
+  },
+  {
+   "url": "https://www.jqjacobs.net/andes/images/sillustani_circle.jpg",
+   "status": 200,
+   "tipo": "image/jpeg",
+   "bytes": 75844,
+   "modificado": "Wed, 14 Aug 2024 21:53:13 GMT",
+   "origens": [
+    "https://www.jqjacobs.net/andes/"
+   ]
+  },
+  {
+   "url": "https://www.jqjacobs.net/andes/images/t_door_tiwanaku.jpg",
+   "status": 200,
+   "tipo": "image/jpeg",
+   "bytes": 15754,
+   "modificado": "Wed, 14 Aug 2024 21:55:42 GMT",
+   "origens": [
+    "https://www.jqjacobs.net/andes/"
+   ]
+  },
+  {
+   "url": "https://www.jqjacobs.net/andes/kml/atacama.kml",
+   "status": 200,
+   "tipo": "application/vnd.google-earth.kml+xml",
+   "bytes": 155008,
+   "modificado": "Wed, 14 Aug 2024 21:56:26 GMT",
+   "origens": [
+    "https://www.jqjacobs.net/andes/",
+    "https://www.jqjacobs.net/archaeology/geoglyph.html"
+   ]
+  },
+  {
+   "url": "https://www.jqjacobs.net/andes/kml/chavin.kmz",
+   "status": 200,
+   "tipo": "application/vnd.google-earth.kmz",
+   "bytes": 1127,
+   "modificado": "Wed, 14 Aug 2024 21:56:30 GMT",
+   "origens": [
+    "https://www.jqjacobs.net/andes/"
+   ]
+  },
+  {
+   "url": "https://www.jqjacobs.net/andes/kml/geoglyphs.jpg",
+   "status": 200,
+   "tipo": "image/jpeg",
+   "bytes": 531926,
+   "modificado": "Wed, 14 Aug 2024 21:56:15 GMT",
+   "origens": [
+    "https://www.jqjacobs.net/archaeology/geoglyph.html"
+   ]
+  },
+  {
+   "url": "https://www.jqjacobs.net/andes/kml/machupicchu.kml",
+   "status": 200,
+   "tipo": "application/vnd.google-earth.kml+xml",
+   "bytes": 367963,
+   "modificado": "Wed, 14 Aug 2024 21:56:31 GMT",
+   "origens": [
+    "https://www.jqjacobs.net/kml/",
+    "https://www.jqjacobs.net/kml/index.html"
+   ]
+  },
+  {
+   "url": "https://www.jqjacobs.net/andes/machu_picchu_phi.kml",
+   "status": 200,
+   "tipo": "application/vnd.google-earth.kml+xml",
+   "bytes": 53668,
+   "modificado": "Sun, 01 Sep 2024 22:51:58 GMT",
+   "origens": [
+    "https://www.jqjacobs.net/andes/"
+   ]
+  },
+  {
+   "url": "https://www.jqjacobs.net/andes/sechin.kml",
+   "status": 200,
+   "tipo": "application/vnd.google-earth.kml+xml",
+   "bytes": 268451,
+   "modificado": "Thu, 02 Apr 2026 01:21:29 GMT",
+   "origens": [
+    "https://www.jqjacobs.net/andes/"
+   ]
+  },
+  {
+   "url": "https://www.jqjacobs.net/andes/sol.kmz",
+   "status": 200,
+   "tipo": "application/vnd.google-earth.kmz",
+   "bytes": 286374,
+   "modificado": "Wed, 14 Aug 2024 21:57:58 GMT",
+   "origens": [
+    "https://www.jqjacobs.net/andes/"
+   ]
+  },
+  {
+   "url": "https://www.jqjacobs.net/archaeo/drawings/hopeton_squier.jpg",
+   "status": 200,
+   "tipo": "image/jpeg",
+   "bytes": 63759,
+   "modificado": "Wed, 14 Aug 2024 22:01:55 GMT",
+   "origens": [
+    "https://www.jqjacobs.net/archaeo/",
+    "https://www.jqjacobs.net/archaeo/index.html"
+   ]
+  },
+  {
+   "url": "https://www.jqjacobs.net/archaeo/drawings/hopeton_squier_t.jpg",
+   "status": 200,
+   "tipo": "image/jpeg",
+   "bytes": 20808,
+   "modificado": "Wed, 14 Aug 2024 22:02:35 GMT",
+   "origens": [
+    "https://www.jqjacobs.net/archaeo/",
+    "https://www.jqjacobs.net/archaeo/index.html"
+   ]
+  },
+  {
+   "url": "https://www.jqjacobs.net/archaeo/drawings/octagon_squier.jpg",
+   "status": 200,
+   "tipo": "image/jpeg",
+   "bytes": 106429,
+   "modificado": "Wed, 14 Aug 2024 22:02:30 GMT",
+   "origens": [
+    "https://www.jqjacobs.net/archaeo/",
+    "https://www.jqjacobs.net/archaeo/index.html"
+   ]
+  },
+  {
+   "url": "https://www.jqjacobs.net/archaeo/images/amazon_earthwork.jpg",
+   "status": 200,
+   "tipo": "image/jpeg",
+   "bytes": 34231,
+   "modificado": "Wed, 14 Aug 2024 22:03:54 GMT",
+   "origens": [
+    "https://www.jqjacobs.net/archaeology/geoglyph.html"
+   ]
+  },
+  {
+   "url": "https://www.jqjacobs.net/archaeo/images/boca_acre_geoglifo.jpg",
+   "status": 200,
+   "tipo": "image/jpeg",
+   "bytes": 32987,
+   "modificado": "Wed, 14 Aug 2024 22:05:24 GMT",
+   "origens": [
+    "https://www.jqjacobs.net/archaeology/geoglyph.html"
+   ]
+  },
+  {
+   "url": "https://www.jqjacobs.net/archaeo/images/cahokia.jpg",
+   "status": 200,
+   "tipo": "image/jpeg",
+   "bytes": 17204,
+   "modificado": "Wed, 14 Aug 2024 22:03:43 GMT",
+   "origens": [
+    "https://www.jqjacobs.net/archaeo/",
+    "https://www.jqjacobs.net/archaeo/index.html"
+   ]
+  },
+  {
+   "url": "https://www.jqjacobs.net/archaeo/images/geolifo_brazil.jpg",
+   "status": 200,
+   "tipo": "image/jpeg",
+   "bytes": 32167,
+   "modificado": "Wed, 14 Aug 2024 22:08:02 GMT",
+   "origens": [
+    "https://www.jqjacobs.net/archaeology/geoglyph.html"
+   ]
+  },
+  {
+   "url": "https://www.jqjacobs.net/archaeo/images/huaca_sol_google_earth.jpg",
+   "status": 200,
+   "tipo": "image/jpeg",
+   "bytes": 64298,
+   "modificado": "Wed, 14 Aug 2024 22:03:32 GMT",
+   "origens": [
+    "https://www.jqjacobs.net/archaeo/",
+    "https://www.jqjacobs.net/archaeo/index.html"
+   ]
+  },
+  {
+   "url": "https://www.jqjacobs.net/archaeo/images/placido_de_castro_circle.jpg",
+   "status": 200,
+   "tipo": "image/jpeg",
+   "bytes": 102133,
+   "modificado": "Wed, 14 Aug 2024 22:04:57 GMT",
+   "origens": [
+    "https://www.jqjacobs.net/archaeology/geoglyph.html"
+   ]
+  },
+  {
+   "url": "https://www.jqjacobs.net/archaeo/images/placido_de_castro_great_circle.jpg",
+   "status": 200,
+   "tipo": "image/jpeg",
+   "bytes": 37257,
+   "modificado": "Wed, 14 Aug 2024 22:03:52 GMT",
+   "origens": [
+    "https://www.jqjacobs.net/archaeology/geoglyph.html"
+   ]
+  },
+  {
+   "url": "https://www.jqjacobs.net/archaeo/images/portsmouth_layers.jpg",
+   "status": 200,
+   "tipo": "image/jpeg",
+   "bytes": 39460,
+   "modificado": "Wed, 14 Aug 2024 22:03:19 GMT",
+   "origens": [
+    "https://www.jqjacobs.net/archaeo/",
+    "https://www.jqjacobs.net/archaeo/index.html"
+   ]
+  },
+  {
+   "url": "https://www.jqjacobs.net/archaeo/portsmouth.kmz",
+   "status": 404,
+   "tipo": "",
+   "bytes": 0,
+   "modificado": "",
+   "origens": [
+    "https://www.jqjacobs.net/archaeo/",
+    "https://www.jqjacobs.net/archaeo/index.html"
+   ]
+  },
+  {
+   "url": "https://www.jqjacobs.net/archaeo/sites/amazon_geoglifos.kmz",
+   "status": 200,
+   "tipo": "application/vnd.google-earth.kmz",
+   "bytes": 45387,
+   "modificado": "Wed, 14 Aug 2024 22:22:29 GMT",
+   "origens": [
+    "https://www.jqjacobs.net/archaeology/geoglyph.html"
+   ]
+  },
+  {
+   "url": "https://www.jqjacobs.net/archaeo/sites/athens.kmz",
+   "status": 200,
+   "tipo": "application/vnd.google-earth.kmz",
+   "bytes": 169784,
+   "modificado": "Wed, 14 Aug 2024 22:13:50 GMT",
+   "origens": [
+    "https://www.jqjacobs.net/archaeo/",
+    "https://www.jqjacobs.net/archaeo/index.html"
+   ]
+  },
+  {
+   "url": "https://www.jqjacobs.net/archaeo/sites/cahokia.kmz",
+   "status": 200,
+   "tipo": "application/vnd.google-earth.kmz",
+   "bytes": 4410,
+   "modificado": "Wed, 14 Aug 2024 22:15:09 GMT",
+   "origens": [
+    "https://www.jqjacobs.net/archaeo/",
+    "https://www.jqjacobs.net/archaeo/index.html"
+   ]
+  },
+  {
+   "url": "https://www.jqjacobs.net/archaeo/sites/caral.kmz",
+   "status": 200,
+   "tipo": "application/vnd.google-earth.kmz",
+   "bytes": 50701,
+   "modificado": "Wed, 14 Aug 2024 22:19:10 GMT",
+   "origens": [
+    "https://www.jqjacobs.net/archaeo/",
+    "https://www.jqjacobs.net/archaeo/index.html"
+   ]
+  },
+  {
+   "url": "https://www.jqjacobs.net/archaeo/sites/cedar_bank.kmz",
+   "status": 200,
+   "tipo": "application/vnd.google-earth.kmz",
+   "bytes": 297247,
+   "modificado": "Wed, 14 Aug 2024 22:16:24 GMT",
+   "origens": [
+    "https://www.jqjacobs.net/archaeo/",
+    "https://www.jqjacobs.net/archaeo/index.html"
+   ]
+  },
+  {
+   "url": "https://www.jqjacobs.net/archaeo/sites/frankfort.kmz",
+   "status": 200,
+   "tipo": "application/vnd.google-earth.kmz",
+   "bytes": 24189,
+   "modificado": "Wed, 14 Aug 2024 22:18:01 GMT",
+   "origens": [
+    "https://www.jqjacobs.net/archaeo/",
+    "https://www.jqjacobs.net/archaeo/index.html"
+   ]
+  },
+  {
+   "url": "https://www.jqjacobs.net/archaeo/sites/geoglifos_brazil.kmz",
+   "status": 200,
+   "tipo": "application/vnd.google-earth.kmz",
+   "bytes": 989,
+   "modificado": "Wed, 14 Aug 2024 22:11:44 GMT",
+   "origens": [
+    "https://www.jqjacobs.net/archaeology/geoglyph.html"
+   ]
+  },
+  {
+   "url": "https://www.jqjacobs.net/archaeo/sites/hopeton.kmz",
+   "status": 200,
+   "tipo": "application/vnd.google-earth.kmz",
+   "bytes": 132181,
+   "modificado": "Wed, 14 Aug 2024 22:22:39 GMT",
+   "origens": [
+    "https://www.jqjacobs.net/archaeo/",
+    "https://www.jqjacobs.net/archaeo/index.html"
+   ]
+  },
+  {
+   "url": "https://www.jqjacobs.net/archaeo/sites/hopewell.kmz",
+   "status": 200,
+   "tipo": "application/vnd.google-earth.kmz",
+   "bytes": 192171,
+   "modificado": "Wed, 14 Aug 2024 22:17:23 GMT",
+   "origens": [
+    "https://www.jqjacobs.net/archaeo/",
+    "https://www.jqjacobs.net/archaeo/index.html"
+   ]
+  },
+  {
+   "url": "https://www.jqjacobs.net/archaeo/sites/indiana.kmz",
+   "status": 200,
+   "tipo": "application/vnd.google-earth.kmz",
+   "bytes": 1922,
+   "modificado": "Wed, 14 Aug 2024 22:26:38 GMT",
+   "origens": [
+    "https://www.jqjacobs.net/archaeo/",
+    "https://www.jqjacobs.net/archaeo/index.html"
+   ]
+  },
+  {
+   "url": "https://www.jqjacobs.net/archaeo/sites/liberty.kmz",
+   "status": 200,
+   "tipo": "application/vnd.google-earth.kmz",
+   "bytes": 396261,
+   "modificado": "Wed, 14 Aug 2024 22:10:04 GMT",
+   "origens": [
+    "https://www.jqjacobs.net/archaeo/",
+    "https://www.jqjacobs.net/archaeo/index.html"
+   ]
+  },
+  {
+   "url": "https://www.jqjacobs.net/archaeo/sites/marietta.kmz",
+   "status": 200,
+   "tipo": "application/vnd.google-earth.kmz",
+   "bytes": 79645,
+   "modificado": "Wed, 14 Aug 2024 22:20:00 GMT",
+   "origens": [
+    "https://www.jqjacobs.net/archaeo/",
+    "https://www.jqjacobs.net/archaeo/index.html"
+   ]
+  },
+  {
+   "url": "https://www.jqjacobs.net/archaeo/sites/marksville.kmz",
+   "status": 200,
+   "tipo": "application/vnd.google-earth.kmz",
+   "bytes": 641998,
+   "modificado": "Wed, 14 Aug 2024 22:24:58 GMT",
+   "origens": [
+    "https://www.jqjacobs.net/archaeo/",
+    "https://www.jqjacobs.net/archaeo/index.html"
+   ]
+  },
+  {
+   "url": "https://www.jqjacobs.net/archaeo/sites/mississippi.kmz",
+   "status": 200,
+   "tipo": "application/vnd.google-earth.kmz",
+   "bytes": 196805,
+   "modificado": "Wed, 14 Aug 2024 22:25:00 GMT",
+   "origens": [
+    "https://www.jqjacobs.net/archaeo/",
+    "https://www.jqjacobs.net/archaeo/index.html"
+   ]
+  },
+  {
+   "url": "https://www.jqjacobs.net/archaeo/sites/mound_city.kmz",
+   "status": 200,
+   "tipo": "application/vnd.google-earth.kmz",
+   "bytes": 977,
+   "modificado": "Wed, 14 Aug 2024 22:17:37 GMT",
+   "origens": [
+    "https://www.jqjacobs.net/archaeo/",
+    "https://www.jqjacobs.net/archaeo/index.html"
+   ]
+  },
+  {
+   "url": "https://www.jqjacobs.net/archaeo/sites/newark.kmz",
+   "status": 200,
+   "tipo": "application/vnd.google-earth.kmz",
+   "bytes": 449255,
+   "modificado": "Wed, 14 Aug 2024 22:28:03 GMT",
+   "origens": [
+    "https://www.jqjacobs.net/archaeo/",
+    "https://www.jqjacobs.net/archaeo/index.html"
+   ]
+  },
+  {
+   "url": "https://www.jqjacobs.net/archaeo/sites/ohio_river.kmz",
+   "status": 200,
+   "tipo": "application/vnd.google-earth.kmz",
+   "bytes": 355881,
+   "modificado": "Wed, 14 Aug 2024 22:25:13 GMT",
+   "origens": [
+    "https://www.jqjacobs.net/archaeo/",
+    "https://www.jqjacobs.net/archaeo/index.html"
+   ]
+  },
+  {
+   "url": "https://www.jqjacobs.net/archaeo/sites/paint.kmz",
+   "status": 200,
+   "tipo": "application/vnd.google-earth.kmz",
+   "bytes": 77682,
+   "modificado": "Wed, 14 Aug 2024 22:10:48 GMT",
+   "origens": [
+    "https://www.jqjacobs.net/archaeo/",
+    "https://www.jqjacobs.net/archaeo/index.html"
+   ]
+  },
+  {
+   "url": "https://www.jqjacobs.net/archaeo/sites/portsmouth.kmz",
+   "status": 200,
+   "tipo": "application/vnd.google-earth.kmz",
+   "bytes": 437640,
+   "modificado": "Wed, 14 Aug 2024 22:25:11 GMT",
+   "origens": [
+    "https://www.jqjacobs.net/archaeo/",
+    "https://www.jqjacobs.net/archaeo/index.html"
+   ]
+  },
+  {
+   "url": "https://www.jqjacobs.net/archaeo/sites/serpent_mound.kmz",
+   "status": 200,
+   "tipo": "application/vnd.google-earth.kmz",
+   "bytes": 208979,
+   "modificado": "Wed, 14 Aug 2024 22:15:04 GMT",
+   "origens": [
+    "https://www.jqjacobs.net/archaeo/",
+    "https://www.jqjacobs.net/archaeo/index.html"
+   ]
+  },
+  {
+   "url": "https://www.jqjacobs.net/archaeo/sites/southeast.kmz",
+   "status": 200,
+   "tipo": "application/vnd.google-earth.kmz",
+   "bytes": 2981,
+   "modificado": "Wed, 14 Aug 2024 22:18:37 GMT",
+   "origens": [
+    "https://www.jqjacobs.net/archaeo/",
+    "https://www.jqjacobs.net/archaeo/index.html"
+   ]
+  },
+  {
+   "url": "https://www.jqjacobs.net/astro/xls/archaeogeodesy.xls",
+   "status": 200,
+   "tipo": "application/vnd.ms-excel",
+   "bytes": 3640832,
+   "modificado": "Wed, 19 Aug 2026 14:17:49 GMT",
+   "origens": [
+    "https://www.jqjacobs.net/archaeology/geoglyph.html"
+   ]
+  },
+  {
+   "url": "https://www.jqjacobs.net/blog/images/grave_creek_t.jpg",
+   "status": 200,
+   "tipo": "image/jpeg",
+   "bytes": 35117,
+   "modificado": "Wed, 14 Aug 2024 14:31:05 GMT",
+   "origens": [
+    "https://www.jqjacobs.net/andes/"
+   ]
+  },
+  {
+   "url": "https://www.jqjacobs.net/blog/images/miamisburg3.jpg",
+   "status": 200,
+   "tipo": "image/jpeg",
+   "bytes": 166036,
+   "modificado": "Wed, 14 Aug 2024 14:31:54 GMT",
+   "origens": [
+    "https://www.jqjacobs.net/kml/",
+    "https://www.jqjacobs.net/kml/index.html"
+   ]
+  },
+  {
+   "url": "https://www.jqjacobs.net/blog/images/miamisburg_t.jpg",
+   "status": 200,
+   "tipo": "image/jpeg",
+   "bytes": 38415,
+   "modificado": "Wed, 14 Aug 2024 14:31:52 GMT",
+   "origens": [
+    "https://www.jqjacobs.net/andes/",
+    "https://www.jqjacobs.net/archaeo/",
+    "https://www.jqjacobs.net/archaeo/index.html"
+   ]
+  },
+  {
+   "url": "https://www.jqjacobs.net/blog/images/quadranau1.jpg",
+   "status": 200,
+   "tipo": "image/jpeg",
+   "bytes": 409721,
+   "modificado": "Wed, 14 Aug 2024 14:33:01 GMT",
+   "origens": [
+    "https://www.jqjacobs.net/archaeo/",
+    "https://www.jqjacobs.net/archaeo/index.html"
+   ]
+  },
+  {
+   "url": "https://www.jqjacobs.net/geodesy/images/cahokia_latitude.jpg",
+   "status": 200,
+   "tipo": "image/jpeg",
+   "bytes": 166599,
+   "modificado": "Thu, 15 Aug 2024 19:13:42 GMT",
+   "origens": [
+    "https://www.jqjacobs.net/archaeo/",
+    "https://www.jqjacobs.net/archaeo/index.html"
+   ]
+  },
+  {
+   "url": "https://www.jqjacobs.net/geodesy/images/cahokia_latitude_jqjacobs.jpg",
+   "status": 200,
+   "tipo": "image/jpeg",
+   "bytes": 731070,
+   "modificado": "Thu, 15 Aug 2024 19:13:41 GMT",
+   "origens": [
+    "https://www.jqjacobs.net/archaeo/",
+    "https://www.jqjacobs.net/archaeo/index.html"
+   ]
+  },
+  {
+   "url": "https://www.jqjacobs.net/images/bar-gb.gif",
+   "status": 200,
+   "tipo": "image/gif",
+   "bytes": 170,
+   "modificado": "Tue, 13 Aug 2024 03:06:27 GMT",
+   "origens": [
+    "https://www.jqjacobs.net/andes/",
+    "https://www.jqjacobs.net/archaeo/",
+    "https://www.jqjacobs.net/archaeo/index.html",
+    "https://www.jqjacobs.net/archaeology/geoglyph.html",
+    "https://www.jqjacobs.net/kml/",
+    "https://www.jqjacobs.net/kml/index.html"
+   ]
+  },
+  {
+   "url": "https://www.jqjacobs.net/images/google.gif",
+   "status": 200,
+   "tipo": "image/gif",
+   "bytes": 3845,
+   "modificado": "Tue, 13 Aug 2024 03:09:01 GMT",
+   "origens": [
+    "https://www.jqjacobs.net/archaeology/geoglyph.html"
+   ]
+  },
+  {
+   "url": "https://www.jqjacobs.net/kml/acrelandia_2022_survey.kml",
+   "status": 200,
+   "tipo": "application/vnd.google-earth.kml+xml",
+   "bytes": 22698,
+   "modificado": "Thu, 15 Aug 2024 03:22:18 GMT",
+   "origens": [
+    "https://www.jqjacobs.net/archaeology/geoglyph.html"
+   ]
+  },
+  {
+   "url": "https://www.jqjacobs.net/kml/aerial/acdc3.jpg",
+   "status": 200,
+   "tipo": "image/jpeg",
+   "bytes": 53616,
+   "modificado": "Thu, 15 Aug 2024 03:39:12 GMT",
+   "origens": [
+    "https://www.jqjacobs.net/archaeology/geoglyph.html"
+   ]
+  },
+  {
+   "url": "https://www.jqjacobs.net/kml/aerial/ronr2.jpg",
+   "status": 200,
+   "tipo": "image/jpeg",
+   "bytes": 643742,
+   "modificado": "Sun, 06 Oct 2024 15:56:52 GMT",
+   "origens": [
+    "https://www.jqjacobs.net/archaeology/geoglyph.html"
+   ]
+  },
+  {
+   "url": "https://www.jqjacobs.net/kml/archaeogeodesy.kml",
+   "status": 200,
+   "tipo": "application/vnd.google-earth.kml+xml",
+   "bytes": 10028786,
+   "modificado": "Wed, 19 Aug 2026 13:52:22 GMT",
+   "origens": [
+    "https://www.jqjacobs.net/andes/"
+   ]
+  },
+  {
+   "url": "https://www.jqjacobs.net/kml/chavin.kml",
+   "status": 200,
+   "tipo": "application/vnd.google-earth.kml+xml",
+   "bytes": 191997,
+   "modificado": "Thu, 23 Jan 2025 22:30:29 GMT",
+   "origens": [
+    "https://www.jqjacobs.net/andes/"
+   ]
+  },
+  {
+   "url": "https://www.jqjacobs.net/kml/drawings/amazon_geoglyphs.jpg",
+   "status": 200,
+   "tipo": "image/jpeg",
+   "bytes": 83583,
+   "modificado": "Thu, 15 Aug 2024 08:51:52 GMT",
+   "origens": [
+    "https://www.jqjacobs.net/archaeology/geoglyph.html"
+   ]
+  },
+  {
+   "url": "https://www.jqjacobs.net/kml/drawings/amazon_geoglyphs_deskpicture.jpg",
+   "status": 200,
+   "tipo": "image/jpeg",
+   "bytes": 228425,
+   "modificado": "Thu, 15 Aug 2024 08:53:53 GMT",
+   "origens": [
+    "https://www.jqjacobs.net/archaeology/geoglyph.html"
+   ]
+  },
+  {
+   "url": "https://www.jqjacobs.net/kml/drawings/boa_vista_amazonas.jpg",
+   "status": 200,
+   "tipo": "image/jpeg",
+   "bytes": 168761,
+   "modificado": "Thu, 15 Aug 2024 08:53:31 GMT",
+   "origens": [
+    "https://www.jqjacobs.net/archaeology/geoglyph.html"
+   ]
+  },
+  {
+   "url": "https://www.jqjacobs.net/kml/france.kml",
+   "status": 200,
+   "tipo": "application/vnd.google-earth.kml+xml",
+   "bytes": 762854,
+   "modificado": "Thu, 15 Aug 2024 03:36:02 GMT",
+   "origens": [
+    "https://www.jqjacobs.net/kml/",
+    "https://www.jqjacobs.net/kml/index.html"
+   ]
+  },
+  {
+   "url": "https://www.jqjacobs.net/kml/images/amazon_octagons.jpg",
+   "status": 200,
+   "tipo": "image/jpeg",
+   "bytes": 1135013,
+   "modificado": "Wed, 09 Oct 2024 13:03:13 GMT",
+   "origens": [
+    "https://jqjacobs.net/archaeology/newark_arcs.html",
+    "https://www.jqjacobs.net/archaeology/geoglyph.html"
+   ]
+  },
+  {
+   "url": "https://www.jqjacobs.net/kml/images/amazon_octagons_t.jpg",
+   "status": 200,
+   "tipo": "image/jpeg",
+   "bytes": 333416,
+   "modificado": "Wed, 09 Oct 2024 13:03:16 GMT",
+   "origens": [
+    "https://jqjacobs.net/archaeology/newark_arcs.html",
+    "https://www.jqjacobs.net/archaeology/geoglyph.html"
+   ]
+  },
+  {
+   "url": "https://www.jqjacobs.net/kml/images/boca_do_acre_geoglyphs.jpg",
+   "status": 200,
+   "tipo": "image/jpeg",
+   "bytes": 496349,
+   "modificado": "Thu, 15 Aug 2024 08:55:59 GMT",
+   "origens": [
+    "https://www.jqjacobs.net/archaeology/geoglyph.html"
+   ]
+  },
+  {
+   "url": "https://www.jqjacobs.net/kml/images/chavin_newark.jpg",
+   "status": 200,
+   "tipo": "image/jpeg",
+   "bytes": 596643,
+   "modificado": "Thu, 15 Aug 2024 09:06:46 GMT",
+   "origens": [
+    "https://www.jqjacobs.net/kml/",
+    "https://www.jqjacobs.net/kml/index.html"
+   ]
+  },
+  {
+   "url": "https://www.jqjacobs.net/kml/images/intiwatana_chavin_phi.jpg",
+   "status": 200,
+   "tipo": "image/jpeg",
+   "bytes": 437049,
+   "modificado": "Thu, 15 Aug 2024 08:59:09 GMT",
+   "origens": [
+    "https://www.jqjacobs.net/andes/",
+    "https://www.jqjacobs.net/archaeo/",
+    "https://www.jqjacobs.net/archaeo/index.html"
+   ]
+  },
+  {
+   "url": "https://www.jqjacobs.net/kml/images/machupicchu_latitude_t.jpg",
+   "status": 200,
+   "tipo": "image/jpeg",
+   "bytes": 519846,
+   "modificado": "Thu, 15 Aug 2024 09:02:46 GMT",
+   "origens": [
+    "https://www.jqjacobs.net/kml/",
+    "https://www.jqjacobs.net/kml/index.html"
+   ]
+  },
+  {
+   "url": "https://www.jqjacobs.net/kml/images/machupicchu_phi.jpg",
+   "status": 200,
+   "tipo": "image/jpeg",
+   "bytes": 317067,
+   "modificado": "Thu, 15 Aug 2024 09:00:21 GMT",
+   "origens": [
+    "https://www.jqjacobs.net/andes/"
+   ]
+  },
+  {
+   "url": "https://www.jqjacobs.net/kml/images/newark_golden_means.jpg",
+   "status": 200,
+   "tipo": "image/jpeg",
+   "bytes": 515486,
+   "modificado": "Thu, 15 Aug 2024 09:05:59 GMT",
+   "origens": [
+    "https://www.jqjacobs.net/archaeo/",
+    "https://www.jqjacobs.net/archaeo/index.html"
+   ]
+  },
+  {
+   "url": "https://www.jqjacobs.net/kml/kazakhstan.kml",
+   "status": 200,
+   "tipo": "application/vnd.google-earth.kml+xml",
+   "bytes": 13948,
+   "modificado": "Thu, 15 Aug 2024 03:36:06 GMT",
+   "origens": [
+    "https://www.jqjacobs.net/archaeology/geoglyph.html"
+   ]
+  },
+  {
+   "url": "https://www.jqjacobs.net/kml/machupicchu.kml",
+   "status": 200,
+   "tipo": "application/vnd.google-earth.kml+xml",
+   "bytes": 1124251,
+   "modificado": "Sun, 27 Sep 2026 23:57:58 GMT",
+   "origens": [
+    "https://www.jqjacobs.net/andes/"
+   ]
+  },
+  {
+   "url": "https://www.jqjacobs.net/kml/phi_golden_ratios.kml",
+   "status": 200,
+   "tipo": "application/vnd.google-earth.kml+xml",
+   "bytes": 116048,
+   "modificado": "Wed, 26 Aug 2026 22:49:22 GMT",
+   "origens": [
+    "https://www.jqjacobs.net/archaeo/",
+    "https://www.jqjacobs.net/archaeo/index.html"
+   ]
+  },
+  {
+   "url": "https://www.jqjacobs.net/kml/pinson.kml",
+   "status": 200,
+   "tipo": "application/vnd.google-earth.kml+xml",
+   "bytes": 13254,
+   "modificado": "Wed, 26 Aug 2026 22:49:24 GMT",
+   "origens": [
+    "https://www.jqjacobs.net/archaeo/",
+    "https://www.jqjacobs.net/archaeo/index.html"
+   ]
+  },
+  {
+   "url": "https://www.jqjacobs.net/kml/poverty_point.kml",
+   "status": 200,
+   "tipo": "application/vnd.google-earth.kml+xml",
+   "bytes": 189408,
+   "modificado": "Thu, 15 Aug 2024 03:38:04 GMT",
+   "origens": [
+    "https://www.jqjacobs.net/archaeo/",
+    "https://www.jqjacobs.net/archaeo/index.html",
+    "https://www.jqjacobs.net/kml/",
+    "https://www.jqjacobs.net/kml/index.html"
+   ]
+  },
+  {
+   "url": "https://www.jqjacobs.net/kml/southwest.kml",
+   "status": 200,
+   "tipo": "application/vnd.google-earth.kml+xml",
+   "bytes": 92902,
+   "modificado": "Thu, 15 Aug 2024 03:38:36 GMT",
+   "origens": [
+    "https://www.jqjacobs.net/kml/",
+    "https://www.jqjacobs.net/kml/index.html"
+   ]
+  },
+  {
+   "url": "https://www.jqjacobs.net/southwest/images/anasazi_heritage_center_ppt.jpg",
+   "status": 200,
+   "tipo": "image/jpeg",
+   "bytes": 71949,
+   "modificado": "Fri, 16 Aug 2024 01:10:47 GMT",
+   "origens": [
+    "https://www.jqjacobs.net/andes/"
+   ]
+  },
+  {
+   "url": "https://www.jqjacobs.net/southwest/images/betatakin_talastima.jpg",
+   "status": 200,
+   "tipo": "image/jpeg",
+   "bytes": 195786,
+   "modificado": "Fri, 16 Aug 2024 00:54:53 GMT",
+   "origens": [
+    "https://www.jqjacobs.net/archaeology/geoglyph.html"
+   ]
+  },
+  {
+   "url": "https://www.jqjacobs.net/southwest/images/betatakin_talastima_t.jpg",
+   "status": 200,
+   "tipo": "image/jpeg",
+   "bytes": 62174,
+   "modificado": "Fri, 16 Aug 2024 01:08:16 GMT",
+   "origens": [
+    "https://www.jqjacobs.net/archaeology/geoglyph.html"
+   ]
+  },
+  {
+   "url": "https://www.repositorio.ufpa.br/jspui/bitstream/2011/8855/1/Dissertacao_AnaliseEspacialSitios.pdf",
+   "status": "externo",
+   "tipo": "",
+   "bytes": 0,
+   "modificado": "",
+   "origens": [
+    "https://www.jqjacobs.net/archaeology/geoglyph.html"
+   ]
+  }
+ ]
+}
