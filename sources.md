@@ -53,6 +53,11 @@ Comparação com a cópia antiga (`~/Documents/misc/amazon_geoglyphs.kml`, set/2
 - A classe "chão" desses arquivos inclui copa de árvore (alturas iguais às da vegetação), então `script/lidar_eba.py` faz um filtro próprio: ponto mais baixo por célula de 2 m, abertura morfológica de 20 m e pontos até 0,5 m acima dela. Daí sai o modelo de terreno de 2 m, o relevo sombreado de várias direções e o realce do relevo local, cortados em `docs/data/lidar/{z}/{x}/{y}.webp` (z10–16, ~24 MB) e `docs/data/lidar_faixas.geojson`.
 - Validação: no ponto Science 2023 nº 745 (Acre, transecto T-0414) aparece um geoglifo circular sob a floresta.
 
+### 6. Desmatamento — PRODES (INPE), via TerraBrasilis
+- WFS https://terrabrasilis.dpi.inpe.br/geoserver/prodes-legal-amz/ows, camadas `accumulated_deforestation_2007` (tudo até 2007) e `yearly_deforestation` (2008 em diante), recortadas em 69°–65,5° O, 8,5°–11,2° S (**CC BY-SA 4.0**, conforme https://terrabrasilis.dpi.inpe.br/downloads/).
+- `script/prodes.py` baixa os polígonos (~68 mil, guardados em `data/raw/prodes/`) e os rasteriza em três imagens de 70 m, uma por período (até 2007, 2008–2015, 2016 em diante): `docs/data/prodes/*.webp` e `docs/data/prodes.json`. Só o tour usa; o crédito aparece no rótulo da legenda do tour ("Desmatamento · PRODES/INPE (CC BY-SA)"). As imagens derivadas seguem a mesma licença (CC BY-SA 4.0).
+- O PRODES só cobre o Brasil: a Bolívia fica sem desmatamento no mapa.
+
 ## Avaliadas, não sincronizadas
 
 | Fonte | Por quê |

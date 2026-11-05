@@ -4,7 +4,7 @@ Mapa aberto das estruturas de terra pré-colombianas (geoglifos) do sudoeste da 
 
 **Mapa:** https://xn--2dk.xyz/dataviz/geoglifos-amazonia/ (cópia em https://rafapolo.github.io/geoglifos-amazonia/)
 
-- **Tour de 3 minutos** com música gerada no navegador (flauta, maracá, tambor e coro): botão Tour ou `?tour=1`; em inglês por `?tour=en`, em espanhol por `?tour=es`. Roteiro, legendas e som em [design/tour.md](design/tour.md).
+- **Tour de 2 minutos** com música gerada no navegador (flauta, maracá, tambor e coro): botão Tour ou `?tour=1`; em inglês por `?tour=en`, em espanhol por `?tour=es`. Roteiro, legendas e som em [design/tour.md](design/tour.md).
 - **Três línguas:** seletor PT/EN/ES no topo ou `?lang=en|es`.
 - **Fundo verde, só os desenhos:** interruptor no painel (ou `?fundo=verde`) que troca o satélite por um mapa desenhado, com os traçados em ocre sobre a terra verde das Américas e o mar azul.
 - **Desenhos** no espírito dos de J. Q. Jacobs, em [`docs/desenhos/`](docs/desenhos/): sudoeste da Amazônia, Amazonas, Acre e Llanos de Mojos, em pt, en e es.

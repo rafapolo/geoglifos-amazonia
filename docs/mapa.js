@@ -283,6 +283,20 @@ window.garantirProb = () => probPedido ||= carregar('data/probabilidade.json').t
   map.addLayer({ id: 'prob', type: 'raster', source: 'prob', layout: { visibility: 'none' }, paint: { 'raster-opacity': 0.65, 'raster-resampling': 'linear' } }, 'ref');
 });
 
+// desmatamento do PRODES (INPE, CC BY-SA 4.0) em três imagens, uma por período (script/prodes.py);
+// só o tour usa, acendendo uma depois da outra; ~700 KB, baixados quando o tour começa
+window.PRODES = ['prodes-ate2007', 'prodes-2008a2015', 'prodes-desde2016'];
+let prodesPedido = null;
+window.garantirProdes = () => prodesPedido ||= pronto.then(() => carregar('data/prodes.json')).then((p) => {
+  if (map.getSource(PRODES[0])) return;
+  p.periodos.forEach((nome, i) => {
+    // fonte de imagem não aceita attribution no MapLibre: o crédito vai no rótulo da legenda do tour
+    map.addSource(PRODES[i], { type: 'image', url: `data/prodes/${nome}.webp`, coordinates: p.coordinates });
+    map.addLayer({ id: PRODES[i], type: 'raster', source: PRODES[i], layout: { visibility: 'none' },
+      paint: { 'raster-opacity': 0, 'raster-opacity-transition': { duration: 1500, delay: 0 }, 'raster-resampling': 'linear' } }, 'ref');
+  });
+});
+
 window.mostrar = (nome, on) => { const cb = document.querySelector(`input[data-camada="${nome}"]`); if (cb && cb.checked !== on) { cb.checked = on; cb.dispatchEvent(new Event('change')); } };
 document.querySelectorAll('input[data-camada]').forEach(cb => cb.addEventListener('change', async () => {
   // camadas que só são baixadas quando ligadas
