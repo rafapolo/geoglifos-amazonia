@@ -77,6 +77,12 @@
   .tour-btn:hover { background: #000; }
   .maplibregl-popup-content img { display: block; width: 100%; border-radius: 4px; margin: 0 0 8px; background: #ddd; max-height: 240px; object-fit: contain; }
   .maplibregl-popup.foto .maplibregl-popup-content { max-width: 340px; width: 340px; }
+  /* no tour em tela estreita o balão abre no centro do mapa: menor e sem o botão, para caber entre a faixa de cima e o centro */
+  @media (max-width: 599px) {
+    body.touring .maplibregl-popup.foto .maplibregl-popup-content { width: 230px; max-width: 230px; }
+    body.touring .maplibregl-popup-content img { max-height: 140px; }
+    body.touring .maplibregl-popup-content .compartilhar { display: none; }
+  }
   .credito { color: var(--suave); font-size: 11px; }
 
   /* painel de fotos (desktop) */

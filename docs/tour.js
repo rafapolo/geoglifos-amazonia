@@ -80,7 +80,10 @@
   const fecharBaloes = () => document.querySelectorAll('.maplibregl-popup').forEach((p) => p.remove());
   function balao(fonte, id) {
     const f = dados[fonte]?.features.find((x) => x.properties.id === id);
-    if (f) abrirPopup(f);
+    if (!f) return;
+    // em tela estreita (celular), o balão no ponto real sairia cortado pela borda: abre no centro do mapa,
+    // que fica parado enquanto a câmera orbita em volta dele
+    abrirPopup(innerWidth < 600 ? { ...f, geometry: { type: 'Point', coordinates: map.getCenter().toArray() } } : f);
   }
 
   // os traçados de J. Q. Jacobs sem os pontos dele, que poluiriam a vista de perto
