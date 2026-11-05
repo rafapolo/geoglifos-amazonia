@@ -185,6 +185,8 @@
   aside .lede b { color: var(--papel); }
   aside h2 { color: #a99b88; }
   aside label.camada { border-top-color: rgba(246,239,227,.1); }
+  /* a mesma linha das camadas e do acordeão separa o título "Camadas" do texto e do botão do tour */
+  aside h2.camadas { border-top: 1px solid rgba(246,239,227,.1); padding-top: 14px; }
   aside label.camada small, aside .n { color: #a99b88; }
   aside .sw { border-color: rgba(246,239,227,.85); }
   aside input[type=checkbox] { accent-color: var(--ocre); }
@@ -320,7 +322,7 @@
   <p class="lede" data-i18n="lede"><b id="lede-total">1.367</b> estruturas de terra (<span id="lede-nature">406</span> achadas por LiDAR, <span id="lede-science">961</span> já catalogadas) e <span id="lede-fotos">664</span> fotos: valas e aterros geométricos de 600&nbsp;a.C. a 850&nbsp;d.C., revelados pelo desmatamento e pelo LiDAR no Acre, no Amazonas e na Bolívia.</p>
   <button id="tour-abrir-painel" class="tour-btn" type="button" data-i18n="tour-painel">Tour de 2 minutos</button>
 
-  <h2 data-i18n="camadas">Camadas</h2>
+  <h2 class="camadas" data-i18n="camadas">Camadas</h2>
   <label class="camada fundo"><input type="checkbox" id="fundo-verde"><span class="sw" style="background:#1f3d29"></span>
     <span data-i18n="c-fundo">Fundo verde, só os desenhos<small>sem satélite: só os traçados, como num mapa desenhado</small></span><span></span></label>
   <label class="camada"><input type="checkbox" data-camada="nature" checked><span class="sw" style="background:var(--terra)"></span>
