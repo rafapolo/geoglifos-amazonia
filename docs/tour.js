@@ -130,7 +130,23 @@
     if (map.getLayer('jacobs-pontos')) map.setLayoutProperty('jacobs-pontos', 'visibility', 'none');
   };
 
-  const so = (...nomes) => ['nature', 'science', 'prob', 'fotos', 'jacobs', 'lidar'].forEach((n) => mostrar(n, nomes.includes(n)));
+  // as linhas de Jacobs (no satélite: finas, tracejadas e claras) ficam cheias, grossas e ocres, para o contorno
+  // das valas aparecer de perto; realce(false) as devolve ao normal
+  const realce = (on) => {
+    if (!map.getLayer('jacobs-linhas') || document.body.classList.contains('fundo-verde')) return;
+    map.setPaintProperty('jacobs-linhas', 'line-color', on ? '#f0c060' : '#f2f2a0');
+    map.setPaintProperty('jacobs-linhas', 'line-width', on ? 2.6 : 1.2);
+    map.setPaintProperty('jacobs-linhas', 'line-dasharray', on ? [1, 0] : [2, 1]);
+  };
+
+  // sai do fundo verde (usado só por um trecho da cena 6) e volta ao satélite sem os rótulos, como no resto do tour
+  const semVerde = () => {
+    if (!document.body.classList.contains('fundo-verde')) return;
+    fundoVerde(false);
+    map.setLayoutProperty('ref', 'visibility', 'none');
+  };
+
+  const so = (...nomes) => realce(false) || ['nature', 'science', 'prob', 'fotos', 'jacobs', 'lidar'].forEach((n) => mostrar(n, nomes.includes(n)));
 
   function cenas() {
     const nat = dados.nature.features, sci = dados.science.features;
@@ -159,17 +175,20 @@
         desmatamento(2);
         await em(7000);
         desmatamento(3);
-        await legenda(t('Geoglifos da Amazônia', 'Geoglyphs of the Amazon', 'Geoglifos de la Amazonía'), t('Desenhos de terra feitos entre 600 a.C. e 850 d.C. no sudoeste da Amazônia, revelados pelo desmatamento.', 'Earthen drawings made between 600 BC and AD 850 in the southwestern Amazon, revealed by deforestation.', 'Dibujos de tierra hechos entre 600 a. C. y 850 d. C. en el suroeste de la Amazonía, revelados por la deforestación.'));
+        await legenda(t('Acre · há mais de 40 anos', 'Acre · over 40 years ago', 'Acre · hace más de 40 años'), t('Alceu Ranzi viu os primeiros de um avião, voltando a Rio Branco: só apareciam onde a floresta tinha virado pasto.', 'Alceu Ranzi spotted the first ones from a plane flying back to Rio Branco: they only showed where forest had become pasture.', 'Alceu Ranzi vio los primeros desde un avión, de regreso a Rio Branco: solo aparecían donde el bosque se había vuelto pastizal.'));
         await em(10000);
         // o menor giro até o norte (rumo 0)
         orbita({ giro: -(((map.getBearing() % 360) + 540) % 360 - 180), pitch: 42, zoom: 7.5, centro: [-66.6, -9.55] }, 4000);
       } },
-      // 1 · Acre: o voo de Ranzi; o desmatamento do PRODES (já aceso desde a abertura) fica, e a câmera, virada para
+      // 1 · Acre: o que são os geoglifos; o desmatamento do PRODES (já aceso desde a abertura) fica, e a câmera, virada para
       // o norte, desce devagar sobre o pasto onde estão os geoglifos
       { dur: 10000, run: async () => {
         so('nature');
         desmatamento(3);
-        await legenda(t('Acre · há mais de 40 anos', 'Acre · over 40 years ago', 'Acre · hace más de 40 años'), t('Alceu Ranzi viu os primeiros de um avião, voltando a Rio Branco: só apareciam onde a floresta tinha virado pasto.', 'Alceu Ranzi spotted the first ones from a plane flying back to Rio Branco: they only showed where forest had become pasture.', 'Alceu Ranzi vio los primeros desde un avión, de regreso a Rio Branco: solo aparecían donde el bosque se había vuelto pastizal.'));
+        await legenda(t('Geoglifos da Amazônia', 'Geoglyphs of the Amazon', 'Geoglifos de la Amazonía'),
+          t('Desenhos de terra feitos entre 600 a.C. e 850 d.C., enterrados sob as florestas do sudoeste da Amazônia e revelados pelo desmatamento.',
+            'Earthen drawings made between 600 BC and AD 850, buried beneath the forests of the southwestern Amazon and revealed by deforestation.',
+            'Dibujos de tierra hechos entre 600 a. C. y 850 d. C., enterrados bajo los bosques del suroeste de la Amazonía y revelados por la deforestación.'));
         orbita({ giro: 20, pitch: 55, zoom: 8.4, centro: [-67.3, -9.8] }, 10000);
         await em(4500);
         await legenda(t('Desmatamento · PRODES/INPE (CC BY-SA)', 'Deforestation · PRODES/INPE (CC BY-SA)', 'Deforestación · PRODES/INPE (CC BY-SA)'), t('Em laranja, a floresta derrubada até 2007, até 2015 e até 2025. Cada pasto novo expôs mais desenhos.', 'In orange, forest cleared by 2007, by 2015 and by 2025. Every new pasture exposed more drawings.', 'En naranja, el bosque talado hasta 2007, hasta 2015 y hasta 2025. Cada pastizal nuevo expuso más dibujos.'));
@@ -186,6 +205,8 @@
         await em(6500);
         // foto de drone de R. Walker: as palmeiras e a estrada mostram o tamanho das valas
         balao('fotos', 'acrdp');
+        // nos últimos segundos, o contorno das valas desenhado por J. Q. Jacobs acende sobre o satélite
+        espera(3500).then(async () => { if (ativo && cenaAtual === 2) { await tracados(); realce(true); } }).catch(() => {});
         await legenda('Tequinho · Acre', t('“Esse povo fazia geometria monumental na Amazônia ao mesmo tempo que Pitágoras desenvolvia seu teorema na Grécia.”', '“These people were making monumental geometry in the Amazon at the same time Pythagoras was developing his theorem in Greece.”', '“Este pueblo hacía geometría monumental en la Amazonía al mismo tiempo que Pitágoras desarrollaba su teorema en Grecia.”'), 'Alceu Ranzi');
       } },
       // 3 · os octógonos: os únicos quatro recintos de oito lados, todos de ~155 m; do simples, num campo arado
@@ -235,11 +256,19 @@
         await em(3500);
         orbita({ giro: 75, pitch: 62, zoom: 6.9 }, 9500);
         await em(6500);
+        // por uns segundos, só os desenhos sobre o verde, num dos trechos com mais traçados de J. Q. Jacobs
+        // (34 recintos e ~40 km de estradas em 18 × 13 km, ao norte de Rio Branco): recintos ligados por estradas
+        fundoVerde(true);
+        await tracados();
+        voar({ center: [-67.215, -9.165], zoom: 12, pitch: 35, bearing: 15 }, 2500);
         await legenda(t('Aquiry · estradas', 'Aquiry · roads', 'Aquiry · caminos'), t('Os sítios eram ligados por estradas, 350 km já mapeados, que se alargavam ao chegar perto deles.', 'The sites were linked by roads, 350 km mapped so far, that widened as they approached them.', 'Los sitios estaban unidos por caminos, 350 km ya mapeados, que se ensanchaban al acercarse a ellos.'));
+        await em(9000);
+        orbita({ giro: 15, pitch: 40, zoom: 12.2 }, 4000);
       } },
       // 7 · um sítio cerimonial no pasto: dois círculos, um retângulo e as estradas entre eles
       // (Acre, Iriarte et al. 2020); só o satélite, e uma órbita larga
       { dur: 8000, run: async () => {
+        semVerde();
         so();
         voar({ center: [-67.65726, -10.20662], zoom: 15.65, pitch: 40, bearing: 0 }, 3200);
         await legenda(t('Cerimônias, não fortalezas', 'Ceremonies, not fortresses', 'Ceremonias, no fortalezas'), t('“Os geoglifos eram usados para encontros, para tomar decisões políticas e para organizar cerimônias religiosas, e também para festas, dança e música.”', '“The geoglyphs were used for gatherings, for making political decisions and for religious ceremonies, and also for feasts, dance and music.”', '“Los geoglifos se usaban para encuentros, para tomar decisiones políticas y para organizar ceremonias religiosas, y también para fiestas, danza y música.”'), 'Martti Pärssinen');
@@ -379,6 +408,8 @@
     // o mapa fica exatamente onde a câmera do tour estava: os limites de zoom e inclinação
     // só voltam ao normal quando a pessoa sai dessa vista (senão a câmera daria um pulo)
     map.once('movestart', () => { if (!ativo) { map.setMaxZoom(16); map.setMaxPitch(60); } });
+    realce(false);
+    if (!salvo.verde && document.body.classList.contains('fundo-verde')) fundoVerde(false);
     map.setLayoutProperty('ref', 'visibility', 'visible');
     if (salvo.verde) fundoVerde(true);
     salvo.camadas.forEach(([n, on]) => mostrar(n, on));
