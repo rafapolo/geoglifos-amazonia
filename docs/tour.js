@@ -148,11 +148,13 @@
         map.jumpTo({ center: rota[0], zoom: 10.6, pitch: 70, bearing: 225 });
         seguir(rota, 10000, { zoom: [10.6, 10.1], pitch: [70, 64] });
         desmatamento(1);
-        await legenda(t('Geoglifos da Amazônia', 'Geoglyphs of the Amazon', 'Geoglifos de la Amazonía'), t('Desenhos de terra feitos entre 600 a.C. e 850 d.C. no sudoeste da Amazônia, revelados pelo desmatamento.', 'Earthen drawings made between 600 BC and AD 850 in the southwestern Amazon, revealed by deforestation.', 'Dibujos de tierra hechos entre 600 a. C. y 850 d. C. en el suroeste de la Amazonía, revelados por la deforestación.'));
+        await legenda(t('Porto Velho → Rio Branco · rio Madeira e BR-364', 'Porto Velho → Rio Branco · Madeira River and BR-364', 'Porto Velho → Rio Branco · río Madeira y BR-364'),
+          t('Seguindo o caminho da destruição…', 'Following the path of destruction…', 'Siguiendo el camino de la destrucción…'));
         await em(3500);
         desmatamento(2);
         await em(7000);
         desmatamento(3);
+        await legenda(t('Geoglifos da Amazônia', 'Geoglyphs of the Amazon', 'Geoglifos de la Amazonía'), t('Desenhos de terra feitos entre 600 a.C. e 850 d.C. no sudoeste da Amazônia, revelados pelo desmatamento.', 'Earthen drawings made between 600 BC and AD 850 in the southwestern Amazon, revealed by deforestation.', 'Dibujos de tierra hechos entre 600 a. C. y 850 d. C. en el suroeste de la Amazonía, revelados por la deforestación.'));
         await em(10000);
         // o menor giro até o norte (rumo 0)
         orbita({ giro: -(((map.getBearing() % 360) + 540) % 360 - 180), pitch: 42, zoom: 7.5, centro: [-66.6, -9.55] }, 4000);
