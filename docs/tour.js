@@ -82,7 +82,7 @@
       // o rumo mais adiante é suavizado, para a câmera não dar trancos nas quinas da linha
       const alvo = rumo(c, ponto(e * total + adiante * total));
       let d = ((alvo - bearing + 540) % 360) - 180;
-      if (t < 1 && Math.hypot(c[0] - fim[0], c[1] - fim[1]) > 1e-6) bearing += d * 0.06;
+      if (t < 1 && Math.hypot(c[0] - fim[0], c[1] - fim[1]) > 1e-6) bearing += d * 0.03;
       map.jumpTo({ center: c, bearing, zoom: zoom[0] + (zoom[1] - zoom[0]) * e, pitch: pitch[0] + (pitch[1] - pitch[0]) * e });
       if (t < 1) anim = requestAnimationFrame(passo);
     };
@@ -137,16 +137,21 @@
     // cada legenda fica no mínimo 6 s na tela: os tempos são marcados a partir do começo da cena (em(ms)),
     // e a câmera se move durante as legendas, sem planos vazios
     return [
-      // 0 · abertura: parte de Porto Velho e sobe o rio Madeira (Santo Antônio, Jaci-Paraná, Jirau, Abunã), depois
-      // segue a BR-364 até Rio Branco: o eixo do desmatamento (~70°/250°, medido nas imagens do PRODES), por onde
+      // 0 · abertura: parte de Porto Velho e voa numa curva larga sobre o rio Madeira até Abunã, depois
+      // sobre a BR-364 até Rio Branco: o eixo do desmatamento (~70°/250°, medido nas imagens do PRODES), por onde
       // a ocupação chegou de Rondônia. Voa baixo, perto do pasto, e o laranja se espalha em três tempos; no fim a
       // câmera sobe e gira para o norte, e o desmatamento aparece inteiro
       { dur: 14000, run: async () => {
         so('nature', 'science');
-        const rota = [[-63.9, -8.76], [-64.05, -8.88], [-64.39, -9.24], [-64.66, -9.27], [-64.95, -9.55], [-65.36, -9.7],
-          [-65.85, -9.74], [-66.36, -9.78], [-66.9, -9.84], [-67.5, -9.9]];
-        map.jumpTo({ center: rota[0], zoom: 10.6, pitch: 70, bearing: 225 });
-        seguir(rota, 10000, { zoom: [10.6, 10.1], pitch: [70, 64] });
+        // uma curva só, suave, de Porto Velho a Rio Branco: passa por cima do Madeira e da estrada sem seguir cada
+        // volta do rio (Bézier cúbica, amostrada em 60 pontos)
+        const [a, b, c, d] = [[-63.9, -8.76], [-64.9, -9.5], [-66.1, -9.85], [-67.5, -9.9]];
+        const rota = Array.from({ length: 61 }, (_, i) => {
+          const u = i / 60, v = 1 - u;
+          return [0, 1].map((k) => v * v * v * a[k] + 3 * v * v * u * b[k] + 3 * v * u * u * c[k] + u * u * u * d[k]);
+        });
+        map.jumpTo({ center: rota[0], zoom: 10.6, pitch: 70, bearing: -121 });
+        seguir(rota, 10000, { zoom: [10.6, 10.1], pitch: [70, 64], adiante: 0.25 });
         desmatamento(1);
         await legenda(t('Porto Velho → Rio Branco · rio Madeira e BR-364', 'Porto Velho → Rio Branco · Madeira River and BR-364', 'Porto Velho → Rio Branco · río Madeira y BR-364'),
           t('Seguindo o caminho da destruição…', 'Following the path of destruction…', 'Siguiendo el camino de la destrucción…'));
