@@ -51,6 +51,43 @@
     };
     anim = requestAnimationFrame(passo);
   }
+  // voo ao longo de uma linha (lon/lat): o centro anda pela linha com velocidade constante no chão e a
+  // câmera olha sempre para um ponto mais adiante dela, então vira junto com as curvas do caminho
+  function seguir(pontos, ms, { zoom, pitch, adiante = 0.12 }) {
+    cancelAnimationFrame(anim);
+    const fim = pontos.at(-1);
+    if (reduz) { map.jumpTo({ center: fim, zoom: zoom[1], pitch: pitch[1] }); return; }
+    const k = Math.cos(fim[1] * Math.PI / 180);
+    const seg = pontos.slice(1).map((b, i) => Math.hypot((b[0] - pontos[i][0]) * k, b[1] - pontos[i][1]));
+    const total = seg.reduce((a, b) => a + b, 0);
+    const ponto = (s) => {
+      s = Math.max(0, Math.min(total, s));
+      for (let i = 0; i < seg.length; i++) {
+        if (s <= seg[i] || i === seg.length - 1) {
+          const f = seg[i] ? s / seg[i] : 0, a = pontos[i], b = pontos[i + 1];
+          return [a[0] + (b[0] - a[0]) * f, a[1] + (b[1] - a[1]) * f];
+        }
+        s -= seg[i];
+      }
+    };
+    const rumo = (a, b) => Math.atan2((b[0] - a[0]) * k, b[1] - a[1]) * 180 / Math.PI;
+    let bearing = rumo(pontos[0], ponto(adiante * total));
+    const t0 = performance.now();
+    const passo = (agora) => {
+      if (!ativo) return;
+      const t = Math.min(1, (agora - t0) / ms);
+      // entra já em movimento (sem a aceleração do começo) e freia no fim
+      const e = Math.sin(t * Math.PI / 2);
+      const c = ponto(e * total);
+      // o rumo mais adiante é suavizado, para a câmera não dar trancos nas quinas da linha
+      const alvo = rumo(c, ponto(e * total + adiante * total));
+      let d = ((alvo - bearing + 540) % 360) - 180;
+      if (t < 1 && Math.hypot(c[0] - fim[0], c[1] - fim[1]) > 1e-6) bearing += d * 0.06;
+      map.jumpTo({ center: c, bearing, zoom: zoom[0] + (zoom[1] - zoom[0]) * e, pitch: pitch[0] + (pitch[1] - pitch[0]) * e });
+      if (t < 1) anim = requestAnimationFrame(passo);
+    };
+    anim = requestAnimationFrame(passo);
+  }
   // espera até o instante ms da cena atual (contado do começo marcado em iniciar())
   let t0Cena = 0;
   const em = (ms) => espera(t0Cena + ms - performance.now());
@@ -100,27 +137,35 @@
     // cada legenda fica no mínimo 6 s na tela: os tempos são marcados a partir do começo da cena (em(ms)),
     // e a câmera se move durante as legendas, sem planos vazios
     return [
-      // 0 · abertura: grua subindo da Amazônia chapada para uma vista oblíqua do Acre, girando
-      { dur: 7000, run: async () => {
+      // 0 · abertura: parte de Porto Velho e sobe o rio Madeira (Santo Antônio, Jaci-Paraná, Jirau, Abunã), depois
+      // segue a BR-364 até Rio Branco: o eixo do desmatamento (~70°/250°, medido nas imagens do PRODES), por onde
+      // a ocupação chegou de Rondônia. Voa baixo, perto do pasto, e o laranja se espalha em três tempos; no fim a
+      // câmera sobe e gira para o norte, e o desmatamento aparece inteiro
+      { dur: 14000, run: async () => {
         so('nature', 'science');
-        map.jumpTo({ center: [-64.5, -8.4], zoom: 4.7, pitch: 0, bearing: 20 });
-        orbita({ giro: -60, pitch: 60, zoom: 7.4, centro: [-67.3, -9.9] }, 7000);
+        const rota = [[-63.9, -8.76], [-64.05, -8.88], [-64.39, -9.24], [-64.66, -9.27], [-64.95, -9.55], [-65.36, -9.7],
+          [-65.85, -9.74], [-66.36, -9.78], [-66.9, -9.84], [-67.5, -9.9]];
+        map.jumpTo({ center: rota[0], zoom: 10.6, pitch: 70, bearing: 225 });
+        seguir(rota, 10000, { zoom: [10.6, 10.1], pitch: [70, 64] });
+        desmatamento(1);
         await legenda(t('Geoglifos da Amazônia', 'Geoglyphs of the Amazon', 'Geoglifos de la Amazonía'), t('Desenhos de terra feitos entre 600 a.C. e 850 d.C. no sudoeste da Amazônia, revelados pelo desmatamento.', 'Earthen drawings made between 600 BC and AD 850 in the southwestern Amazon, revealed by deforestation.', 'Dibujos de tierra hechos entre 600 a. C. y 850 d. C. en el suroeste de la Amazonía, revelados por la deforestación.'));
-      } },
-      // 1 · Acre: o voo de Ranzi e o desmatamento do PRODES se espalhando em três tempos (até 2007, 2015, 2025)
-      { dur: 13000, run: async () => {
-        so('nature');
-        voar({ center: [-67.55, -9.95], zoom: 8.7, pitch: 58, bearing: -35 }, 3200);
-        await legenda(t('Acre · há mais de 40 anos', 'Acre · over 40 years ago', 'Acre · hace más de 40 años'), t('Alceu Ranzi viu os primeiros de um avião, voltando a Rio Branco: só apareciam onde a floresta tinha virado pasto.', 'Alceu Ranzi spotted the first ones from a plane flying back to Rio Branco: they only showed where forest had become pasture.', 'Alceu Ranzi vio los primeros desde un avión, de regreso a Rio Branco: solo aparecían donde el bosque se había vuelto pastizal.'));
-        await em(3200);
-        orbita({ giro: 45, pitch: 64, zoom: 9.5, centro: [-67.45, -9.9] }, 9800);
-        await desmatamento(1);
-        await em(5000);
+        await em(3500);
         desmatamento(2);
-        await em(6500);
-        await legenda(t('Desmatamento · PRODES/INPE (CC BY-SA)', 'Deforestation · PRODES/INPE (CC BY-SA)', 'Deforestación · PRODES/INPE (CC BY-SA)'), t('Em laranja, a floresta derrubada até 2007, até 2015 e até 2025. Cada pasto novo expôs mais desenhos.', 'In orange, forest cleared by 2007, by 2015 and by 2025. Every new pasture exposed more drawings.', 'En naranja, el bosque talado hasta 2007, hasta 2015 y hasta 2025. Cada pastizal nuevo expuso más dibujos.'));
-        await em(8500);
+        await em(7000);
         desmatamento(3);
+        await em(10000);
+        // o menor giro até o norte (rumo 0)
+        orbita({ giro: -(((map.getBearing() % 360) + 540) % 360 - 180), pitch: 42, zoom: 7.5, centro: [-66.6, -9.55] }, 4000);
+      } },
+      // 1 · Acre: o voo de Ranzi; o desmatamento do PRODES (já aceso desde a abertura) fica, e a câmera, virada para
+      // o norte, desce devagar sobre o pasto onde estão os geoglifos
+      { dur: 10000, run: async () => {
+        so('nature');
+        desmatamento(3);
+        await legenda(t('Acre · há mais de 40 anos', 'Acre · over 40 years ago', 'Acre · hace más de 40 años'), t('Alceu Ranzi viu os primeiros de um avião, voltando a Rio Branco: só apareciam onde a floresta tinha virado pasto.', 'Alceu Ranzi spotted the first ones from a plane flying back to Rio Branco: they only showed where forest had become pasture.', 'Alceu Ranzi vio los primeros desde un avión, de regreso a Rio Branco: solo aparecían donde el bosque se había vuelto pastizal.'));
+        orbita({ giro: 20, pitch: 55, zoom: 8.4, centro: [-67.3, -9.8] }, 10000);
+        await em(4500);
+        await legenda(t('Desmatamento · PRODES/INPE (CC BY-SA)', 'Deforestation · PRODES/INPE (CC BY-SA)', 'Deforestación · PRODES/INPE (CC BY-SA)'), t('Em laranja, a floresta derrubada até 2007, até 2015 e até 2025. Cada pasto novo expôs mais desenhos.', 'In orange, forest cleared by 2007, by 2015 and by 2025. Every new pasture exposed more drawings.', 'En naranja, el bosque talado hasta 2007, hasta 2015 y hasta 2025. Cada pastizal nuevo expuso más dibujos.'));
       } },
       // 2 · Tequinho: chega de cima, a grua desce e dá a volta no quadrado triplo; a foto de drone dá a escala
       { dur: 13000, run: async () => {

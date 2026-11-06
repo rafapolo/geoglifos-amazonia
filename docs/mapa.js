@@ -30,8 +30,10 @@ const map = new maplibregl.Map({
     ]
   }
 });
-map.addControl(new maplibregl.NavigationControl({ visualizePitch: false }), 'bottom-right');
+// nos cantos de baixo o MapLibre empilha cada controle novo acima dos anteriores: a escala vem primeiro
+// para ficar embaixo de tudo
 map.addControl(new maplibregl.ScaleControl({ unit: 'metric' }), 'bottom-right');
+map.addControl(new maplibregl.NavigationControl({ visualizePitch: false }), 'bottom-right');
 map.addControl(new maplibregl.AttributionControl({ compact: true }), 'bottom-right');
 // a atribuição compacta abre sozinha em telas largas: começa sempre recolhida
 const recolheAtribuicao = () => document.querySelectorAll('.maplibregl-ctrl-attrib').forEach(d => { d.removeAttribute('open'); d.classList.remove('maplibregl-compact-show'); });
@@ -284,7 +286,7 @@ window.garantirProb = () => probPedido ||= carregar('data/probabilidade.json').t
 });
 
 // desmatamento do PRODES (INPE, CC BY-SA 4.0) em três imagens, uma por período (script/prodes.py);
-// só o tour usa, acendendo uma depois da outra; ~700 KB, baixados quando o tour começa
+// só o tour usa, acendendo uma depois da outra; ~1,3 MB, baixados quando o tour começa
 window.PRODES = ['prodes-ate2007', 'prodes-2008a2015', 'prodes-desde2016'];
 let prodesPedido = null;
 window.garantirProdes = () => prodesPedido ||= pronto.then(() => carregar('data/prodes.json')).then((p) => {

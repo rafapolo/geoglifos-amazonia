@@ -6,7 +6,7 @@ Entrada: WFS do TerraBrasilis (camadas prodes-legal-amz:accumulated_deforestatio
          prodes-legal-amz:yearly_deforestation), guardado em data/raw/prodes/ para não baixar de novo
 Saída:   docs/data/prodes/{ate2007,2008a2015,desde2016}.webp e docs/data/prodes.json (cantos das imagens)
 
-Uso: uv run --with shapely --with pillow script/prodes.py
+Uso: uv run --with shapely --with pillow --with numpy script/prodes.py
 """
 import json
 import math
@@ -14,16 +14,20 @@ import urllib.parse
 import urllib.request
 from pathlib import Path
 
+import numpy as np
 from PIL import Image, ImageDraw
 
 RAIZ = Path(__file__).resolve().parent.parent
 BRUTO = RAIZ / "data/raw/prodes"
 SAIDA = RAIZ / "docs/data/prodes"
 WFS = "https://terrabrasilis.dpi.inpe.br/geoserver/prodes-legal-amz/ows"
-# leste do Acre e sul do Amazonas, onde estão os geoglifos e as faixas de LiDAR da Nature
-OESTE, SUL, LESTE, NORTE = -69.0, -11.2, -65.5, -8.5
-METROS_PX = 70
+# leste do Acre, sul do Amazonas e o vale do Madeira até Porto Velho, de onde o tour parte
+OESTE, SUL, LESTE, NORTE = -69.0, -11.2, -63.6, -8.2
+METROS_PX = 85
 COR = (226, 112, 64)
+# largura, em fração do lado, da faixa onde o laranja some aos poucos: com a câmera inclinada, o corte
+# reto na borda da imagem (o desmatamento continua fora dela) apareceria no horizonte
+BORDA = 0.12
 PERIODOS = {"ate2007": (0, 2007), "2008a2015": (2008, 2015), "desde2016": (2016, 9999)}
 
 
@@ -67,6 +71,8 @@ def main():
     px = lambda lon, lat: ((merc(lon, lat)[0] - x0) / (x1 - x0) * larg, (y0 - merc(lon, lat)[1]) / (y0 - y1) * alt)
 
     SAIDA.mkdir(parents=True, exist_ok=True)
+    rampa = lambda n: np.clip(np.minimum(np.arange(n) + 0.5, n - np.arange(n) - 0.5) / (BORDA * n), 0, 1)
+    esfuma = np.outer(rampa(alt), rampa(larg)) ** 1.5
     for nome, (a, b) in PERIODOS.items():
         mascara = Image.new("L", (larg, alt), 0)
         d = ImageDraw.Draw(mascara)
@@ -83,7 +89,7 @@ def main():
                     d.polygon([px(*c[:2]) for c in buraco], fill=0)
             n += 1
         img = Image.new("RGBA", (larg, alt), COR + (0,))
-        img.putalpha(mascara)
+        img.putalpha(Image.fromarray((np.asarray(mascara) * esfuma).astype(np.uint8)))
         img.save(SAIDA / f"{nome}.webp", lossless=True, quality=100, method=6)
         print(f"{nome}: {n} polígonos, {(SAIDA / f'{nome}.webp').stat().st_size // 1024} KB")
 
